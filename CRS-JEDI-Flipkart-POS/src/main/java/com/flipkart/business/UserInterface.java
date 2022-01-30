@@ -3,7 +3,7 @@
  */
 package com.flipkart.business;
 
-import com.flipkart.exception.*;
+import com.flipkart.exception.UserNotFoundException;
 
 /**
  * @author rutwi
