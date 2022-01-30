@@ -3,15 +3,11 @@
  */
 package com.flipkart.business;
 
-import java.sql.SQLException;
-
 import com.flipkart.bean.ReportCard;
 import com.flipkart.bean.Student;
-import com.flipkart.exception.FeesPendingException;
-import com.flipkart.exception.GradeNotAddedException;
-import com.flipkart.exception.StudentNotApprovedException;
-import com.flipkart.exception.StudentNotRegisteredException;
-import com.flipkart.exception.UserAlreadyInUseException;
+import com.flipkart.exception.*;
+
+import java.sql.SQLException;
 
 /**
  * @author rutwi

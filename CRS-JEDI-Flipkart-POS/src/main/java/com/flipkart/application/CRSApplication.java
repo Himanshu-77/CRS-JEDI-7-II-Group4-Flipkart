@@ -30,7 +30,8 @@ public class CRSApplication {
                 System.out.println("---------------------------------------");
                 System.out.println("1 : Register a new user");
                 System.out.println("2 : Login");
-                System.out.println("3 : Exit menu");
+                System.out.println("3 : Update Password");
+                System.out.println("4 : Exit menu");
                 System.out.println("=======================================");
 
                 int menuOption = sc.nextInt();
@@ -46,6 +47,10 @@ public class CRSApplication {
                         break;
 
                     case 3:
+                        System.out.println("feature under implementation");
+                        break;
+
+                    case 4:
                         sc.close();
                         return;
 
