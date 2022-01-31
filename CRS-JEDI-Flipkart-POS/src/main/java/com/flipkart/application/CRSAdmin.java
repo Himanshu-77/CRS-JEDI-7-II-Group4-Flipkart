@@ -1,5 +1,8 @@
 package com.flipkart.application;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +14,8 @@ import com.flipkart.bean.Student;
 import com.flipkart.constants.constants;
 import com.flipkart.business.AdminInterface;
 import com.flipkart.business.AdminOperation;
+import com.flipkart.exception.InvalidSemesterException;
+import com.flipkart.utils.DBUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,10 +24,10 @@ public class CRSAdmin {
     private static final Logger logger = LogManager.getLogger(CRSAdmin.class);
     private Scanner sc = new Scanner(System.in);
     AdminInterface ao = AdminOperation.getInstance();
-
+    private String username;
     public void createAdminMenu(String username) {
         try {
-
+            this.username = username;
             while(true) {
             	System.out.println("\n\n==~~=~~=~~=~~=~Admin Panel~=~~=~~=~~=~~==");
                 System.out.println("Choose an option : ");
@@ -34,7 +39,8 @@ public class CRSAdmin {
                 System.out.println("5 : Remove Professor");
                 System.out.println("6 : View Course Wise student list");
                 System.out.println("7 : Approve Pending Student Accounts");
-                System.out.println("8 : Logout");
+                System.out.println("8 : Enable Fee Payment Window");
+                System.out.println("9 : Logout");
                 System.out.println("=======================================");
 
                 int menuOption = sc.nextInt();
@@ -62,7 +68,9 @@ public class CRSAdmin {
                     case 7:
                     	approvePendingStudentAccounts();
                     	break;
-                    case 8:
+                    case 8 :
+                        enablePaymentWindow();
+                    case 9 :
                         return;
                     default:
                         System.out.println("Invalid input");
@@ -291,5 +299,35 @@ public class CRSAdmin {
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
+    }
+    private void enablePaymentWindow() throws SQLException {
+        System.out.println("=======================================");
+        int a = 0 ;
+        do {
+            System.out.println("\n---------------------------------------------------");
+            System.out.println("Enter Semester No. to enable Payment Window : ");
+            System.out.println("Enter -1 to exit: ");
+            a = sc.nextInt();
+            if (a == -1) {
+                System.out.println("*********** Exit Successful *************");
+            } else if (a > 0 && a < 9) {
+                final Connection conn = DBUtil.getConnection();
+                PreparedStatement queryStatement;
+                String query = "UPDATE paymentwindow "  + " SET is_open = ? WHERE semester_id = ?";
+                queryStatement = conn.prepareStatement(query);
+                queryStatement.setString(1, "1");
+                queryStatement.setString(2, Integer.toString(a));
+                queryStatement.executeUpdate();
+                System.out.println("******* Payment Window Opened Successfully for Semester "+ a +" ********");
+
+            } else {
+                try {
+                    throw new InvalidSemesterException(username);
+                } catch (InvalidSemesterException ex) {
+                    System.out.println(ex.getMessage());
+
+                }
+            }
+        } while (a != -1);
     }
 }

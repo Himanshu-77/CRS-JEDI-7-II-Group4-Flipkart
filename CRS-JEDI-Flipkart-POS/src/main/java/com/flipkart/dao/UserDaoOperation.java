@@ -12,24 +12,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class UserDaoOperation implements UserDaoInterface{
+public class UserDaoOperation implements UserDaoInterface {
 
 	private static final Logger logger = LogManager.getLogger(UserDaoOperation.class);
-	private static volatile UserDaoOperation instance=null;
+	private static volatile UserDaoOperation instance = null;
 	private static final Connection conn = DBUtil.getConnection();
 	private static final String[] roleList = {"professor", "student", "admin"};
 	private String userRole;
 
-	private UserDaoOperation(){
+	private UserDaoOperation() {
 
 	}
-	public static UserDaoOperation getInstance()
-	{
-		if(instance==null)
-		{
+
+	public static UserDaoOperation getInstance() {
+		if (instance == null) {
 			// This is a synchronized block, when multiple threads will access this instance
-			synchronized(UserDaoOperation.class){
-				instance=new UserDaoOperation();
+			synchronized (UserDaoOperation.class) {
+				instance = new UserDaoOperation();
 			}
 		}
 		return instance;
@@ -44,7 +43,6 @@ public class UserDaoOperation implements UserDaoInterface{
 	}
 
 
-
 	@Override
 	public void updatePassword(String userID, String newPassword) throws UserNotFoundException {
 
@@ -53,7 +51,7 @@ public class UserDaoOperation implements UserDaoInterface{
 		try {
 			System.out.println("Updating password...");
 
-			if(userRole == null) {
+			if (userRole == null) {
 				assignUserRole(userID);
 			}
 
@@ -65,8 +63,7 @@ public class UserDaoOperation implements UserDaoInterface{
 			queryStatement.executeUpdate();
 
 
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
 	}
@@ -74,20 +71,20 @@ public class UserDaoOperation implements UserDaoInterface{
 	@Override
 	public String getUserRole(String userID) throws UserNotFoundException {
 
-		if(userRole == null) {
+		if (userRole == null) {
 			assignUserRole(userID);
 		}
 
 		return userRole;
 	}
 
-	private void assignUserRole(String userID) throws UserNotFoundException{
+	private void assignUserRole(String userID) throws UserNotFoundException {
 
 		PreparedStatement stmt;
 
 		try {
 
-			for(String role : roleList) {
+			for (String role : roleList) {
 
 				String query = "SELECT COUNT(1) FROM " + role + " WHERE user_name = ?";
 
@@ -95,17 +92,17 @@ public class UserDaoOperation implements UserDaoInterface{
 				stmt.setString(1, userID);
 				ResultSet rs = stmt.executeQuery();
 
-				while(rs.next()) {
-					if(rs.getInt("COUNT(1)") == 1) {
+				while (rs.next()) {
+					if (rs.getInt("COUNT(1)") == 1) {
 						userRole = role;
 						break;
 					}
 				}
 
-				if(userRole != null) break;
+				if (userRole != null) break;
 			}
 
-			if(userRole == null) {
+			if (userRole == null) {
 				throw new UserNotFoundException();
 			}
 
@@ -122,7 +119,7 @@ public class UserDaoOperation implements UserDaoInterface{
 		try {
 			System.out.println("Updating contact number...");
 
-			if(userRole == null) {
+			if (userRole == null) {
 				assignUserRole(userID);
 			}
 
@@ -134,8 +131,7 @@ public class UserDaoOperation implements UserDaoInterface{
 			queryStatement.executeUpdate();
 
 
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
 	}
@@ -147,29 +143,6 @@ public class UserDaoOperation implements UserDaoInterface{
 
 		try {
 			System.out.println("Logging in...");
-			
-			
-			
-//			if(role.equals("student"))
-//			{
-//				String query1 = "SELECT account_approved " + "FROM student WHERE user_name = ?";
-//				queryStatement = conn.prepareStatement(query1);
-//				queryStatement.setString(1, userID);
-//				ResultSet rs = queryStatement.executeQuery();
-//				
-//				Boolean account_status = false;
-//				while (rs.next()) {
-//					account_status = rs.getBoolean("account_approved");
-//				}
-//				
-//				if(!account_status)
-//				{
-//					throw new Exception("Account not approved by admin");
-//					// TODO: make this exception class
-//				}
-//			})
-
-
 
 			String query = "SELECT password " + "FROM " + role + " WHERE user_name = ?";
 
@@ -183,47 +156,40 @@ public class UserDaoOperation implements UserDaoInterface{
 				password = rs.getString("password");
 			}
 
-			if(password == null) {
+			if (password == null) {
 				throw new UserNotFoundException();
 			}
+			if (password.equals(userPassword)) {
 
-			if(Objects.requireNonNull(password).equals(userPassword)) {
-				
-				if(role.equals("student"))
-				{
+				if (role.equals("student")) {
 					String query1 = "SELECT account_approved FROM student WHERE user_name = ?";
 					queryStatement = conn.prepareStatement(query1);
 					queryStatement.setString(1, userID);
 					ResultSet rs1 = queryStatement.executeQuery();
-					
+
 					Boolean account_status = false;
-					if(rs1.next())
-					{
+					if (rs1.next()) {
 						account_status = rs1.getBoolean("account_approved");
-						
+
 					}
-					
-					if(!account_status)
-					{
+
+					if (!account_status) {
 						throw new Exception("Account Not Approved By Admin");
 						// TODO: ma
 					}
-					
 				}
 				return true;
-			}
-			else{
+			} else {
 				throw new LoginFailedException(userID);
 			}
 
-
+		} catch (LoginFailedException ex) {
+			System.out.println(ex.getMessage());
 		} catch (UserNotFoundException ex) {
 			System.out.println(ex.getMessage());
-		}
-		catch (SQLException ex) {
+		} catch (SQLException ex) {
 			ex.printStackTrace();
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 

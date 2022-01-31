@@ -3,6 +3,7 @@ package com.flipkart.application;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.flipkart.dao.ProfessorDaoOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.flipkart.exception.CourseNotFoundException;
@@ -27,8 +28,7 @@ public class CRSProfessor {
     public void createProfessorMenu(String username) {
         try {
 
-            professorID = getProfessorID(username);
-            assert professorID != -1;
+            this.professorID = getProfessorID(username);
 
             while(true) {
                 
@@ -71,6 +71,7 @@ public class CRSProfessor {
 
     private void registerCourse() throws SQLException {
 
+        System.out.println(professorID);
         String courseID;
         Integer semesterID;
         System.out.println("Enter course ID: ");
@@ -130,7 +131,13 @@ public class CRSProfessor {
 
     private Integer getProfessorID(String username) throws SQLException {
 
-//
+        ProfessorDaoOperation pdo = ProfessorDaoOperation.getInstance();
+        try {
+            return pdo.getProfessorIDFromUserName(username);
+        } catch (ProfessorNotRegisteredException e) {
+
+            System.out.println(e.getMessage());
+        }
         return -1;
     }
 }

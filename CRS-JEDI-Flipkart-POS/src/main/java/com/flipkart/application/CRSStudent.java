@@ -5,7 +5,11 @@ import com.flipkart.bean.Payment;
 import com.flipkart.bean.ReportCard;
 import com.flipkart.exception.*;
 import com.flipkart.business.*;
+import com.flipkart.utils.DBUtil;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -136,16 +140,37 @@ public class CRSStudent {
     }
 
     private void payRegistrationFee() {
-
         Scanner sc = new Scanner(System.in);
         Payment payment = new Payment();
         PaymentOperation po = new PaymentOperation();
-
         payment.setStudentID(studentID);
 
         try {
             if(!finishedRegistration) {
                 throw new Exception("You registration is incomplete!");
+            }
+
+            boolean isPaymentOpen = false;
+            Connection conn = DBUtil.getConnection();
+            PreparedStatement stmt;
+            String query = "SELECT semester_id FROM registered_courses WHERE student_id = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, Integer.toString(studentID));
+            ResultSet rs = stmt.executeQuery();
+
+            int sem_id = rs.getInt(1);
+            query = "SELECT is_open FROM paymentwindow WHERE semester_id = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, Integer.toString(sem_id));
+            rs = stmt.executeQuery();
+
+            int isOpen = rs.getInt(1);
+            if(isOpen==1)
+                isPaymentOpen = true;
+
+
+            if(isPaymentOpen==false){
+                throw new Exception("The Payment Window has still not Opened....");
             }
 
             System.out.println("=======================================");
