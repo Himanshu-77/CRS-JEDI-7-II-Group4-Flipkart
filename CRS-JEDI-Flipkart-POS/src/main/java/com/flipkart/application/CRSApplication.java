@@ -48,6 +48,7 @@ public class CRSApplication {
 
                     case 3:
                         System.out.println("feature under implementation");
+                        updatePassword();
                         break;
 
                     case 4:
@@ -146,7 +147,6 @@ public class CRSApplication {
     private void registerStudent() {
 
         String username, password, name, department, contact, joiningYear;
-//        StudentOperation so = new StudentOperation();
 
         try {
         	System.out.println("=======================================");
@@ -176,6 +176,47 @@ public class CRSApplication {
                 System.out.println("User Added Successfully");
                 System.out.println("=======================================");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void updatePassword() {
+        String oldPassword,newPassword,username,role;
+        try {
+            System.out.println("=======================================");
+            System.out.print("Enter Username: ");
+            username = sc.nextLine();
+            System.out.print("Enter existing Password: ");
+            oldPassword = sc.nextLine();
+            System.out.print("Enter Role (student/professor/admin): ");
+            role = sc.nextLine();
+
+            UserOperation uo = new UserOperation();
+            if(uo.loginUser(username, oldPassword, role))
+            {
+                System.out.println("=======================================");
+                System.out.print("Enter new Password: ");
+                newPassword = sc.nextLine();
+                switch (role) {
+                    case "student":
+                        uo.updateStudentPassword(username,newPassword);
+                        break;
+
+                    case "professor":
+                        uo.updateProfPassword(username,newPassword);
+                        break;
+
+                    case "admin":
+                        uo.updateAdminPassword(username,newPassword);
+                        break;
+
+                    default:
+                        System.out.println("Invalid Role");
+                        System.out.println("=======================================");
+                }
+
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

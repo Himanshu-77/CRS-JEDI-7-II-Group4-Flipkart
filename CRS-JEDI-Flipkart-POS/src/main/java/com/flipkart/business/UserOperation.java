@@ -11,13 +11,23 @@ public class UserOperation implements UserInterface{
 	private final UserDaoOperation userDao = UserDaoOperation.getInstance();
 
 	@Override
-	public void updatePassword(String userID, String password) {
+	public void updateStudentPassword(String userID, String password) {
 
-		try {
-			userDao.updatePassword(userID, password);
-		} catch (UserNotFoundException e) {
-			logger.error(e.getMessage());
-		}
+		userDao.updateStudentPassword(userID, password);
+	}
+
+	@Override
+	public void updateProfPassword(String userID, String password) {
+
+		userDao.updateProfPassword(userID, password);
+
+	}
+
+	@Override
+	public void updateAdminPassword(String userID, String password) {
+
+		userDao.updateAdminPassword(userID, password);
+
 	}
 
 	@Override

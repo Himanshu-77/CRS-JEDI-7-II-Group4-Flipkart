@@ -35,10 +35,12 @@ public class UserDaoOperation implements UserDaoInterface{
 		return instance;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UserNotFoundException {
 		UserDaoInterface test = new UserDaoOperation();
 
-//		test.updatePassword("aaa", "aaa");
+//		test.updateStudentPassword("arkaprabha", "12345");
+		test.updateProfPassword("Arka", "12345");
+//		test.updateAdminPassword("admin", "admin");
 //		test.updateContactNumber("aaa", "999");
 		//System.out.println(test.loginUser("aaa", "bbb"));
 	}
@@ -46,23 +48,45 @@ public class UserDaoOperation implements UserDaoInterface{
 
 
 	@Override
-	public void updatePassword(String userID, String newPassword) throws UserNotFoundException {
+	public void updateStudentPassword(String userID, String newPassword)  {
 
 		PreparedStatement queryStatement;
 
 		try {
 			System.out.println("Updating password...");
 
-			if(userRole == null) {
-				assignUserRole(userID);
-			}
-
-			String query = "UPDATE " + userRole + " SET password = ? WHERE user_name = ?";
+			String query = "UPDATE student" + " SET password = ? WHERE user_name = ?";
 
 			queryStatement = conn.prepareStatement(query);
 			queryStatement.setString(1, newPassword);
 			queryStatement.setString(2, userID);
 			queryStatement.executeUpdate();
+
+			System.out.println("Password Update Successful!");
+
+		}
+		catch (SQLException ex) {
+			logger.error(ex.getMessage());
+		}
+	}
+
+	@Override
+	public void updateProfPassword(String userID, String newPassword)  {
+
+		PreparedStatement queryStatement;
+
+		try {
+			System.out.println("Updating password...");
+
+
+			String query = "UPDATE professor"  + " SET password = ? WHERE user_name = ?";
+
+			queryStatement = conn.prepareStatement(query);
+			queryStatement.setString(1, newPassword);
+			queryStatement.setString(2, userID);
+			queryStatement.executeUpdate();
+
+			System.out.println("Password Update Successful!");
 
 
 		}
@@ -70,6 +94,32 @@ public class UserDaoOperation implements UserDaoInterface{
 			logger.error(ex.getMessage());
 		}
 	}
+
+	@Override
+	public void updateAdminPassword(String userID, String newPassword)  {
+
+		PreparedStatement queryStatement;
+
+		try {
+			System.out.println("Updating password...");
+
+			String query = "UPDATE admin" + " SET password = ? WHERE user_name = ?";
+
+			queryStatement = conn.prepareStatement(query);
+			queryStatement.setString(1, newPassword);
+			queryStatement.setString(2, userID);
+			queryStatement.executeUpdate();
+
+			System.out.println("Password Update Successful!");
+
+
+		}
+		catch (SQLException ex) {
+			logger.error(ex.getMessage());
+		}
+	}
+
+
 
 	@Override
 	public String getUserRole(String userID) throws UserNotFoundException {
@@ -146,33 +196,10 @@ public class UserDaoOperation implements UserDaoInterface{
 		PreparedStatement queryStatement;
 
 		try {
-			System.out.println("Logging in...");
+			System.out.println("Attempting to Log in...");
 			
-			
-			
-//			if(role.equals("student"))
-//			{
-//				String query1 = "SELECT account_approved " + "FROM student WHERE user_name = ?";
-//				queryStatement = conn.prepareStatement(query1);
-//				queryStatement.setString(1, userID);
-//				ResultSet rs = queryStatement.executeQuery();
-//				
-//				Boolean account_status = false;
-//				while (rs.next()) {
-//					account_status = rs.getBoolean("account_approved");
-//				}
-//				
-//				if(!account_status)
-//				{
-//					throw new Exception("Account not approved by admin");
-//					// TODO: make this exception class
-//				}
-//			})
-
-
 
 			String query = "SELECT password " + "FROM " + role + " WHERE user_name = ?";
-
 
 			queryStatement = conn.prepareStatement(query);
 			queryStatement.setString(1, userID);
@@ -187,7 +214,7 @@ public class UserDaoOperation implements UserDaoInterface{
 				throw new UserNotFoundException();
 			}
 
-			if(Objects.requireNonNull(password).equals(userPassword)) {
+			if(password.equals(userPassword)) {
 				
 				if(role.equals("student"))
 				{
@@ -206,7 +233,7 @@ public class UserDaoOperation implements UserDaoInterface{
 					if(!account_status)
 					{
 						throw new Exception("Account Not Approved By Admin");
-						// TODO: ma
+
 					}
 					
 				}
@@ -216,8 +243,12 @@ public class UserDaoOperation implements UserDaoInterface{
 				throw new LoginFailedException(userID);
 			}
 
+		}
 
-		} catch (UserNotFoundException ex) {
+		catch(LoginFailedException ex){
+			System.out.println(ex.getMessage());
+		}
+		catch (UserNotFoundException ex) {
 			System.out.println(ex.getMessage());
 		}
 		catch (SQLException ex) {
