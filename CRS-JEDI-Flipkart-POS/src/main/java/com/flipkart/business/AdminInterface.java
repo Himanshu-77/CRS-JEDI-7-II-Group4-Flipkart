@@ -14,7 +14,13 @@ import java.util.List;
  *
  */
 public interface AdminInterface {
-	
+
+	/**
+	 * @param semesterId
+	 */
+
+	public void enableFeePayment(int semesterId);
+
 	/**
 	 * @param students
 	 * @throws StudentNotApprovedException 

@@ -121,9 +121,20 @@ public class StudentOperation implements StudentInterface {
 
 		return -1;
 	}
+
+	public Boolean checkPaymentWindow(int StudentID)  {
+
+		try {
+			return SDO.checkPaymentWindow(StudentID);
+		} catch (PaymentWindowException | StudentNotRegisteredException e ) {
+			logger.error(e.getMessage());
+		}
+
+		return false;
+	}
 	
 	public static void main(String[] args) {
-		System.out.println("Hey There!");
+//		System.out.println("Hey There!");
 		StudentOperation so = new StudentOperation();
 
 	}

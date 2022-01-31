@@ -104,7 +104,7 @@ public class CRSStudent {
                         break;
                     case 4:
                         finishRegistration();
-                        return;
+                        break;
                     case 5:
                         payRegistrationFee();
                         break;
@@ -137,65 +137,68 @@ public class CRSStudent {
 
     private void payRegistrationFee() {
 
-        Scanner sc = new Scanner(System.in);
-        Payment payment = new Payment();
-        PaymentOperation po = new PaymentOperation();
+        if (so.checkPaymentWindow(studentID)){
+            Scanner sc = new Scanner(System.in);
+            Payment payment = new Payment();
+            PaymentOperation po = new PaymentOperation();
 
-        payment.setStudentID(studentID);
+            payment.setStudentID(studentID);
 
-        try {
-            if(!finishedRegistration) {
-                throw new Exception("You registration is incomplete!");
+            try {
+                if(!finishedRegistration) {
+                    throw new Exception("You registration is incomplete!");
+                }
+
+                System.out.println("=======================================");
+                System.out.println("Choose a Payment type : ");
+                System.out.println("---------------------------------------");
+                System.out.println("1 : Card");
+                System.out.println("2 : NetBanking");
+                System.out.println("3 : Cash");
+                System.out.println("4 : Cheque");
+                System.out.println("=======================================");
+
+                int menuOption = sc.nextInt();
+                sc.nextLine();
+
+                switch (menuOption) {
+                    case 1:
+                        System.out.println("=======================================");
+                        System.out.println("Enter your card details");
+                        System.out.println("---------------------------------------");
+                        System.out.println("Enter card number : ");
+                        sc.nextLine();
+                        String cardNumber = sc.nextLine();
+                        payment.setPaymentMode("Card");
+                        break;
+                    case 2:
+                        System.out.println("=======================================");
+                        System.out.println("Enter your bank details");
+                        System.out.println("---------------------------------------");
+                        System.out.println("Enter account number : ");
+                        sc.nextLine();
+                        String accountNumber = sc.nextLine();
+                        payment.setPaymentMode("NetBanking");
+                        break;
+                    case 3:
+                        payment.setPaymentMode("Cash");
+                        break;
+                    case 4:
+                        payment.setPaymentMode("Cheque");
+                        break;
+                    default:
+                        System.out.println("---------------------------------------");
+                        System.out.println("Invalid input");
+                        return;
+                }
+
+                po.makePayment(payment);
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-
-            System.out.println("=======================================");
-            System.out.println("Choose a Payment type : ");
-            System.out.println("---------------------------------------");
-            System.out.println("1 : Card");
-            System.out.println("2 : NetBanking");
-            System.out.println("3 : Cash");
-            System.out.println("4 : Cheque");
-            System.out.println("=======================================");
-
-            int menuOption = sc.nextInt();
-            sc.nextLine();
-
-            switch (menuOption) {
-                case 1:
-                    System.out.println("=======================================");
-                    System.out.println("Enter your card details");
-                    System.out.println("---------------------------------------");
-                    System.out.println("Enter card number : ");
-                    sc.nextLine();
-                    String cardNumber = sc.nextLine();
-                    payment.setPaymentMode("Card");
-                    break;
-                case 2:
-                    System.out.println("=======================================");
-                    System.out.println("Enter your bank details");
-                    System.out.println("---------------------------------------");
-                    System.out.println("Enter account number : ");
-                    sc.nextLine();
-                    String accountNumber = sc.nextLine();
-                    payment.setPaymentMode("NetBanking");
-                    break;
-                case 3:
-                    payment.setPaymentMode("Cash");
-                    break;
-                case 4:
-                    payment.setPaymentMode("Cheque");
-                    break;
-                default:
-                    System.out.println("---------------------------------------");
-                    System.out.println("Invalid input");
-                    return;
-            }
-
-            po.makePayment(payment);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
+
     }
 
     private void dropCourse() {

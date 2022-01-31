@@ -11,6 +11,7 @@ import com.flipkart.bean.Student;
 import com.flipkart.constants.constants;
 import com.flipkart.business.AdminInterface;
 import com.flipkart.business.AdminOperation;
+import com.flipkart.exception.InvalidSemesterException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +35,8 @@ public class CRSAdmin {
                 System.out.println("5 : Remove Professor");
                 System.out.println("6 : View Course Wise student list");
                 System.out.println("7 : Approve Pending Student Accounts");
-                System.out.println("8 : Logout");
+                System.out.println("8 : Enable Fee Payment Window");
+                System.out.println("9 : Logout");
                 System.out.println("=======================================");
 
                 int menuOption = sc.nextInt();
@@ -63,6 +65,9 @@ public class CRSAdmin {
                     	approvePendingStudentAccounts();
                     	break;
                     case 8:
+                        enableFeePaymentWindow();
+                        break;
+                    case 9:
                         return;
                     default:
                         System.out.println("Invalid input");
@@ -135,6 +140,31 @@ public class CRSAdmin {
         
     }
 
+    private void enableFeePaymentWindow(){
+        System.out.println("=======================================");
+        int a = 0 ;
+        System.out.println("Enter Semester No. to enable Payment Window : ");
+        System.out.println("Enter -1 to exit: ");
+        a = sc.nextInt();
+        if (a == -1) {
+            System.out.println("*********** Exit Successful *************");
+        }
+
+        else if (a > 0 && a < 9){
+            ao.enableFeePayment(a);
+            }
+
+        else {
+            try {
+                throw new InvalidSemesterException();
+            }
+            catch (InvalidSemesterException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        }
+
+    }
 
     private void removeProfessor() {
     	System.out.println("Enter Instructor ID :");

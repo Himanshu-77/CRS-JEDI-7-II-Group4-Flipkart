@@ -14,14 +14,21 @@ import java.sql.SQLException;
  *
  */
 public interface StudentInterface {
-	
+
+	/**
+	 * @param StudentID
+	 * @return payment window status for semester in which student has registered
+
+	 */
+	public Boolean checkPaymentWindow(int StudentID);
+
 	/**
 	 * @param StudentID
 	 * @param reportCard
 	 * @throws UserAlreadyInUseException 
 	 */
 
-	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear) throws UserAlreadyInUseException, SQLException, UserAlreadyInUseException;
+	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear) throws  SQLException, UserAlreadyInUseException;
 	
 	
 	/**
@@ -31,7 +38,7 @@ public interface StudentInterface {
 	 * @throws StudentNotApprovedException 
 	 * @throws SQLException 
 	 */
-	public ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException, StudentNotApprovedException,FeesPendingException, SQLException, StudentNotApprovedException;
+	public ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException,FeesPendingException, SQLException, StudentNotApprovedException;
 	
 	/**
 	 * @param studentID

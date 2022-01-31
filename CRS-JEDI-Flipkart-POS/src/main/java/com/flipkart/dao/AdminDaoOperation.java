@@ -56,7 +56,23 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 		}
 		return instance;
-	}	
+	}
+
+	@Override
+	public void enableFeePaymentWindow(int semesterId) throws SQLException {
+
+
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement queryStatement;
+			String query = "UPDATE paymentwindow "  + " SET is_open = ? WHERE semester_id = ?";
+			queryStatement = conn.prepareStatement(query);
+			queryStatement.setString(1, "1");
+			queryStatement.setString(2, Integer.toString(semesterId));
+			queryStatement.executeUpdate();
+			System.out.println("******* Payment Window Opened Successfully for Semester "+ semesterId +" ********");
+
+
+	}
 
 	@Override
 	public void approveStudentRegistration(int studentId,int semesterId) throws FeesPendingException, StudentNotApprovedException {

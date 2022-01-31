@@ -17,9 +17,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-//import com.flipkart.exception.ReportCardNotGeneratedException;
 
 public class StudentDaoOperation implements StudentDaoInterface {
+
+	public static void main(String[]args) throws PaymentWindowException, StudentNotRegisteredException {
+		StudentDaoOperation test = new StudentDaoOperation();
+		test.checkPaymentWindow(5);
+	}
 
 	private static final Logger logger = LogManager.getLogger(StudentDaoOperation.class);
 	private static volatile StudentDaoOperation instance=null;
@@ -192,4 +196,51 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		return studentID;
 	}
+	public Boolean checkPaymentWindow(int StudentID) throws PaymentWindowException,StudentNotRegisteredException {
+
+		boolean isPaymentOpen = false;
+		Connection conn = DBUtil.getConnection();
+
+		try {
+
+
+			PreparedStatement stmt,stmt2;
+			String query = "SELECT semester_id FROM registered_courses WHERE student_id = ?";
+			stmt = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			stmt.setString(1, Integer.toString(StudentID));
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()==false){
+				throw new StudentNotRegisteredException();
+			}
+			else{
+
+				rs.first();
+				int sem_id = rs.getInt(1);
+
+				String query2 = "SELECT is_open FROM paymentwindow WHERE semester_id = ?";
+				stmt2 = conn.prepareStatement(query2,ResultSet.TYPE_SCROLL_SENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);
+				stmt2.setString(1, Integer.toString(sem_id));
+				ResultSet rs2 = stmt2.executeQuery();
+				rs2.first();
+				int isOpen = rs2.getInt(1);
+				if (isOpen == 1)
+					isPaymentOpen = true;
+
+				if (isPaymentOpen == false) {
+					throw new PaymentWindowException();
+				}
+
+			}
+
+
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		return isPaymentOpen;
+
+	}
+
 }
