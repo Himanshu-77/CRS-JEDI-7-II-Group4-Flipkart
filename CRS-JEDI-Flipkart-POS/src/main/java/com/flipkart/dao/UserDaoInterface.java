@@ -5,17 +5,33 @@ import com.flipkart.exception.UserNotFoundException;
 import java.sql.SQLException;
 
 /**
- * @author rutwi
+ * @author Dell
  *
  */
 public interface UserDaoInterface {
-	
+
+	public void updateProfPassword(String userID, String password) throws UserNotFoundException;
+
 	/**
 	 * @param userID
 	 * @param password
 	 */
-	public void updatePassword(String userID, String password) throws UserNotFoundException;
 
+
+	public void updateAdminPassword(String userID, String password) throws UserNotFoundException;
+
+	/**
+	 * @param userID
+	 * @param password
+	 */
+
+
+	public void updateStudentPassword(String userID, String password) throws UserNotFoundException;
+
+	/**
+	 * @param userID
+	 * @param number
+	 */
 	/**
 	 * @param userID
 	 * @return

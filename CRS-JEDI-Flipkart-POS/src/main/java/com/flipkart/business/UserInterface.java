@@ -6,7 +6,7 @@ package com.flipkart.business;
 import com.flipkart.exception.UserNotFoundException;
 
 /**
- * @author rutwi
+ * @author Dell
  *
  */
 public interface UserInterface {
@@ -16,7 +16,23 @@ public interface UserInterface {
 	 * @param password
 	 */
 
-	public void updatePassword(String userID, String password) throws UserNotFoundException;
+	public void updateProfPassword(String userID, String password) throws UserNotFoundException;
+
+	/**
+	 * @param userID
+	 * @param password
+	 */
+
+
+	public void updateAdminPassword(String userID, String password) throws UserNotFoundException;
+
+	/**
+	 * @param userID
+	 * @param password
+	 */
+
+
+	public void updateStudentPassword(String userID, String password) throws UserNotFoundException;
 	
 	/**
 	 * @param userID

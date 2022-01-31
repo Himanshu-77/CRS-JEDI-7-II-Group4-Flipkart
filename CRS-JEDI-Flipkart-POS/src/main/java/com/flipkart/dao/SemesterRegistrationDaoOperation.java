@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * @author Asus
+ * @author Dell
  *
  */
 public class SemesterRegistrationDaoOperation implements SemesterRegistrationDaoInterface{

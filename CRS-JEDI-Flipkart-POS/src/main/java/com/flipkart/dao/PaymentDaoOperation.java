@@ -86,7 +86,6 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 			String query = "SELECT MAX(transactionId) FROM payments";
 			PreparedStatement stmt = connection.prepareStatement(query);
 			ResultSet rs = stmt.executeQuery();
-
 			while(rs.next()) {
 				newTransactionID = rs.getInt("MAX(transactionId)") + 1;
 			}
