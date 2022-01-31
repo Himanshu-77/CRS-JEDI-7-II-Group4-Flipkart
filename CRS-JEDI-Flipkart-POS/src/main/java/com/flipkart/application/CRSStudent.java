@@ -145,6 +145,7 @@ public class CRSStudent {
             payment.setStudentID(studentID);
 
             try {
+
                 if(!finishedRegistration) {
                     throw new Exception("You registration is incomplete!");
                 }
@@ -167,7 +168,7 @@ public class CRSStudent {
                         System.out.println("Enter your card details");
                         System.out.println("---------------------------------------");
                         System.out.println("Enter card number : ");
-                        sc.nextLine();
+//                        sc.nextLine();
                         String cardNumber = sc.nextLine();
                         payment.setPaymentMode("Card");
                         break;
@@ -176,7 +177,7 @@ public class CRSStudent {
                         System.out.println("Enter your bank details");
                         System.out.println("---------------------------------------");
                         System.out.println("Enter account number : ");
-                        sc.nextLine();
+//                        sc.nextLine();
                         String accountNumber = sc.nextLine();
                         payment.setPaymentMode("NetBanking");
                         break;

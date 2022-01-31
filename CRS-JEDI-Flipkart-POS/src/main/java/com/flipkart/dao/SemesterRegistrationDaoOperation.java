@@ -26,6 +26,7 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 	private static Connection conn = DBUtil.getConnection();
 	private static final Logger logger = LogManager.getLogger(SemesterRegistrationDaoOperation.class);
 
+
 	private SemesterRegistrationDaoOperation(){
 
 	}
@@ -42,15 +43,9 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 	}
 
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, InvalidSemesterRegistration, PaymentDoneException {
 		SemesterRegistrationDaoInterface test = new SemesterRegistrationDaoOperation();
-
-//		test.addCourse(3, 1, "aaa", false);
-//		test.dropCourse(3, 1, "aaa");
-
-//		for(String courseID : test.viewRegisteredCourses(1, 1).getCourseID()) {
-//			System.out.println(courseID);
-//		}
+		test.finishRegistration(5,1);
 	}
 
 	@Override
@@ -222,11 +217,20 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 	}
 
 	@Override
-	public boolean finishRegistration(int studentId, int semesterId) throws InvalidSemesterRegistration{
+	public boolean finishRegistration(int studentId, int semesterId) throws InvalidSemesterRegistration,PaymentDoneException{
 
-		PreparedStatement stmt;
+		PreparedStatement stmt,stmt2;
 
 		try {
+
+			String query2 = "SELECT studentId from payments where studentId = ?";
+			stmt2 = conn.prepareStatement(query2,ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+			stmt2.setString(1, Integer.toString(studentId));
+			ResultSet rs2 = stmt2.executeQuery();
+			if(rs2.next()==true){
+				throw new PaymentDoneException();
+			}
 
 			String query = SQLQueries.REGISTRATION_FINISH_REG;
 

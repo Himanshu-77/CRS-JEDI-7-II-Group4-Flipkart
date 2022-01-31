@@ -95,6 +95,9 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 
 		} catch (InvalidSemesterRegistration e) {
 			logger.error(e.getMessage());
+		} catch (PaymentDoneException e) {
+			logger.error(e.getMessage());
+			return true;
 		}
 		return false;
 	}
