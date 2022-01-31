@@ -3,6 +3,7 @@
  */
 package com.flipkart.business;
 
+import com.flipkart.bean.Notification;
 import com.flipkart.bean.Payment;
 import com.flipkart.dao.PaymentDaoInterface;
 import com.flipkart.dao.PaymentDaoOperation;
@@ -25,6 +26,9 @@ public class PaymentOperation implements PaymentInterface{
 		try {
 			PaymentDaoInterface paymentObj = new PaymentDaoOperation();
 			paymentObj.makePayment(payment);
+			Notification obj = new Notification();
+			obj.showPaymentNotification(Integer.toString(payment.getStudentID()));
+
 		} catch (PaymentFailedException e) {
 			logger.error(e.getMessage());
 		} catch (PaymentDoneException e) {

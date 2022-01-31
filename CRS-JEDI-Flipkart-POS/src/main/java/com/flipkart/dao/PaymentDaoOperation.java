@@ -75,13 +75,13 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 				statement2.executeUpdate();
 
 
-				System.out.println("+-----------------------------------+");
-				System.out.println("|         Notification Alert!       |");
-				System.out.println("+-----------------------------------+");
-				System.out.println("|          Payment Completed!       |");
-				System.out.println("|   Student ID: " + payment.getStudentID());
-				System.out.println("|   Amount    : " + "1000");
-				System.out.println("+-----------------------------------+");
+//				System.out.println("+-----------------------------------+");
+//				System.out.println("|         Notification Alert!       |");
+//				System.out.println("+-----------------------------------+");
+//				System.out.println("|          Payment Completed!       |");
+//				System.out.println("|   Student ID: " + payment.getStudentID());
+//				System.out.println("|   Amount    : " + "1000");
+//				System.out.println("+-----------------------------------+");
 
 			}
 		}
