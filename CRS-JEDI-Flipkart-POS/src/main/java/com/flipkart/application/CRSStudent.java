@@ -260,7 +260,7 @@ public class CRSStudent {
 
         System.out.println("Course catalog : ");
         for(Course c : courseCatalog) {
-            System.out.println("Course ID : "+c.getCourseID()+" \t Course Name : "+ c.getCoursename()+"\t Instructor : "+c.getInstructorID()+"\t Available seats : "+c.getAvailableSeats());
+            System.out.println("Course ID : "+c.getCourseID() +"\t Available seats : "+c.getAvailableSeats()+" \t Instructor : "+c.getInstructorID()+" \t Course Name : "+ c.getCoursename());
         }
     }
 
