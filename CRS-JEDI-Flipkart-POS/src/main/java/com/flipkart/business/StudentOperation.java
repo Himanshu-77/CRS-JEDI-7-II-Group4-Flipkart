@@ -9,6 +9,7 @@ import com.flipkart.exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class StudentOperation implements StudentInterface {
@@ -104,7 +105,7 @@ public class StudentOperation implements StudentInterface {
 
 			return newStudent;
 
-		} catch (UserAlreadyInUseException e) {
+		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
 

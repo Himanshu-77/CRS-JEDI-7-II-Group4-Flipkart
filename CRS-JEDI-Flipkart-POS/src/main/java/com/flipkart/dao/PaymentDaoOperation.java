@@ -4,6 +4,8 @@
 package com.flipkart.dao;
 
 import com.flipkart.bean.Payment;
+import com.flipkart.business.NotificationInterface;
+import com.flipkart.business.NotificationOperation;
 import com.flipkart.exception.PaymentDoneException;
 import com.flipkart.exception.PaymentFailedException;
 import com.flipkart.utils.DBUtil;
@@ -16,7 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author Asus
+ * @author Dell
  *
  */
 public class PaymentDaoOperation implements PaymentDaoInterface{
@@ -42,14 +44,17 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 					ResultSet.CONCUR_UPDATABLE);
 			stmt2.setString(1, Integer.toString(payment.getStudentID()));
 			ResultSet rs2 = stmt2.executeQuery();
+
 			if(rs2.next()==true){
 				throw new PaymentDoneException();
+
 			}
 			else {
 				int newID = getNewTransactionID();
 
 				if (newID == -1) {
 					throw new SQLException();
+
 				}
 
 				payment.setPaymentID(newID);
@@ -74,19 +79,15 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 				statement2.setInt(1, payment.getStudentID());
 				statement2.executeUpdate();
 
-
-//				System.out.println("+-----------------------------------+");
-//				System.out.println("|         Notification Alert!       |");
-//				System.out.println("+-----------------------------------+");
-//				System.out.println("|          Payment Completed!       |");
-//				System.out.println("|   Student ID: " + payment.getStudentID());
-//				System.out.println("|   Amount    : " + "1000");
-//				System.out.println("+-----------------------------------+");
+				// Generate Notification
+				NotificationInterface notificationObj = new NotificationOperation();
+				notificationObj.sendPaymentCompleteNotification(newID,payment.getStudentID());
 
 			}
 		}
 			catch (SQLException e) {
 			throw new PaymentFailedException();
+
 		}
 	}
 
@@ -100,13 +101,8 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 			PreparedStatement stmt = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stmt.executeQuery();
-//			if(rs.next()==false)
-//				return 0;
-//			else{
-//				rs.first();
 				while(rs.next()) {
 					newTransactionID = rs.getInt("MAX(transactionId)") + 1;
-//				}
 			}
 
 		}

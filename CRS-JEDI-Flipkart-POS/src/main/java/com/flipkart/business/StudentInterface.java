@@ -25,10 +25,9 @@ public interface StudentInterface {
 	/**
 	 * @param StudentID
 	 * @param reportCard
-	 * @throws UserAlreadyInUseException 
 	 */
 
-	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear) throws  SQLException, UserAlreadyInUseException;
+	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear);
 	
 	
 	/**

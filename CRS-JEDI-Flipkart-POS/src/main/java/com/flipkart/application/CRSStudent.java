@@ -131,7 +131,7 @@ public class CRSStudent {
             System.out.println("Registration completed successfully!");
         }
         else {
-            System.out.println("Registration did not complete.");
+            System.out.println("Finish Registration action not done!!");
         }
     }
 

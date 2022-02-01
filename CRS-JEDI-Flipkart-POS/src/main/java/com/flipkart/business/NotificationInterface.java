@@ -4,7 +4,7 @@
 package com.flipkart.business;
 
 /**
- * @author Jayanth
+ * @author Dell
  *
  */
 public interface NotificationInterface{
@@ -12,6 +12,6 @@ public interface NotificationInterface{
 	
 	 public void sendPayFeesNotification();
 	 
-	 public void sendPaymentCompleteNotification(int amount, int studentid);
+	 public void sendPaymentCompleteNotification(int transactionId, int studentid);
 	
 }

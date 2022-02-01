@@ -45,7 +45,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	}
 
 	@Override
-	public Student addStudent(Student student) throws UserAlreadyInUseException{
+	public Student addStudent(Student student) throws SQLException{
 		
 		Connection connection=DBUtil.getConnection();
 		
@@ -73,7 +73,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		}
 		catch(SQLException ex) {
-			throw new UserAlreadyInUseException();
+			throw ex;
+
 		}
 		return student;
 	}

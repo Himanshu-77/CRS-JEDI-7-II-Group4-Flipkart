@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author rutwi
+ * @author Dell
  *
  */
 public interface AdminInterface {
@@ -26,7 +26,7 @@ public interface AdminInterface {
 	 * @throws StudentNotApprovedException 
 	 * @throws FeesPendingException 
 	 */
-	public void approveStudentRegistration(int studentId,int semesterId) throws StudentNotRegisteredException, StudentNotRegisteredException, FeesPendingException, StudentNotApprovedException;
+	public void approveStudentRegistration(int studentId,int semesterId) throws StudentNotRegisteredException, FeesPendingException, StudentNotApprovedException;
 	
 	/**
 	 * @param professor
