@@ -5,6 +5,7 @@ package com.flipkart.business;
 
 
 import com.flipkart.bean.Course;
+import com.flipkart.bean.Notification;
 import com.flipkart.bean.SemesterRegistration;
 import com.flipkart.dao.SemesterRegistrationDaoInterface;
 import com.flipkart.dao.SemesterRegistrationDaoOperation;
@@ -91,9 +92,14 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 
 		try {
 
-			return srdo.finishRegistration(studentId, semesterId);
+			Boolean val = srdo.finishRegistration(studentId, semesterId);
+			NotificationInterface notificationObj = new NotificationOperation();
+			notificationObj.sendPayFeesNotification();
+			return val;
 
 		} catch (InvalidSemesterRegistration e) {
+			logger.error(e.getMessage());
+		} catch (PaymentDoneException e) {
 			logger.error(e.getMessage());
 		}
 		return false;

@@ -6,6 +6,7 @@ import com.flipkart.bean.ReportCard;
 import com.flipkart.bean.Student;
 import com.flipkart.exception.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,14 @@ public interface AdminDaoInterface {
 	 */
 
 	public void approveStudentRegistration(int studentId,int semesterId) throws FeesPendingException, StudentNotApprovedException;
+
+
+	/**
+	 * @param semesterId
+	 */
+
+	public void enableFeePaymentWindow(int semesterId) throws SQLException;
+
 	/**
 	 * @param professor
 	 */

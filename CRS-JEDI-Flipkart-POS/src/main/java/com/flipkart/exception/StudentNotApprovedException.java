@@ -26,6 +26,6 @@ public class StudentNotApprovedException extends Exception{
 	
 	@Override
 	public String getMessage() {
-		return "Student "+ studentId +"is not approved";
+		return "Student "+ studentId +" is not approved!!";
 	}
 }

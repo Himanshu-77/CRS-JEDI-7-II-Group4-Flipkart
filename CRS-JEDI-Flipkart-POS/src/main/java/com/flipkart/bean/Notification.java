@@ -55,4 +55,25 @@ public class Notification {
 		this.message = message;
 	}
 
+	public void showPaymentNotification(String message,String ID){
+		System.out.println("+-----------------------------------+");
+		System.out.println("|         Notification Alert!       |");
+		System.out.println("+-----------------------------------+");
+		System.out.println("|          Payment Completed!       |");
+		System.out.println("|   Student ID: " + message);
+		System.out.println("|   Amount    : " + "1000");
+		System.out.println("|   Transaction ID: " + ID);
+		System.out.println("+-----------------------------------+");
+	}
+
+	public void showRegistrationNotification(){
+		System.out.println("+-----------------------------------+");
+		System.out.println("|         Notification Alert!       |");
+		System.out.println("+-----------------------------------+");
+		System.out.println("|      Registration Completed!      |");
+		System.out.println("|    Please Complete Fee Payment!   |");
+		System.out.println("+-----------------------------------+");
+	}
+
+
 }

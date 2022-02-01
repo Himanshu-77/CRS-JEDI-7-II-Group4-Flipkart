@@ -43,7 +43,7 @@ public interface SemesterRegistrationDaoInterface {
 	 * @throws SQLException
 	 */
 
-	public boolean finishRegistration(int studentId, int semesterId) throws InvalidSemesterRegistration;
+	public boolean finishRegistration(int studentId, int semesterId) throws InvalidSemesterRegistration,PaymentDoneException;
 	
 	/**
 	 * Method to view all courses available

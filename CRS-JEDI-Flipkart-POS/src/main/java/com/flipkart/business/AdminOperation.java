@@ -13,6 +13,7 @@ import com.flipkart.exception.StudentNotApprovedException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,18 @@ public class AdminOperation implements AdminInterface {
 	}
 
 	AdminDaoInterface ado  = AdminDaoOperation.getInstance();
+
+	@Override
+	public void enableFeePayment(int semesterId) {
+
+		try {
+			ado.enableFeePaymentWindow(semesterId);
+		}
+		catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
 
 	@Override
 	public void approveStudentRegistration(int studentId,int semesterId) {

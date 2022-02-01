@@ -8,14 +8,24 @@ import com.flipkart.bean.ReportCard;
 import com.flipkart.bean.Student;
 import com.flipkart.exception.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
- * @author rutwi
+ * @author Dell
  *
  */
 public interface StudentDaoInterface {
-	
+
+	/**
+	 * @param StudentID
+	 * @return payment window status
+	 * @throws SQLException
+	 * @throws PaymentWindowException
+
+	 */
+	public Boolean checkPaymentWindow(int StudentID) throws PaymentWindowException,StudentNotRegisteredException;
+
 	/**
 	 * @param StudentID
 
@@ -27,14 +37,14 @@ public interface StudentDaoInterface {
 
 	public ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException, StudentNotApprovedException, FeesPendingException, ReportCardNotGeneratedException;
 
-/*
+
 	/**
 	 * @param studentID
-	 * @param catalog
+	 * @param semesterId
 	 */
 
 	public List<Course> viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException;
-	public Student addStudent(Student student) throws UserAlreadyInUseException;
+	public Student addStudent(Student student) throws SQLException;
 	
 	public int getStudentIDFromUserName(String username) throws StudentNotRegisteredException;
 	

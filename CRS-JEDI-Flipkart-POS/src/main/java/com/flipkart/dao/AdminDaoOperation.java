@@ -26,7 +26,7 @@ import java.util.List;
 
 
 /**
- * @author rutwi
+ * @author Dell
  *
  */
 public class AdminDaoOperation implements AdminDaoInterface {
@@ -56,7 +56,35 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 		}
 		return instance;
-	}	
+	}
+
+	public static void main(String[] args) throws CourseNotFoundException {
+		AdminDaoOperation test = new AdminDaoOperation();
+		Course c = new Course();
+		c.setCourseID("38");
+		c.setCoursename("test course");
+		c.setAvailableSeats(10);
+		c.setInstructorID("2");
+		c.setOfferedSemester(1);
+		test.addCourse(c);
+
+		test.removeCourse("38");
+	}
+	@Override
+	public void enableFeePaymentWindow(int semesterId) throws SQLException {
+
+
+			Connection conn = DBUtil.getConnection();
+			PreparedStatement queryStatement;
+			String query = "UPDATE paymentwindow "  + " SET is_open = ? WHERE semester_id = ?";
+			queryStatement = conn.prepareStatement(query);
+			queryStatement.setString(1, "1");
+			queryStatement.setString(2, Integer.toString(semesterId));
+			queryStatement.executeUpdate();
+			System.out.println("******* Payment Window Opened Successfully for Semester "+ semesterId +" ********");
+
+
+	}
 
 	@Override
 	public void approveStudentRegistration(int studentId,int semesterId) throws FeesPendingException, StudentNotApprovedException {
@@ -66,8 +94,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		
 		try {
 			statement = connection.prepareStatement(SQLQueries.GET_STUDENT_BY_ID(studentId, semesterId));
-//			statement.setInt(1, studentId);
-//			statement.setInt(2, semesterId);
 			ResultSet rs = statement.executeQuery();
 			if(!rs.next()) {
 				throw new StudentNotApprovedException(studentId);
@@ -99,7 +125,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			PreparedStatement update_statement = connection.prepareStatement(SQLQueries.APPROVE_STUDENT(studentId, semesterId));
 
 			update_statement.executeUpdate();
-			logger.info("Approved");
+			System.out.println("Approved");
 		}	
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
@@ -222,22 +248,31 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				throw new CourseNotFoundException(courseID);
 			}
 			else {
-			
+
+//				Update legacy course catalog
+				String query2 = "DELETE FROM course_catalog_legacy WHERE courseID= ?";
+				PreparedStatement queryStatement;
+				queryStatement = connection.prepareStatement(query2);
+				queryStatement.setString(1, courseID);
+				queryStatement.executeUpdate();
+
 				System.out.println(row + " course deleted.");
 			}
 			
 			
 		} catch (SQLException e) {
 			
-//			logger.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		
 	}
 
 	@Override
 	public void addCourse(Course course) {
-		// TODO Auto-generated method stub
+
 		String sql = SQLQueries.ADMIN_ADD_COURSE;
+
+
 
 		Connection connection = DBUtil.getConnection();
 		
@@ -249,7 +284,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setInt(4, course.getAvailableSeats());
 			
 			int row = statement.executeUpdate();
-			
+
+			String query2 = "INSERT INTO course_catalog_legacy(courseID, course_name) VALUES (?, ?)";;
+			PreparedStatement queryStatement;
+			queryStatement = connection.prepareStatement(query2);
+			queryStatement.setString(1,  course.getCourseID());
+			queryStatement.setString(2, course.getCoursename());
+			queryStatement.executeUpdate();
+
 			System.out.println(row + " course added.");
 			
 		} catch (SQLException e) {

@@ -1,105 +1,89 @@
-package com.flipkart.dao;///**
-// *
-// */
-//package com.flipkart.dao;
-//
-//import com.flipkart.bean.Notification;
-//import com.flipkart.bean.Payment;
-//import com.flipkart.constants.SQLQueries;
-//import com.flipkart.utils.DBUtil;
-//
-//import java.sql.Connection;
-//import java.sql.PreparedStatement;
-//
-///**
-// * @author JEDI G6
-// *
-// */
-//public class NotificationDaoOperation implements NotificationDaoInterface{
-//	private static volatile NotificationDaoOperation instance=null;
-//	//private static Logger logger=Logger.getLogger(NotificationDaoOperation.class);
-//
-//	@Override
-//	public Notification GenerateNotification(int studentId, Payment payment, String message) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	public static NotificationDaoOperation getInstance(){
-//		if(instance !=null)
-//			return instance;
-//			synchronized (NotificationDaoOperation.class){
-//				instance=new NotificationDaoOperation();
-//			}
-//		return instance;
-//	}
-//
-//	@Override
-//	public int sendNotification(int studentId, Notification notification) {
-//		int notificationId=0;
-//		Connection connection= DBUtil.getConnection();
-//		try{
-//			PreparedStatement ps = connection.prepareStatement(SQLQueries.INSERT_NOTIFICATION,Statement.RETURN_GENERATED_KEYS);
-//			ps.setInt(1, studentId);
-//			ps.setString(2,type.toString());
-//			if(type==NotificationType.PAYMENT)
-//			{
-//				//insert into payment, get reference id and add here
-//				UUID referenceId=addPayment(studentId, modeOfPayment,amount);
-//				ps.setString(3, referenceId.toString());
-//				logger.info("Payment successful, Reference ID: "+referenceId);
-//			}
-//			else
-//				ps.setString(3,"");
-//
-//			ps.executeUpdate();
-//			ResultSet results=ps.getGeneratedKeys();
-//			if(results.next())
-//				notificationId=results.getInt(1);
-//
-//			switch(type)
-//			{
-//				case REGISTRATION:
-//					logger.info("Registration successfull. Administration will verify the details and approve it!");
-//					break;
-//				case REGISTRATION_APPROVAL:
-//					logger.info("Student with id "+studentId+" has been approved!");
-//					break;
-//				case PAYMENT:
-//					logger.info("Student with id "+studentId+" fee has been paid");
-//			}
-//
-//		}
-//		catch(SQLException ex)
-//		{
-//			throw ex;
-//		}
-//		return notificationId;
-//	}
-//	public UUID addPayment(int studentId, ModeOfPayment modeOfPayment,double amount) throws SQLException
-//	{
-//		UUID referenceId;
-//		Connection connection=DBUtils.getConnection();
-//		try
-//		{
-//			referenceId=UUID.randomUUID();
-//			//INSERT_NOTIFICATION = "insert into notification(studentId,type,referenceId) values(?,?,?);";
-//			PreparedStatement statement = connection.prepareStatement(SQLQueriesConstants.INSERT_PAYMENT);
-//			statement.setInt(1, studentId);
-//			statement.setString(2, modeOfPayment.toString());
-//			statement.setString(3,referenceId.toString());
-//			statement.setDouble(4, amount);
-//			statement.executeUpdate();
-//			//check if record is added
-//		}
-//		catch(SQLException ex)
-//		{
-//			throw ex;
-//		}
-//		return referenceId;
-//		//
-//	}
-//
-//
-//}
-//
+package com.flipkart.dao;
+import com.flipkart.bean.Notification;
+import com.flipkart.bean.Payment;
+import com.flipkart.constants.SQLQueries;
+import com.flipkart.utils.DBUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+ import java.sql.ResultSet;
+import java.sql.SQLException;
+
+/**
+ * @author Dell
+ *
+ */
+public class NotificationDaoOperation implements NotificationDaoInterface{
+	private static volatile NotificationDaoOperation instance=null;
+	private static Logger logger=LogManager.getLogger(NotificationDaoOperation.class);
+    private final Connection connection=DBUtil.getConnection();
+
+	public static NotificationDaoOperation getInstance(){
+		if(instance !=null)
+			return instance;
+			synchronized (NotificationDaoOperation.class){
+				instance=new NotificationDaoOperation();
+			}
+		return instance;
+	}
+
+    public static void main(String[] args) {
+
+        NotificationDaoOperation test = new NotificationDaoOperation();
+        test.sendPaymentCompleteNotification(4,2);
+    }
+	@Override
+	public Boolean sendPaymentCompleteNotification(int transactionID, int studentid) {
+        try{
+
+            PreparedStatement statement;
+            int newID = getNewTransactionID();
+
+            String sql = "INSERT INTO notification(notification_id,transactionId, studentId) VALUES (?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, newID);
+            statement.setInt(2, transactionID);
+            statement.setInt(3, studentid);
+
+            statement.executeUpdate();
+            return true;
+
+
+        }
+        catch (SQLException ex){
+            logger.error(ex.getMessage());
+            return false;
+        }
+
+    }
+
+    private int getNewTransactionID() {
+
+        int newNotificationID = -1;
+
+        try
+        {
+            String query = "SELECT MAX(notification_id) FROM notification";
+            PreparedStatement stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                newNotificationID = rs.getInt("MAX(notification_id)") + 1;
+            }
+
+        }
+        catch(Exception ex) {
+            logger.error(ex.getMessage());
+        }
+
+        return newNotificationID;
+    }
+
+
+
+
+}
+
