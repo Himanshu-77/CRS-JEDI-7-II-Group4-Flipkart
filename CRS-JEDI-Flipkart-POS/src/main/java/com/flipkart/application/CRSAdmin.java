@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.ReportCard;
 import com.flipkart.bean.Student;
+import com.flipkart.business.SemesterRegistrationInterface;
+import com.flipkart.business.SemesterRegistrationOperation;
 import com.flipkart.constants.constants;
 import com.flipkart.business.AdminInterface;
 import com.flipkart.business.AdminOperation;
@@ -20,6 +23,7 @@ public class CRSAdmin {
     private static final Logger logger = LogManager.getLogger(CRSAdmin.class);
     private Scanner sc = new Scanner(System.in);
     AdminInterface ao = AdminOperation.getInstance();
+    SemesterRegistrationInterface sro = SemesterRegistrationOperation.getInstance();
 
     public void createAdminMenu(String username) {
         try {
@@ -36,7 +40,8 @@ public class CRSAdmin {
                 System.out.println("6 : View Course Wise student list");
                 System.out.println("7 : Approve Pending Student Accounts");
                 System.out.println("8 : Enable Fee Payment Window");
-                System.out.println("9 : Logout");
+                System.out.println("9 : View available course details");
+                System.out.println("10 : Logout");
                 System.out.println("=======================================");
 
                 int menuOption = sc.nextInt();
@@ -68,7 +73,10 @@ public class CRSAdmin {
                         enableFeePaymentWindow();
                         break;
                     case 9:
+                        viewAvailableCourses();
+                    case 10:
                         return;
+
                     default:
                         System.out.println("Invalid input");
                 }
@@ -78,6 +86,18 @@ public class CRSAdmin {
             logger.error(e.getMessage());
         }
     }
+
+    private void viewAvailableCourses() {
+
+        ArrayList<Course> courseCatalog = null;
+        courseCatalog = sro.viewAvailableCourses();
+
+        System.out.println("Course catalog : ");
+        for(Course c : courseCatalog) {
+            System.out.println("Course ID : "+c.getCourseID() +"\t Available seats : "+c.getAvailableSeats()+" \t Instructor : "+c.getInstructorID()+" \t Course Name : "+ c.getCoursename());
+        }
+    }
+
 
     private void approvePendingStudentAccounts() {
 		
