@@ -146,6 +146,7 @@ public class CRSStudent {
                 System.out.println("2 : NetBanking");
                 System.out.println("3 : Cash");
                 System.out.println("4 : Cheque");
+                System.out.println("5 : Scholarship");
                 System.out.println("=======================================");
 
                 int menuOption = sc.nextInt();
@@ -174,6 +175,9 @@ public class CRSStudent {
                     case 4:
                         payment.setPaymentMode("Cheque");
                         break;
+
+                    case 5:
+                        payment.setPaymentMode("Scholarship");
                     default:
                         System.out.println("---------------------------------------");
                         System.out.println("Invalid input");
