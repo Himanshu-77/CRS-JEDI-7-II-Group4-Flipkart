@@ -51,7 +51,6 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		
 		try
 		{
-			//open db connection
 			PreparedStatement stmt = connection.prepareStatement("SELECT MAX(student_id) FROM student");
 			ResultSet results = stmt.executeQuery();
 			int studentId = 0;
@@ -60,10 +59,10 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			}
 			student.setStudentID(studentId+1);
 			
-			PreparedStatement preparedStatement=connection.prepareStatement(SQLQueries.ADD_STUDENT);
+			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.ADD_STUDENT);
 			preparedStatement.setString(1, student.getUserID());
 			preparedStatement.setString(2, student.getName());
-			preparedStatement.setString(3, "student");//role
+			preparedStatement.setString(3, "student"); //role
 			preparedStatement.setInt(4, student.getStudentID());
 			preparedStatement.setString(5, student.getDepartment());
 			preparedStatement.setInt(6, student.getJoiningYear());
@@ -90,10 +89,11 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		
 		try
 		{ 
-			PreparedStatement preparedStatement=connection.prepareStatement(SQLQueries.GET_REPORT(StudentID,semesterId));
-			
+			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.GET_REPORT);
+			preparedStatement.setInt(1, StudentID);
+			preparedStatement.setInt(2, semesterId);
+
 			ResultSet rs = preparedStatement.executeQuery();
-//			rs.next();
 			HashMap<String,Integer> grades = new HashMap<String, Integer>();
 
 			while (rs.next()) {
@@ -128,20 +128,22 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			throws StudentNotRegisteredException {
 		
 		Connection connection=DBUtil.getConnection();
-		
 		List<Course> registeredCourses = new ArrayList<Course>();
-		
-		
+
 		try
 		{ 
-			PreparedStatement preparedStatement=connection.prepareStatement(SQLQueries.GET_COURSES(studentID,semesterId));
+			PreparedStatement preparedStatement=connection.prepareStatement(SQLQueries.GET_COURSES);
+			preparedStatement.setInt(1, studentID);
+			preparedStatement.setInt(2, semesterId);
 			
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
 				String courseId = rs.getString("course_id");
 
-				PreparedStatement preparedStatement0=connection.prepareStatement(SQLQueries.GET_COURSE_BY_ID(courseId, semesterId));
+				PreparedStatement preparedStatement0 = connection.prepareStatement(SQLQueries.GET_COURSE_BY_ID);
+				preparedStatement0.setString(1, courseId);
+				preparedStatement0.setInt(2, semesterId);
 				ResultSet rs0 = preparedStatement0.executeQuery();
 
 				if(rs0.next()) {

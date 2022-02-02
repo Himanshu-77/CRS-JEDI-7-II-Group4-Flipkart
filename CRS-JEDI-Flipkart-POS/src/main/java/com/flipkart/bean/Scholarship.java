@@ -12,7 +12,7 @@ public class Scholarship extends Payment {
 
 	public Scholarship() {
 		// TODO Auto-generated constructor stub
-	scholarshipName = "Default";
+		scholarshipName = "Default";
 	}
 	
 	/**
@@ -22,6 +22,5 @@ public class Scholarship extends Payment {
 		super();
 		this.scholarshipName = scholarshipName;
 	}
-	
 
 }

@@ -27,10 +27,12 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 	private static volatile PaymentDaoOperation instance=null;
 	private final Connection connection=DBUtil.getConnection();
 	
+	/*
 	public static void main(String[] args) throws SQLException {
 		PaymentDaoOperation test = new PaymentDaoOperation();
-//		test.makePayment();
+		test.makePayment();
 	}
+	 */
 	
 	@Override
 	public void makePayment(Payment payment) throws PaymentFailedException,PaymentDoneException {

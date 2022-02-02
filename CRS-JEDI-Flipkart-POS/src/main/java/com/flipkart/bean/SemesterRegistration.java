@@ -12,13 +12,6 @@ public class SemesterRegistration {
 	private Integer semesterID;
 	private String dateOfRegistration;
 	private Boolean isApproved;
-
-//	/**
-//	 * @param studentID
-//	 * @param semesterID
-//	 * @param dateOfRegistration
-//	 * @param isApproved
-//	 */
 	
 	public SemesterRegistration() {
 		// TODO Auto-generated constructor stub

@@ -6,7 +6,7 @@ package com.flipkart.business;
 import com.flipkart.exception.CourseNotFoundException;
 
 /**
- * @author rutwi
+ * @author Aeron
  *
  */
 public interface ProfessorInterface {
@@ -16,17 +16,23 @@ public interface ProfessorInterface {
 	 * @param courseID
 	 * @param grade
 	 */
-
 	public void addGrade(Integer studentID, Integer semesterID,String courseID, Integer grade) ;
-
 
 	/**
 	 * @param courseID
 	 * @param semesterID
-	 * @throws CourseNotFoundException
 	 */
-
 	public void viewCourseStudents(String courseID, Integer semesterID) ;
+
+	/**
+	 * @param instructorID
+	 */
 	public void viewCourseProf(int instructorID) ;
+
+	/**
+	 * @param instructorID
+	 * @param semesterID
+	 * @param courseID
+	 */
 	public void registerCourse(int instructorID, Integer semesterID, String courseID) ;
 }

@@ -18,11 +18,10 @@ public interface AdminInterface {
 	/**
 	 * @param semesterId
 	 */
-
 	public void enableFeePayment(int semesterId);
 
 	/**
-	 * @param students
+	 * @param studentId
 	 * @throws StudentNotApprovedException 
 	 * @throws FeesPendingException 
 	 */
@@ -34,7 +33,7 @@ public interface AdminInterface {
 	public void addProfessor(Professor professor) throws ProfessorNotAddedException;
 	
 	/**
-	 * @param professor
+	 * @param professorID
 	 */
 	public void removeProfessor(int professorID);
 	
@@ -48,19 +47,23 @@ public interface AdminInterface {
 	
 	/**
 	 * @param courseID
-	 * @param courseCatalog
 	 */
 	public void removeCourse(String courseID) throws CourseNotFoundException, CourseNotDeletedException;
-	
-	/**
-	 * @param courseID
-	 * @param courseCatalog
-	 */
+
 	public void addCourse(String course_name, String courseID, int semester) throws CourseAlreadyPresentException;
 
+	/**
+	 * @param courseID
+	 * @param semester
+	 * @param viewAll
+	 * @return
+	 */
 	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semester, Boolean viewAll);
 
 	public List<Student> getPendingStudentAccountsList();
 
+	/**
+	 * @param studentID
+	 */
 	public void approveStudentAccount(Integer studentID);
 }

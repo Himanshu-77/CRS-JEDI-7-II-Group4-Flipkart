@@ -4,11 +4,9 @@
 package com.flipkart.exception;
 
 /**
- * @author JEDI-G6
+ * @author Aeron
  *
  */
-
-//Exception arises when grade is not allocated but report cards are generated
 
 public class GradeNotAddedException extends Exception {
 	private Integer studentId;

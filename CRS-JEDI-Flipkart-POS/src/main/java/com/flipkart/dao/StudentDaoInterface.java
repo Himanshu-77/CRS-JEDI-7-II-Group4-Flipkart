@@ -24,7 +24,7 @@ public interface StudentDaoInterface {
 	 * @throws PaymentWindowException
 
 	 */
-	public Boolean checkPaymentWindow(int StudentID) throws PaymentWindowException,StudentNotRegisteredException;
+	Boolean checkPaymentWindow(int StudentID) throws PaymentWindowException,StudentNotRegisteredException;
 
 	/**
 	 * @param StudentID
@@ -34,18 +34,27 @@ public interface StudentDaoInterface {
 	 * @throws FeesPendingException 
 	 * @throws StudentNotApprovedException 
 	 */
-
-	public ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException, StudentNotApprovedException, FeesPendingException, ReportCardNotGeneratedException;
+	ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException, StudentNotApprovedException, FeesPendingException, ReportCardNotGeneratedException;
 
 
 	/**
 	 * @param studentID
 	 * @param semesterId
 	 */
+	List<Course> viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException;
 
-	public List<Course> viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException;
-	public Student addStudent(Student student) throws SQLException;
-	
-	public int getStudentIDFromUserName(String username) throws StudentNotRegisteredException;
+	/**
+	 * @param student
+	 * @return
+	 * @throws SQLException
+	 */
+	Student addStudent(Student student) throws SQLException;
+
+	/**
+	 * @param username
+	 * @return
+	 * @throws StudentNotRegisteredException
+	 */
+	int getStudentIDFromUserName(String username) throws StudentNotRegisteredException;
 	
 }

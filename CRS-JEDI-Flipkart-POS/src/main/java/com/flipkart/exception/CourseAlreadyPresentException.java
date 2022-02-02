@@ -5,17 +5,15 @@ package com.flipkart.exception;
 
 /**
  * @author Dell
- *
+ * Exception arises when we try to add an existing course to our catalogue
  */
-
-//Exception arises when we try to add an existing course to our catalogue
 
 public class CourseAlreadyPresentException extends Exception{
 	private String courseID;
 
 	public CourseAlreadyPresentException() {
 		// TODO Auto-generated constructor stub
-	courseID = "";
+		courseID = "";
 	}
 	/**
 	 * @param courseID
@@ -35,8 +33,5 @@ public class CourseAlreadyPresentException extends Exception{
 	public String getMessage() {
 		return "CourseID: " + courseID + "is already present in catalog!";
 	}
-	
-	
-	
 	
 }

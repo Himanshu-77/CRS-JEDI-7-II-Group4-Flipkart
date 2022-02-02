@@ -18,15 +18,18 @@ public interface StudentInterface {
 	/**
 	 * @param StudentID
 	 * @return payment window status for semester in which student has registered
-
 	 */
 	public Boolean checkPaymentWindow(int StudentID);
 
 	/**
-	 * @param StudentID
-	 * @param reportCard
+	 * @param userName
+	 * @param name
+	 * @param password
+	 * @param department
+	 * @param contactNumber
+	 * @param joiningYear
+	 * @return
 	 */
-
 	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear);
 	
 	

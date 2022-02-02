@@ -3,18 +3,13 @@ package com.flipkart.application;
 import java.util.Scanner;
 
 import com.flipkart.bean.Student;
-import com.flipkart.business.AdminInterface;
-import com.flipkart.business.AdminOperation;
 import com.flipkart.business.StudentOperation;
 import com.flipkart.business.UserOperation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CRSApplication {
 
     private Scanner sc = new Scanner(System.in);
     StudentOperation so = StudentOperation.getInstance();
-
 
     public static void main(String[] args) {
     	    	
@@ -25,10 +20,11 @@ public class CRSApplication {
     private void createMenu() {
         try {
             while(true) {
-            	System.out.println("\n\n==~~=~~=~~=~~=~~=~CRS~=~~=~~=~~=~~=~~==");
-                System.out.println("Choose an option: ");
+            	System.out.println("\n\n==~~=~~= Course Registration System ~=~~=~~=~~==");
+                System.out.println("   Welcome !    ");
+                System.out.println("\nChoose an option: ");
                 System.out.println("---------------------------------------");
-                System.out.println("1 : Register a new user");
+                System.out.println("1 : Student Self Registration");
                 System.out.println("2 : Login");
                 System.out.println("3 : Update Password");
                 System.out.println("4 : Exit menu");
@@ -39,7 +35,7 @@ public class CRSApplication {
 
                 switch(menuOption) {
                     case 1:
-                        registerUser();
+                        registerStudent();
                         break;
 
                     case 2:
@@ -47,7 +43,6 @@ public class CRSApplication {
                         break;
 
                     case 3:
-                        System.out.println("feature under implementation");
                         updatePassword();
                         break;
 
@@ -108,37 +103,7 @@ public class CRSApplication {
                 }
             		
             }
-            
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void registerUser() {
-
-        try {
-            while(true) {
-            	System.out.println("=======================================");
-                System.out.println("Register: ");
-                System.out.println("---------------------------------------");
-                System.out.println("1 : Student");
-                System.out.println("2 : Exit registration");
-                System.out.println("=======================================");
-
-                int userType = sc.nextInt();
-                sc.nextLine();
-
-                switch(userType) {
-                    case 1:
-                        registerStudent();
-                        break;
-                    case 2:
-                        return;
-                    default:
-                        System.out.println("Invalid input");
-                } 
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

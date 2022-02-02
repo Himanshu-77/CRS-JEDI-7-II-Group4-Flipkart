@@ -35,17 +35,17 @@ public class UserDaoOperation implements UserDaoInterface{
 		return instance;
 	}
 
+	/*
 	public static void main(String[] args) throws UserNotFoundException {
 		UserDaoInterface test = new UserDaoOperation();
 
-//		test.updateStudentPassword("arkaprabha", "12345");
+		test.updateStudentPassword("arkaprabha", "12345");
 		test.updateProfPassword("Arka", "12345");
-//		test.updateAdminPassword("admin", "admin");
-//		test.updateContactNumber("aaa", "999");
-		//System.out.println(test.loginUser("aaa", "bbb"));
+		test.updateAdminPassword("admin", "admin");
+		test.updateContactNumber("aaa", "999");
+		System.out.println(test.loginUser("aaa", "bbb"));
 	}
-
-
+	 */
 
 	@Override
 	public void updateStudentPassword(String userID, String newPassword)  {
@@ -258,7 +258,6 @@ public class UserDaoOperation implements UserDaoInterface{
 			System.out.println(ex.getMessage());
 		}
 
-		// throw exception on login failure
 		return false;
 	}
 

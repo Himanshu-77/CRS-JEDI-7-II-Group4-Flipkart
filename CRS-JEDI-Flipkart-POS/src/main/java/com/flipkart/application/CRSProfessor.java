@@ -21,7 +21,6 @@ public class CRSProfessor {
     
     public static void main(String[] args) {
         CRSProfessor test = new CRSProfessor();
-//        test.createProfessorMenu("Arka");
     }
 
     public void createProfessorMenu(String username) {
@@ -102,12 +101,7 @@ public class CRSProfessor {
         grade = sc.nextInt();
         sc.nextLine();
     	profObj.addGrade(studentID, semesterID, courseID, grade);
-        // get students details/objects
-
-
     }
-
-   
 
     private void viewEnrolledStudents() throws CourseNotFoundException {
 
@@ -130,7 +124,6 @@ public class CRSProfessor {
 
     private Integer getProfessorID(String username) throws SQLException {
 
-//
         return -1;
     }
 }

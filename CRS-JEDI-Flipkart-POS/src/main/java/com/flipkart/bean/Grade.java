@@ -1,5 +1,9 @@
 package com.flipkart.bean;
 
+/**
+ * @author Aeron
+ *
+ */
 public class Grade {
 	private int numericGrade;
 

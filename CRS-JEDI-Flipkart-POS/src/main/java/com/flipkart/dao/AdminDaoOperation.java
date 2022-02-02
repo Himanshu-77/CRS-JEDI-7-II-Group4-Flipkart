@@ -37,7 +37,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	private static final Logger logger = LogManager.getLogger(AdminDaoOperation.class);
 
 
-	
 	/**
 	 * Default Constructor
 	 */
@@ -58,6 +57,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		return instance;
 	}
 
+	/*
 	public static void main(String[] args) throws CourseNotFoundException {
 		AdminDaoOperation test = new AdminDaoOperation();
 		Course c = new Course();
@@ -70,9 +70,11 @@ public class AdminDaoOperation implements AdminDaoInterface {
 
 		test.removeCourse("38");
 	}
+	*/
+
+
 	@Override
 	public void enableFeePaymentWindow(int semesterId) throws SQLException {
-
 
 			Connection conn = DBUtil.getConnection();
 			PreparedStatement queryStatement;
@@ -83,55 +85,58 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			queryStatement.executeUpdate();
 			System.out.println("******* Payment Window Opened Successfully for Semester "+ semesterId +" ********");
 
-
 	}
 
 	@Override
 	public void approveStudentRegistration(int studentId,int semesterId) throws FeesPendingException, StudentNotApprovedException {
 		
 		Connection connection = DBUtil.getConnection();
-		
-		
+
 		try {
-			statement = connection.prepareStatement(SQLQueries.GET_STUDENT_BY_ID(studentId, semesterId));
+			statement = connection.prepareStatement(SQLQueries.GET_STUDENT_BY_ID);
+			statement.setInt(1, studentId);
+			statement.setInt(2, semesterId);
 			ResultSet rs = statement.executeQuery();
 			if(!rs.next()) {
 				throw new StudentNotApprovedException(studentId);
 			}
 			else {
 			
-			Boolean primary4 = true;
-			Boolean fees = true;
-			List<String> primary_course_ids = new ArrayList<String>();
-			List<String> alternate_course_ids = new ArrayList<String>();
-			do {
-				if(!rs.getBoolean(7))fees=false; //fees not paid
-				if(rs.getString(2)!=null) {
-					if(rs.getBoolean(5)) //is primary 
-						primary_course_ids.add(rs.getString(2));
-					else 
-						alternate_course_ids.add(rs.getString(2));
+				Boolean primary4 = true;
+				Boolean fees = true;
+				List<String> primary_course_ids = new ArrayList<String>();
+				List<String> alternate_course_ids = new ArrayList<String>();
+				do {
+					if(!rs.getBoolean(7))fees=false; //fees not paid
+					if(rs.getString(2)!=null) {
+						if(rs.getBoolean(5)) //is primary
+							primary_course_ids.add(rs.getString(2));
+						else
+							alternate_course_ids.add(rs.getString(2));
+					}
+				} while(rs.next());
+			
+				if(!fees) {
+					throw new FeesPendingException(studentId);
 				}
-			}while(rs.next());
 			
-			if(!fees) {
-				throw new FeesPendingException(studentId);
-			}
+				if( primary_course_ids.size()  + alternate_course_ids.size() < 4) {
+					throw new StudentNotApprovedException(studentId);
+				}
 			
-			if( primary_course_ids.size()  + alternate_course_ids.size() < 4) {
-				throw new StudentNotApprovedException(studentId);
-			}
-			
-			PreparedStatement update_statement = connection.prepareStatement(SQLQueries.APPROVE_STUDENT(studentId, semesterId));
+				PreparedStatement update_statement = connection.prepareStatement(SQLQueries.APPROVE_STUDENT);
+				update_statement.setInt(1, studentId);
+				update_statement.setInt(2, semesterId);
 
-			update_statement.executeUpdate();
-			System.out.println("Approved");
-		}	
+				update_statement.executeUpdate();
+				System.out.println("Approved");
+			}
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
-			
-}
+
+	}
 
 	@Override
 	public void addProfessor(Professor professor){
@@ -194,21 +199,19 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 			
 		} catch (SQLException e) {
-
-//			logger.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 	}
 
 	@Override
-
 	public ReportCard generateReportCard(int studentID) throws StudentNotApprovedException {
 
 		Connection connection = DBUtil.getConnection();
 		ReportCard R = new ReportCard();
 		
 		try {
-			statement = connection.prepareStatement(SQLQueries.GET_STUDENT(studentID));
-						
+			statement = connection.prepareStatement(SQLQueries.GET_STUDENT);
+			statement.setInt(1, studentID);
 			ResultSet rs = statement.executeQuery();
 			rs.next();
 			
@@ -217,7 +220,10 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				StudentOperation so = new StudentOperation();
 				R = so.viewReportCard(studentID, constants.SemesterID);
 				
-				PreparedStatement statement1 = connection.prepareStatement(SQLQueries.GENERATE_REPORT_CARD(studentID,R.getSpi()));
+				PreparedStatement statement1 = connection.prepareStatement(SQLQueries.GENERATE_REPORT_CARD);
+				statement1.setFloat(1, R.getSpi());
+				statement1.setInt(2, studentID);
+
 				statement1.executeUpdate();
 			}
 			
@@ -226,7 +232,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 			
 		} catch (SQLException e) {
-//			logger.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return R;
 	}
@@ -249,7 +255,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 			else {
 
-//				Update legacy course catalog
+				// Update legacy course catalog
 				String query2 = "DELETE FROM course_catalog_legacy WHERE courseID= ?";
 				PreparedStatement queryStatement;
 				queryStatement = connection.prepareStatement(query2);
@@ -261,7 +267,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 			
 		} catch (SQLException e) {
-			
 			logger.error(e.getMessage());
 		}
 		
@@ -271,9 +276,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void addCourse(Course course) {
 
 		String sql = SQLQueries.ADMIN_ADD_COURSE;
-
-
-
 		Connection connection = DBUtil.getConnection();
 		
 		try {
@@ -295,9 +297,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			System.out.println(row + " course added.");
 			
 		} catch (SQLException e) {
-
 			logger.error(e.getMessage());
-
 		}
 		
 	}
@@ -314,7 +314,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			List<String> course_ids = new ArrayList<String>();
 			
 			if(viewAll) {
-				statement = connection.prepareStatement(SQLQueries.GET_ALL_COURSES(semesterId));						
+				statement = connection.prepareStatement(SQLQueries.GET_ALL_COURSES);
+				statement.setInt(1, semesterId);
 				ResultSet rs = statement.executeQuery();
 				rs.next();
 	
@@ -327,7 +328,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 			 
 			for(String c : course_ids) {
-				PreparedStatement statement2 = connection.prepareStatement(SQLQueries.GET_COURSE_STUDENTS(c,semesterId));
+				PreparedStatement statement2 = connection.prepareStatement(SQLQueries.GET_COURSE_STUDENTS);
+				statement2.setString(1, c);
+				statement2.setInt(2, semesterId);
 				ResultSet studentSet= statement2.executeQuery();
 				studentSet.next();
 				ArrayList<Integer> CourseStudentList = new ArrayList<Integer>();
@@ -336,9 +339,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				}while(studentSet.next());
 				StudentList.put(c,CourseStudentList);
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			logger.error(e.getMessage());
 		}
@@ -346,7 +347,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	
 	}
 
-	
 	@Override
 	public List<Student> getPendingStudentAccountsList() {
 		
@@ -375,7 +375,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}	
 				
 		} catch (SQLException e) {
-//			logger.error(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return pendingStudents;
 	}
@@ -386,8 +386,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		Connection connection = DBUtil.getConnection();
 		
 		try {
-			statement = connection.prepareStatement(SQLQueries.APPROVE_STUDENT_ACCOUNT(studentId));
-						
+			statement = connection.prepareStatement(SQLQueries.APPROVE_STUDENT_ACCOUNT);
+			statement.setInt(1, studentId);
 			statement.executeUpdate();
 			
 			System.out.println("Student ID: "+studentId+" Approved !");

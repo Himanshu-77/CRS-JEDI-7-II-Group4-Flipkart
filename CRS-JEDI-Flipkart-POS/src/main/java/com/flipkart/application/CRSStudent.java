@@ -18,17 +18,6 @@ public class CRSStudent {
     SemesterRegistrationInterface sro = SemesterRegistrationOperation.getInstance();
     StudentInterface so = StudentOperation.getInstance();
 
-
-    public static void main(String[] args) {
-//        StudentClient test = new StudentClient();
-//        System.out.println("Enter You Username");
-//        String username = sc.nextLine();
-//        test.createStudentMenu(username);
-
-        boolean a = sc.nextBoolean();
-        System.out.println(a);
-    }
-
     public void createStudentMenu(String username) {
 
         try {
@@ -168,7 +157,6 @@ public class CRSStudent {
                         System.out.println("Enter your card details");
                         System.out.println("---------------------------------------");
                         System.out.println("Enter card number : ");
-//                        sc.nextLine();
                         String cardNumber = sc.nextLine();
                         payment.setPaymentMode("Card");
                         break;
@@ -177,7 +165,6 @@ public class CRSStudent {
                         System.out.println("Enter your bank details");
                         System.out.println("---------------------------------------");
                         System.out.println("Enter account number : ");
-//                        sc.nextLine();
                         String accountNumber = sc.nextLine();
                         payment.setPaymentMode("NetBanking");
                         break;

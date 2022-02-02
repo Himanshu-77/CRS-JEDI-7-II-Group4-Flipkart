@@ -31,36 +31,42 @@ public class RegisteredCourses {
 		this.semesterID = semesterID;
 		this.courseID = courseID;
 	}
+
 	/**
 	 * @return the studentID
 	 */
 	public Integer getStudentID() {
 		return studentID;
 	}
+
 	/**
 	 * @param studentID the studentID to set
 	 */
 	public void setStudentID(Integer studentID) {
 		this.studentID = studentID;
 	}
+
 	/**
 	 * @return the semesterID
 	 */
 	public Integer getSemesterID() {
 		return semesterID;
 	}
+
 	/**
 	 * @param semesterID the semesterID to set
 	 */
 	public void setSemesterID(Integer semesterID) {
 		this.semesterID = semesterID;
 	}
+
 	/**
 	 * @return the courseID
 	 */
 	public ArrayList<String> getCourseID() {
 		return courseID;
 	}
+
 	/**
 	 * @param courseID the courseID to set
 	 */
