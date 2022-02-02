@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 /**
  * @author Dell
- *  Class to implement Professor Dao Operations
+ * Class to implement Professor Dao Operations
  */
 public class ProfessorDaoOperation implements ProfessorDaoInterface {
 
@@ -31,7 +31,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 
 	}
 
-//	Method to make ProfessorDaoOperation Singleton
 	public static ProfessorDaoOperation getInstance(){
 		if(instance==null)
 		{
@@ -59,7 +58,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		{
 			PreparedStatement stmt;
 
-			PreparedStatement checkStmt = connection.prepareStatement(SQLQueries.CHECK_COURSE_VALIDITY(studentID, semesterID, courseID));
+			PreparedStatement checkStmt = connection.prepareStatement(SQLQueries.CHECK_COURSE_VALIDITY);
 			checkStmt.setInt(1, studentID);
 			checkStmt.setString(2, courseID);
 			checkStmt.setInt(3, semesterID);
@@ -74,7 +73,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 				
 			}
 			else {
-				stmt = connection.prepareStatement(SQLQueries.ADD_GRADE(studentID, semesterID, courseID, grade));
+				stmt = connection.prepareStatement(SQLQueries.ADD_GRADE);
 		    	stmt.setInt(1, grade);
 				stmt.setInt(2, studentID);
 				stmt.setString(3, courseID);
@@ -99,7 +98,6 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			
 	/**
 	 * Method to View student details for students who are registered in a particular course
-	 * @param professorID
 	 * @return the enrolled students for the corresponding professor and course code.
 	 * @throws NoStudentInCourseException
 	 */
@@ -108,7 +106,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	public ArrayList<RegisteredCourses> viewCourseStudents(String courseID, Integer semesterID) throws NoStudentInCourseException{
 		Connection connection=DBUtil.getConnection();
 		try {
-			PreparedStatement stmt = connection.prepareStatement(SQLQueries.VIEW_REGISTERED_STUDENTS(courseID, semesterID));
+			PreparedStatement stmt = connection.prepareStatement(SQLQueries.VIEW_REGISTERED_STUDENTS);
 			stmt.setString(1, courseID);
 			stmt.setInt(2, semesterID);
 			ResultSet rs = stmt.executeQuery();
@@ -148,12 +146,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	public ArrayList<Course> viewCourseProf(Integer instructorID) throws ProfessorNotAssignedException {
 
 		ArrayList<Course>ans = new ArrayList<Course>();
-		Connection connection=DBUtil.getConnection();
+		Connection connection = DBUtil.getConnection();
+
 		try {
-			
-
-			PreparedStatement stmt = connection.prepareStatement(SQLQueries.VIEW_ASSOCIATED_PROFESSOR(instructorID));
-
+			PreparedStatement stmt = connection.prepareStatement(SQLQueries.VIEW_ASSOCIATED_PROFESSOR);
 			stmt.setInt(1, instructorID);
 			ResultSet rs = stmt.executeQuery();
 
@@ -191,11 +187,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		
 		Connection connection=DBUtil.getConnection();
 		try {
-			
-			String sql = "SELECT * FROM course_catalog WHERE courseID = '"+courseID+"' AND offered_semester = "+semesterID + " AND instructor is NULL";
-			String sql1 = "UPDATE course_catalog set instructor = + '"+instructorID+"' WHERE courseID = '"+courseID+"' AND offered_semester = "+semesterID;
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(SQLQueries.GET_COURSE_WITHOUT_INSTRUCTOR);
+			stmt.setString(1, courseID);
+			stmt.setInt(2, semesterID);
+			ResultSet rs = stmt.executeQuery();
 			
 			if(!rs.next())
 			{
@@ -205,26 +200,25 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			}
 			else {
 			
-				PreparedStatement stmt1 = connection.prepareStatement(sql1);
+				PreparedStatement stmt1 = connection.prepareStatement(SQLQueries.ASSIGN_COURSE_INSTRUCTOR);
+				stmt1.setInt(1, instructorID);
+				stmt1.setString(2, courseID);
+				stmt1.setInt(3, semesterID);
 				int res = stmt1.executeUpdate();
-				if (res > 0)            
-
-					logger.info("Successfully Registered");            
-	            
+				if (res > 0) {
+					logger.info("Successfully Registered");
+				}
 				else{
 	            	throw new ProfessorCourseRegistrationException(instructorID, semesterID, courseID);
 	            }
 			}
-				
-			
+
 			return true;
-			
 		}
 		
 		catch(SQLException e)
 		{
 			return false;
-			
 		}
 	}
 
@@ -238,11 +232,11 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 
 		int professorID = -1;
 
-		Connection connection=DBUtil.getConnection();
+		Connection connection = DBUtil.getConnection();
 
 		try
 		{			
-			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.VIEW_PROFESSOR_ID(username));
+			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.VIEW_PROFESSOR_ID);
 			preparedStatement.setString(1, username);
 			ResultSet results=preparedStatement.executeQuery();
 

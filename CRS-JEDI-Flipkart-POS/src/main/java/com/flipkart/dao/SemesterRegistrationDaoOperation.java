@@ -223,8 +223,7 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 
 		try {
 
-			String query2 = "SELECT studentId from payments where studentId = ?";
-			stmt2 = conn.prepareStatement(query2,ResultSet.TYPE_SCROLL_SENSITIVE,
+			stmt2 = conn.prepareStatement(SQLQueries.VERIFY_PAYMENT, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			stmt2.setString(1, Integer.toString(studentId));
 			ResultSet rs2 = stmt2.executeQuery();
@@ -251,12 +250,14 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 			}
 
 			if(totalPrimaryCourse == 4 && totalAlternateCourses == 2) {
-//				System.out.println("+-----------------------------------+");
-//				System.out.println("|         Notification Alert!       |");
-//				System.out.println("+-----------------------------------+");
-//				System.out.println("|      Registration Completed!      |");
-//				System.out.println("|    Please Complete Fee Payment!   |");
-//				System.out.println("+-----------------------------------+");
+				/*
+				System.out.println("+-----------------------------------+");
+				System.out.println("|         Notification Alert!       |");
+				System.out.println("+-----------------------------------+");
+				System.out.println("|      Registration Completed!      |");
+				System.out.println("|    Please Complete Fee Payment!   |");
+				System.out.println("+-----------------------------------+");
+				 */
 				return true;
 			}
 

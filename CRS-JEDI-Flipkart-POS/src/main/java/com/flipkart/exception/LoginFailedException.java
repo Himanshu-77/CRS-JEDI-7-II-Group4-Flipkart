@@ -4,7 +4,7 @@
 package com.flipkart.exception;
 
 /**
- * @author rutwi
+ * @author Aeron
  *
  */
 public class LoginFailedException extends Exception {

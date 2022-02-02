@@ -3,8 +3,6 @@
  */
 package com.flipkart.bean;
 
-import javax.print.DocFlavor.INPUT_STREAM;
-
 /**
  * @author Dell
  *

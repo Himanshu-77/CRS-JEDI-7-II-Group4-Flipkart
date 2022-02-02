@@ -25,7 +25,7 @@ public class User {
 	}
 
 	/**
-	 * @param userID the userID to set
+	 * @param userName the userID to set
 	 */
 	public void setUserID(String userName) {
 		this.userName = userName;
@@ -110,9 +110,15 @@ public class User {
 		contactNumber = "0000000000";
 		joiningYear = 2021;
 		}
-			
-			// TODO Auto-generated constructor stub
-	
+
+	/**
+	 * @param userName
+	 * @param name
+	 * @param role
+	 * @param password
+	 * @param contactNumber
+	 * @param joiningYear
+	 */
 	public User(String userName, String name, String role, String password, String contactNumber, Integer joiningYear) {
 		super();
 		this.userName = userName;
@@ -122,14 +128,4 @@ public class User {
 		this.contactNumber = contactNumber;
 		this.joiningYear = joiningYear;
 	}
-	
-	/**
-	 * @param userID
-	 * @param name
-	 * @param role
-	 * @param password
-	 * @param contactNumber
-	 * @param joiningYear
-	 */
-
 }

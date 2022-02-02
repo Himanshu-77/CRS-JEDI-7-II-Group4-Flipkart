@@ -15,23 +15,18 @@ public interface UserInterface {
 	 * @param userID
 	 * @param password
 	 */
-
 	public void updateProfPassword(String userID, String password) throws UserNotFoundException;
 
 	/**
 	 * @param userID
 	 * @param password
 	 */
-
-
 	public void updateAdminPassword(String userID, String password) throws UserNotFoundException;
 
 	/**
 	 * @param userID
 	 * @param password
 	 */
-
-
 	public void updateStudentPassword(String userID, String password) throws UserNotFoundException;
 	
 	/**

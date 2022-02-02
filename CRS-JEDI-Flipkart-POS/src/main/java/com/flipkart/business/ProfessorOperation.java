@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * @author rutwi
+ * @author Aeron
  *
  */
 
@@ -48,11 +48,9 @@ public class ProfessorOperation implements ProfessorInterface {
 		return instance;
 	}
 
-	//Add grade
 	@Override
 	public void addGrade(Integer studentID, Integer semesterID, String courseID, Integer grade)  
 	{
-		
 		ProfessorDaoInterface profObj= ProfessorDaoOperation.getInstance();
 			try {
 				profObj.addGrade(studentID, semesterID,courseID, grade);
@@ -63,9 +61,8 @@ public class ProfessorOperation implements ProfessorInterface {
 			}
 	}
 
-	//view student details who have registered for a particular course
+	// To view student details who have registered for a particular course
 	@Override
-
 	public void viewCourseStudents(String courseID, Integer semesterID) {
 		
 		ArrayList<RegisteredCourses>ans = new ArrayList<RegisteredCourses>();
@@ -91,7 +88,7 @@ public class ProfessorOperation implements ProfessorInterface {
 			
 	}
 
-	//view course details which the professor is associated with
+	// View course details which the professor is associated with
 	@Override
 	public void viewCourseProf(int instructorID) {
 	
@@ -116,7 +113,6 @@ public class ProfessorOperation implements ProfessorInterface {
 	}
 
 	@Override
-
 	public void registerCourse(int instructorID, Integer semesterID, String courseID) {
 		ProfessorDaoInterface profObj= ProfessorDaoOperation.getInstance();
 		try {

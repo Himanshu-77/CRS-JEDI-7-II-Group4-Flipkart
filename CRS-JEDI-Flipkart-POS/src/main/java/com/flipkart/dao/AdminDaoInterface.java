@@ -12,24 +12,23 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author rutwi
+ * @author Aeron
  *
  */
 public interface AdminDaoInterface {
-	
-	/**
-	 * @param students
-	 * @throws FeesPendingException 
-	 * @throws StudentNotApprovedException 
-	 */
 
+	/**
+	 * @param studentId
+	 * @param semesterId
+	 * @throws FeesPendingException
+	 * @throws StudentNotApprovedException
+	 */
 	public void approveStudentRegistration(int studentId,int semesterId) throws FeesPendingException, StudentNotApprovedException;
 
 
 	/**
 	 * @param semesterId
 	 */
-
 	public void enableFeePaymentWindow(int semesterId) throws SQLException;
 
 	/**
@@ -39,9 +38,8 @@ public interface AdminDaoInterface {
 
 	
 	/**
-	 * @param professor
+	 * @param professorID
 	 */
-
 	public void removeProfessor(int professorID) throws ProfessorNotRegisteredException;
 
 	
@@ -55,27 +53,35 @@ public interface AdminDaoInterface {
 
 	public ReportCard generateReportCard(int studentID) throws StudentNotApprovedException;
 
-	
+
 	/**
 	 * @param courseID
-	 * @param courseCatalog
+	 * @throws CourseNotFoundException
 	 */
-
 	public void removeCourse(String courseID) throws CourseNotFoundException;
 
-	
-	/**
-	 * @param courseID
-	 * @param courseCatalog
-	 */
 
+	/**
+	 * @param course
+	 */
 	public void addCourse(Course course);
 
-	
+	/**
+	 * @param courseID
+	 * @param semesterId
+	 * @param viewAll
+	 * @return
+	 */
 	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semesterId, Boolean viewAll);
-	
+
+	/**
+	 * @return
+	 */
 	public List<Student> getPendingStudentAccountsList();
-	
+
+	/**
+	 * @param studentId
+	 */
 	public void approveStudentAccount(int studentId);
 
 }

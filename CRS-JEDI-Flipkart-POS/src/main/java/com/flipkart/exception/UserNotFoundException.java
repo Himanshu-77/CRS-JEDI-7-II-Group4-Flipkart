@@ -4,7 +4,7 @@
 package com.flipkart.exception;
 
 /**
- * @author Jayanth
+ * @author Aeron
  *
  */
 public class UserNotFoundException extends Exception {

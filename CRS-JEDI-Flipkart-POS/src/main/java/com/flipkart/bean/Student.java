@@ -10,15 +10,10 @@ package com.flipkart.bean;
 public class Student extends User{
 	private Integer studentID;
 	private String department;
-	
-	/**
-	 * @param studentID
-	 * @param department
-	 */
-	
+
 	public Student() {
-	studentID = 0;
-	department = "Default";
+		studentID = 0;
+		department = "Default";
 	}
 	
 	public Student(Integer studentID, String department) {

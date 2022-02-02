@@ -41,8 +41,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface{
             PreparedStatement statement;
             int newID = getNewTransactionID();
 
-            String sql = "INSERT INTO notification(notification_id,transactionId, studentId) VALUES (?, ?, ?)";
-            statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(SQLQueries.ADD_NOTIFICATION);
 
             statement.setInt(1, newID);
             statement.setInt(2, transactionID);
@@ -66,8 +65,7 @@ public class NotificationDaoOperation implements NotificationDaoInterface{
 
         try
         {
-            String query = "SELECT MAX(notification_id) FROM notification";
-            PreparedStatement stmt = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE,
+            PreparedStatement stmt = connection.prepareStatement(SQLQueries.GET_MAX_NOTIFICATION_ID, ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = stmt.executeQuery();
             while(rs.next()) {
@@ -81,9 +79,6 @@ public class NotificationDaoOperation implements NotificationDaoInterface{
 
         return newNotificationID;
     }
-
-
-
 
 }
 

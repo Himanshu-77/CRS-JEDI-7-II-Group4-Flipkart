@@ -5,10 +5,9 @@ package com.flipkart.exception;
 
 /**
  * @author Dell
- *
+ * Exception arises when course has number of students which are either more/less than the recommended range
  */
 
-//Exception arises when course has number of students which are either more/less than the recommended range
 public class InvalidCourseException extends Exception {
 
 	private String courseID;
@@ -30,11 +29,6 @@ public class InvalidCourseException extends Exception {
 		this.numberOfStudents = numberOfStudents;
 	}
 
-	/**
-	 * @param courseID
-	 */
-
-	
 	/**
 	 * @return the courseID
 	 */

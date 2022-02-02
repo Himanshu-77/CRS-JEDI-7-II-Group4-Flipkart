@@ -9,7 +9,7 @@ public class Admin extends User {
 
 	public Admin() {
 		// TODO Auto-generated constructor stub
-		this.dateOfJoining="01-01-2001";//default value of DOJ
+		this.dateOfJoining="01-01-2001";  //default value of DOJ
 	}
 
 	public Admin(String dateOfJoining) {

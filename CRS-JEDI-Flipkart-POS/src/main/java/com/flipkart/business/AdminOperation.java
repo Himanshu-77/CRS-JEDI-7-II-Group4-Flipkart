@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author rutwi
+ * @author Aeron
  *
  */
 
@@ -59,7 +59,6 @@ public class AdminOperation implements AdminInterface {
 			logger.error(e.getMessage());
 		}
 	}
-
 
 	@Override
 	public void approveStudentRegistration(int studentId,int semesterId) {

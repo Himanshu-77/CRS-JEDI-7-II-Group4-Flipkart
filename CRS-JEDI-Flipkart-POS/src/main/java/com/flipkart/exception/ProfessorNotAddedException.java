@@ -4,17 +4,16 @@
 package com.flipkart.exception;
 
 /**
- * @author JEDI-G6
- *
+ * @author Aeron
+ * Professor is not added to Course Catalogue
  */
 
-// Professor is not added to Course Catalogue
 public class ProfessorNotAddedException extends Exception{
 	private String professorId;
 	
 	public ProfessorNotAddedException() {
 		// TODO Auto-generated constructor stub
-	professorId = "";
+		professorId = "";
 	}
 
 	public ProfessorNotAddedException(String professorId) {
