@@ -7,10 +7,7 @@ import com.flipkart.bean.Course;
 import com.flipkart.bean.RegisteredCourses;
 import com.flipkart.dao.ProfessorDaoInterface;
 import com.flipkart.dao.ProfessorDaoOperation;
-import com.flipkart.exception.GradeNotAddedException;
-import com.flipkart.exception.NoStudentInCourseException;
-import com.flipkart.exception.ProfessorNotAssignedException;
-import com.flipkart.exception.StudentNotRegisteredException;
+import com.flipkart.exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -122,5 +119,17 @@ public class ProfessorOperation implements ProfessorInterface {
 			logger.error(e.getMessage());
 		}
 	}
+
+	@Override
+	public Integer getProfessorID(String username) throws SQLException, ProfessorNotRegisteredException{
+		ProfessorDaoOperation pdo = ProfessorDaoOperation.getInstance();
+		try {
+			return pdo.getProfessorIDFromUserName(username);
+		} catch (Exception e) {
+
+			throw e;
+		}
+	}
+
 
 }

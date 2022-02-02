@@ -1,5 +1,8 @@
 package com.flipkart.application;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import com.flipkart.bean.Student;
@@ -75,10 +78,15 @@ public class CRSApplication {
             
             if(uo.loginUser(username, password, role))
             {
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+
                 switch (role) {
                     case "student":
                         System.out.println("=======================================");
                         System.out.println("Logged In Successfully as a Student");
+                        System.out.println("Welcome "+username+ " !!");
+                        System.out.println("Login Time: "+ dtf.format(now) );
                         CRSStudent sc = new CRSStudent();
                         sc.createStudentMenu(username);
                         break;
@@ -86,6 +94,8 @@ public class CRSApplication {
                     case "professor":
                         System.out.println("=======================================");
                         System.out.println("Logged In Successfully as a Professor");
+                        System.out.println("Welcome "+username+ " !!");
+                        System.out.println("Login Time: "+ dtf.format(now) );
                         CRSProfessor pc = new CRSProfessor();
                         pc.createProfessorMenu(username);
                         break;
@@ -93,6 +103,8 @@ public class CRSApplication {
                     case "admin":
                         System.out.println("=======================================");
                         System.out.println("Logged In Successfully as a Admin");
+                        System.out.println("Welcome "+username+ " !!");
+                        System.out.println("Login Time: "+ dtf.format(now) );
                         CRSAdmin ac = new CRSAdmin();
                         ac.createAdminMenu(username);
                         break;
@@ -138,7 +150,7 @@ public class CRSApplication {
                 System.out.println("=======================================");
             }
             else {
-                System.out.println("User Added Successfully");
+                System.out.println("User Added Successfully! Wait for admin approval!");
                 System.out.println("=======================================");
             }
         } catch (Exception e) {

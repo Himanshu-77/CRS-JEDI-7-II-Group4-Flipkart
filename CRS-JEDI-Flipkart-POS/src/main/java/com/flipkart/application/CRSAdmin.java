@@ -74,6 +74,7 @@ public class CRSAdmin {
                         break;
                     case 9:
                         viewAvailableCourses();
+                        break;
                     case 10:
                         return;
 

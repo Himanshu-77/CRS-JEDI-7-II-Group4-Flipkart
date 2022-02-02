@@ -20,7 +20,11 @@ public class SQLQueries {
 	public static final String ADMIN_REMOVE_COURSE = "DELETE FROM course_catalog WHERE courseID=?";
 	public static final String ADMIN_ADD_COURSE = "INSERT INTO course_catalog(courseID, course_name,  offered_semester, available_seats) VALUES (?, ?, ?, ?)";
 
-	public static final String GET_PASSWORD = "SELECT password FROM ? WHERE user_name = ?";
+	public static final String GET_PASSWORD_ADMIN = "SELECT password FROM admin WHERE user_name=? ";
+	public static final String GET_PASSWORD_STUDENT = "SELECT password FROM student WHERE user_name=? ";
+	public static final String GET_PASSWORD_PROF = "SELECT password FROM professor WHERE user_name=? ";
+//	public static final String GET_PASSWORD = "SELECT ? FROM admin WHERE user_name=? ";
+
 	public static final String UPDATE_CONTACT = "UPDATE ? SET contact_number = ? WHERE user_name = ?";
 	public static final String USER_WITH_ROLE_EXIST = "SELECT COUNT(1) FROM ? WHERE user_name = ?";
 	public static final String UPDATE_ADMIN_PASSWORD = "UPDATE admin SET password = ? WHERE user_name = ?";
@@ -37,7 +41,7 @@ public class SQLQueries {
 
 	public static final String GET_REPORT = "select * from registered_courses where student_id = ? and semester_id = ? and is_primary=1";
 	public static final String GET_COURSES = "select course_id, is_primary from registered_courses where student_id = ? and semester_id = ?";
-	public static String GET_COURSE_BY_ID = "select * from course_catalog where courseID = '?' and offered_semester = ?";
+	public static String GET_COURSE_BY_ID = "select * from course_catalog where courseID = ? and offered_semester = ?";
 
 	public static String REMOVE_COURSE_BY_ID = "DELETE FROM course_catalog_legacy WHERE courseID= ?";
 	public static String ADD_COURSE_BY_ID = "INSERT INTO course_catalog_legacy(courseID, course_name) VALUES (?, ?)";
@@ -45,9 +49,9 @@ public class SQLQueries {
 	public static String ASSIGN_COURSE_INSTRUCTOR = "UPDATE course_catalog set instructor = ? WHERE courseID = ? AND offered_semester = ?";
 
 	public static String GET_COURSES_BY_STUDENT_ID = "select * from registered_courses where student_id = ? and semester_id = ?";
-	public static String APPROVE_STUDENT = "UPDATE registered_courses set is_approved=1 where student_id = ?' and semester_id = ?";
+	public static String APPROVE_STUDENT = "UPDATE registered_courses set is_approved=1 where student_id = ? and semester_id = ?";
 	public static String GET_ALL_COURSES = "select distinct course_id from registered_courses where semester_id = ?";
-	public static String GET_COURSE_STUDENTS = "select student_id from registered_courses where course_id = '?' and semester_id = ?";
+	public static String GET_COURSE_STUDENTS = "select student_id from registered_courses where course_id = ? and semester_id = ?";
 	public static String GET_STUDENT = "select account_approved from student where student_id = ?";
 	public static String GENERATE_REPORT_CARD = "update student set spi = ? where student_id = ?";
 	public static String APPROVE_STUDENT_ACCOUNT = "update student set account_approved = 1 where student_id = ?";

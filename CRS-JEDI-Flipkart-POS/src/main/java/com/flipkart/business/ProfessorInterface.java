@@ -4,6 +4,9 @@
 package com.flipkart.business;
 
 import com.flipkart.exception.CourseNotFoundException;
+import com.flipkart.exception.ProfessorNotRegisteredException;
+
+import java.sql.SQLException;
 
 /**
  * @author Aeron
@@ -35,4 +38,7 @@ public interface ProfessorInterface {
 	 * @param courseID
 	 */
 	public void registerCourse(int instructorID, Integer semesterID, String courseID) ;
+
+	public Integer getProfessorID(String username) throws SQLException, ProfessorNotRegisteredException;
+
 }

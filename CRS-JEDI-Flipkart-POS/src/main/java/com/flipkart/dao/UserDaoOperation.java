@@ -1,6 +1,8 @@
 package com.flipkart.dao;
 
 import com.flipkart.constants.SQLQueries;
+import com.flipkart.exception.InvalidCourseException;
+import com.flipkart.exception.InvalidRoleException;
 import com.flipkart.exception.LoginFailedException;
 import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.DBUtil;
@@ -36,17 +38,18 @@ public class UserDaoOperation implements UserDaoInterface{
 		return instance;
 	}
 
-	/*
-	public static void main(String[] args) throws UserNotFoundException {
-		UserDaoInterface test = new UserDaoOperation();
 
-		test.updateStudentPassword("arkaprabha", "12345");
-		test.updateProfPassword("Arka", "12345");
-		test.updateAdminPassword("admin", "admin");
-		test.updateContactNumber("aaa", "999");
-		System.out.println(test.loginUser("aaa", "bbb"));
+	public static void main(String[] args) throws UserNotFoundException, SQLException {
+		UserDaoInterface test = new UserDaoOperation();
+//
+//		test.updateStudentPassword("arkaprabha", "12345");
+//		test.updateProfPassword("Arka", "12345");
+//		test.updateAdminPassword("admin", "admin");
+//		test.updateContactNumber("aaa", "999");
+//		System.out.println(test.loginUser("aaa", "bbb"));
+		test.loginUser("admin","admin","admin");
 	}
-	 */
+
 
 	@Override
 	public void updateStudentPassword(String userID, String newPassword)  {
@@ -189,11 +192,17 @@ public class UserDaoOperation implements UserDaoInterface{
 		try {
 			System.out.println("Attempting to Log in...");
 
-			queryStatement = conn.prepareStatement(SQLQueries.GET_PASSWORD);
-			queryStatement.setString(1, role);
-			queryStatement.setString(2, userID);
-			ResultSet rs = queryStatement.executeQuery();
+			if(role.equals("admin"))
+				queryStatement = conn.prepareStatement(SQLQueries.GET_PASSWORD_ADMIN);
+			else if(role.equals("student"))
+				queryStatement = conn.prepareStatement(SQLQueries.GET_PASSWORD_STUDENT);
+			else if(role.equals("professor"))
+				queryStatement = conn.prepareStatement(SQLQueries.GET_PASSWORD_PROF);
+			else
+				throw new InvalidRoleException();
 
+			queryStatement.setString(1, userID);
+			ResultSet rs = queryStatement.executeQuery();
 			String password = null;
 			while (rs.next()) {
 				password = rs.getString("password");
