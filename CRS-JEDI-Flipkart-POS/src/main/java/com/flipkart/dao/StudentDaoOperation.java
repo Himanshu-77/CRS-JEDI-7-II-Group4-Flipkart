@@ -47,11 +47,11 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	@Override
 	public Student addStudent(Student student) throws SQLException{
 		
-		Connection connection=DBUtil.getConnection();
+		Connection connection = DBUtil.getConnection();
 		
 		try
 		{
-			PreparedStatement stmt = connection.prepareStatement("SELECT MAX(student_id) FROM student");
+			PreparedStatement stmt = connection.prepareStatement(SQLQueries.GET_MAX_STUDENT_ID);
 			ResultSet results = stmt.executeQuery();
 			int studentId = 0;
 			if(results.next()) {
@@ -81,7 +81,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	@Override
 	public ReportCard viewReportCard(int StudentID, int semesterId) throws ReportCardNotGeneratedException, GradeNotAddedException , StudentNotApprovedException, FeesPendingException{
 
-		Connection connection=DBUtil.getConnection();
+		Connection connection = DBUtil.getConnection();
 		
 		ReportCard R = new ReportCard();
 		R.setStudentID(StudentID);
@@ -179,8 +179,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		
 		try
 		{
-			String Qry = "select * from student where user_name = ?";
-			PreparedStatement preparedStatement = connection.prepareStatement(Qry);
+			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueries.GET_STUDENT_BY_ID);
 			preparedStatement.setString(1, username);
 			ResultSet results=preparedStatement.executeQuery();
 			
@@ -206,14 +205,12 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		try {
 
-
-			PreparedStatement stmt,stmt2;
-			String query = "SELECT semester_id FROM registered_courses WHERE student_id = ?";
-			stmt = conn.prepareStatement(query,ResultSet.TYPE_SCROLL_SENSITIVE,
+			PreparedStatement stmt, stmt2;
+			stmt = conn.prepareStatement(SQLQueries.GET_SEM_BY_STUDENT, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			stmt.setString(1, Integer.toString(StudentID));
 			ResultSet rs = stmt.executeQuery();
-			if(rs.next()==false){
+			if(!rs.next()){
 				throw new StudentNotRegisteredException();
 			}
 			else{
@@ -221,8 +218,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 				rs.first();
 				int sem_id = rs.getInt(1);
 
-				String query2 = "SELECT is_open FROM paymentwindow WHERE semester_id = ?";
-				stmt2 = conn.prepareStatement(query2,ResultSet.TYPE_SCROLL_SENSITIVE,
+				stmt2 = conn.prepareStatement(SQLQueries.SEM_PAYMENT_WINDOW,ResultSet.TYPE_SCROLL_SENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);
 				stmt2.setString(1, Integer.toString(sem_id));
 				ResultSet rs2 = stmt2.executeQuery();
@@ -236,8 +232,6 @@ public class StudentDaoOperation implements StudentDaoInterface {
 				}
 
 			}
-
-
 
 		} catch (SQLException e) {
 			logger.error(e.getMessage());

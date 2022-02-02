@@ -187,11 +187,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		
 		Connection connection=DBUtil.getConnection();
 		try {
-			
-			String sql = "SELECT * FROM course_catalog WHERE courseID = '"+courseID+"' AND offered_semester = "+semesterID + " AND instructor is NULL";
-			String sql1 = "UPDATE course_catalog set instructor = + '"+instructorID+"' WHERE courseID = '"+courseID+"' AND offered_semester = "+semesterID;
-			PreparedStatement stmt = connection.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery(sql);
+			PreparedStatement stmt = connection.prepareStatement(SQLQueries.GET_COURSE_WITHOUT_INSTRUCTOR);
+			stmt.setString(1, courseID);
+			stmt.setInt(2, semesterID);
+			ResultSet rs = stmt.executeQuery();
 			
 			if(!rs.next())
 			{
@@ -201,7 +200,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			}
 			else {
 			
-				PreparedStatement stmt1 = connection.prepareStatement(sql1);
+				PreparedStatement stmt1 = connection.prepareStatement(SQLQueries.ASSIGN_COURSE_INSTRUCTOR);
+				stmt1.setInt(1, instructorID);
+				stmt1.setString(2, courseID);
+				stmt1.setInt(3, semesterID);
 				int res = stmt1.executeUpdate();
 				if (res > 0) {
 					logger.info("Successfully Registered");

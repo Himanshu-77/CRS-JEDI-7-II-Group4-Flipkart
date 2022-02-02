@@ -77,9 +77,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	public void enableFeePaymentWindow(int semesterId) throws SQLException {
 
 			Connection conn = DBUtil.getConnection();
-			PreparedStatement queryStatement;
-			String query = "UPDATE paymentwindow "  + " SET is_open = ? WHERE semester_id = ?";
-			queryStatement = conn.prepareStatement(query);
+			PreparedStatement queryStatement = conn.prepareStatement(SQLQueries.CHANGE_PAYMENT_WINDOW_STATUS);
 			queryStatement.setString(1, "1");
 			queryStatement.setString(2, Integer.toString(semesterId));
 			queryStatement.executeUpdate();
@@ -93,7 +91,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		Connection connection = DBUtil.getConnection();
 
 		try {
-			statement = connection.prepareStatement(SQLQueries.GET_STUDENT_BY_ID);
+			statement = connection.prepareStatement(SQLQueries.GET_COURSES_BY_STUDENT_ID);
 			statement.setInt(1, studentId);
 			statement.setInt(2, semesterId);
 			ResultSet rs = statement.executeQuery();
@@ -148,7 +146,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		
 		try {
 			
-			PreparedStatement preparedStatement0=connection.prepareStatement("SELECT MAX(instructor_ID) FROM professor");
+			PreparedStatement preparedStatement0 = connection.prepareStatement(SQLQueries.GET_MAX_PROFESSOR_ID);
 			ResultSet results=preparedStatement0.executeQuery();
 			int instructorId = 0;
 			if(results.next()) {
@@ -256,9 +254,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			else {
 
 				// Update legacy course catalog
-				String query2 = "DELETE FROM course_catalog_legacy WHERE courseID= ?";
-				PreparedStatement queryStatement;
-				queryStatement = connection.prepareStatement(query2);
+				PreparedStatement queryStatement = connection.prepareStatement(SQLQueries.REMOVE_COURSE_BY_ID);
 				queryStatement.setString(1, courseID);
 				queryStatement.executeUpdate();
 
@@ -287,9 +283,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 			int row = statement.executeUpdate();
 
-			String query2 = "INSERT INTO course_catalog_legacy(courseID, course_name) VALUES (?, ?)";;
 			PreparedStatement queryStatement;
-			queryStatement = connection.prepareStatement(query2);
+			queryStatement = connection.prepareStatement(SQLQueries.ADD_COURSE_BY_ID);
 			queryStatement.setString(1,  course.getCourseID());
 			queryStatement.setString(2, course.getCoursename());
 			queryStatement.executeUpdate();
@@ -390,7 +385,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setInt(1, studentId);
 			statement.executeUpdate();
 			
-			System.out.println("Student ID: "+studentId+" Approved !");
+			System.out.println("Student ID: " + studentId + " Approved !");
 				
 		} catch (SQLException e) {
 			logger.error(e.getMessage());

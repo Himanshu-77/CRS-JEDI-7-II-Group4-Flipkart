@@ -6,6 +6,7 @@ package com.flipkart.dao;
 import com.flipkart.bean.Payment;
 import com.flipkart.business.NotificationInterface;
 import com.flipkart.business.NotificationOperation;
+import com.flipkart.constants.SQLQueries;
 import com.flipkart.exception.PaymentDoneException;
 import com.flipkart.exception.PaymentFailedException;
 import com.flipkart.utils.DBUtil;
@@ -39,10 +40,9 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 
 		try {
 
-			PreparedStatement statement,stmt2;
+			PreparedStatement statement, stmt2;
 
-			String query2 = "SELECT studentId from payments where studentId = ?";
-			stmt2 = connection.prepareStatement(query2,ResultSet.TYPE_SCROLL_SENSITIVE,
+			stmt2 = connection.prepareStatement(SQLQueries.PAYMENT_STATUS_STUDENT, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			stmt2.setString(1, Integer.toString(payment.getStudentID()));
 			ResultSet rs2 = stmt2.executeQuery();
@@ -61,8 +61,8 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 
 				payment.setPaymentID(newID);
 
-				String sql = "INSERT INTO payments(studentId, amount, transactionId, paymentType, isPaid) VALUES (?, ?, ?, ?, ?)";
-				String query = "UPDATE registered_courses set is_paid = 1 where student_id = ?";
+				String sql = SQLQueries.MAKE_PAYMENT;
+				String query = SQLQueries.UPDATE_STUDENT_PAYMENT_STATUS;
 
 				statement = connection.prepareStatement(sql);
 
@@ -99,8 +99,7 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 
 		try
 		{
-			String query = "SELECT MAX(transactionId) FROM payments";
-			PreparedStatement stmt = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_SENSITIVE,
+			PreparedStatement stmt = connection.prepareStatement(SQLQueries.GET_MAX_TRANSACTION_ID, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
@@ -121,7 +120,7 @@ public class PaymentDaoOperation implements PaymentDaoInterface{
 		{
 			// This is a synchronized block, when multiple threads will access this instance
 			synchronized(PaymentDaoOperation.class){
-				instance=new PaymentDaoOperation();
+				instance = new PaymentDaoOperation();
 			}
 		}
 		return instance;

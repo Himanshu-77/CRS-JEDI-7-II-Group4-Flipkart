@@ -1,5 +1,6 @@
 package com.flipkart.dao;
 
+import com.flipkart.constants.SQLQueries;
 import com.flipkart.exception.LoginFailedException;
 import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.DBUtil;
@@ -55,9 +56,7 @@ public class UserDaoOperation implements UserDaoInterface{
 		try {
 			System.out.println("Updating password...");
 
-			String query = "UPDATE student" + " SET password = ? WHERE user_name = ?";
-
-			queryStatement = conn.prepareStatement(query);
+			queryStatement = conn.prepareStatement(SQLQueries.UPDATE_STUDENT_PASSWORD);
 			queryStatement.setString(1, newPassword);
 			queryStatement.setString(2, userID);
 			queryStatement.executeUpdate();
@@ -78,10 +77,7 @@ public class UserDaoOperation implements UserDaoInterface{
 		try {
 			System.out.println("Updating password...");
 
-
-			String query = "UPDATE professor"  + " SET password = ? WHERE user_name = ?";
-
-			queryStatement = conn.prepareStatement(query);
+			queryStatement = conn.prepareStatement(SQLQueries.UPDATE_PROF_PASSWORD);
 			queryStatement.setString(1, newPassword);
 			queryStatement.setString(2, userID);
 			queryStatement.executeUpdate();
@@ -103,9 +99,7 @@ public class UserDaoOperation implements UserDaoInterface{
 		try {
 			System.out.println("Updating password...");
 
-			String query = "UPDATE admin" + " SET password = ? WHERE user_name = ?";
-
-			queryStatement = conn.prepareStatement(query);
+			queryStatement = conn.prepareStatement(SQLQueries.UPDATE_ADMIN_PASSWORD);
 			queryStatement.setString(1, newPassword);
 			queryStatement.setString(2, userID);
 			queryStatement.executeUpdate();
@@ -118,7 +112,6 @@ public class UserDaoOperation implements UserDaoInterface{
 			logger.error(ex.getMessage());
 		}
 	}
-
 
 
 	@Override
@@ -139,10 +132,9 @@ public class UserDaoOperation implements UserDaoInterface{
 
 			for(String role : roleList) {
 
-				String query = "SELECT COUNT(1) FROM " + role + " WHERE user_name = ?";
-
-				stmt = conn.prepareStatement(query);
-				stmt.setString(1, userID);
+				stmt = conn.prepareStatement(SQLQueries.USER_WITH_ROLE_EXIST);
+				stmt.setString(1, role);
+				stmt.setString(2, userID);
 				ResultSet rs = stmt.executeQuery();
 
 				while(rs.next()) {
@@ -176,11 +168,10 @@ public class UserDaoOperation implements UserDaoInterface{
 				assignUserRole(userID);
 			}
 
-			String query = "UPDATE " + userRole + " SET contact_number = ? WHERE user_name = ?";
-
-			queryStatement = conn.prepareStatement(query);
-			queryStatement.setString(1, newNumber);
-			queryStatement.setString(2, userID);
+			queryStatement = conn.prepareStatement(SQLQueries.UPDATE_CONTACT);
+			queryStatement.setString(1, userRole);
+			queryStatement.setString(2, newNumber);
+			queryStatement.setString(3, userID);
 			queryStatement.executeUpdate();
 
 
@@ -197,12 +188,10 @@ public class UserDaoOperation implements UserDaoInterface{
 
 		try {
 			System.out.println("Attempting to Log in...");
-			
 
-			String query = "SELECT password " + "FROM " + role + " WHERE user_name = ?";
-
-			queryStatement = conn.prepareStatement(query);
-			queryStatement.setString(1, userID);
+			queryStatement = conn.prepareStatement(SQLQueries.GET_PASSWORD);
+			queryStatement.setString(1, role);
+			queryStatement.setString(2, userID);
 			ResultSet rs = queryStatement.executeQuery();
 
 			String password = null;
@@ -218,7 +207,7 @@ public class UserDaoOperation implements UserDaoInterface{
 				
 				if(role.equals("student"))
 				{
-					String query1 = "SELECT account_approved FROM student WHERE user_name = ?";
+					String query1 = SQLQueries.GET_ACCOUNT_STATUS_BY_ID;
 					queryStatement = conn.prepareStatement(query1);
 					queryStatement.setString(1, userID);
 					ResultSet rs1 = queryStatement.executeQuery();
