@@ -10,8 +10,7 @@ import com.flipkart.bean.SemesterRegistration;
 import com.flipkart.dao.SemesterRegistrationDaoInterface;
 import com.flipkart.dao.SemesterRegistrationDaoOperation;
 import com.flipkart.exception.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 public class SemesterRegistrationOperation implements SemesterRegistrationInterface{
 	
 	private static volatile SemesterRegistrationOperation instance = null;
-	private static final Logger logger = LogManager.getLogger(SemesterRegistration.class);
+	private static final Logger logger = Logger.getLogger(SemesterRegistration.class);
 	SemesterRegistrationDaoInterface srdo = SemesterRegistrationDaoOperation.getInstance();
 
 	private SemesterRegistrationOperation() {

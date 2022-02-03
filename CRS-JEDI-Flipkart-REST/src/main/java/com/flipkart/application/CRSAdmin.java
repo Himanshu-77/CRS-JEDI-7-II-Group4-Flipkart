@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.LogManager;
 
+import org.apache.log4j.Logger;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.ReportCard;
@@ -15,12 +17,18 @@ import com.flipkart.constants.constants;
 import com.flipkart.business.AdminInterface;
 import com.flipkart.business.AdminOperation;
 import com.flipkart.exception.InvalidSemesterException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+
+
+
+
 
 public class CRSAdmin {
 
-    private static final Logger logger = LogManager.getLogger(CRSAdmin.class);
+//    private static final Logger logger = LogManager.getLogger(CRSAdmin.class);
+	private static final Logger logger = Logger.getLogger(CRSAdmin.class);
+    
+	
     private Scanner sc = new Scanner(System.in);
     AdminInterface ao = AdminOperation.getInstance();
     SemesterRegistrationInterface sro = SemesterRegistrationOperation.getInstance();

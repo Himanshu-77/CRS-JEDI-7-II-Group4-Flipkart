@@ -6,8 +6,7 @@ import com.flipkart.bean.Student;
 import com.flipkart.constants.SQLQueries;
 import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +24,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 		test.checkPaymentWindow(5);
 	}
 
-	private static final Logger logger = LogManager.getLogger(StudentDaoOperation.class);
+	private static final Logger logger = Logger.getLogger(StudentDaoOperation.class);
 	private static volatile StudentDaoOperation instance=null;
 
 	StudentDaoOperation() {
@@ -45,7 +44,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 	}
 
 	@Override
-	public Student addStudent(Student student) throws SQLException{
+	public Student addStudent(Student student) throws UsernameTakenException{
 		
 		Connection connection = DBUtil.getConnection();
 		
@@ -72,7 +71,7 @@ public class StudentDaoOperation implements StudentDaoInterface {
 
 		}
 		catch(SQLException ex) {
-			throw ex;
+			throw new UsernameTakenException();
 
 		}
 		return student;

@@ -6,8 +6,7 @@ import com.flipkart.exception.InvalidRoleException;
 import com.flipkart.exception.LoginFailedException;
 import com.flipkart.exception.UserNotFoundException;
 import com.flipkart.utils.DBUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +16,7 @@ import java.util.Objects;
 
 public class UserDaoOperation implements UserDaoInterface{
 
-	private static final Logger logger = LogManager.getLogger(UserDaoOperation.class);
+	private static final Logger logger = Logger.getLogger(UserDaoOperation.class);
 	private static volatile UserDaoOperation instance=null;
 	private static final Connection conn = DBUtil.getConnection();
 	private static final String[] roleList = {"professor", "student", "admin"};
@@ -47,7 +46,7 @@ public class UserDaoOperation implements UserDaoInterface{
 //		test.updateAdminPassword("admin", "admin");
 //		test.updateContactNumber("aaa", "999");
 //		System.out.println(test.loginUser("aaa", "bbb"));
-		test.loginUser("admin","admin","admin");
+//		test.loginUser("admin","admin","admin");
 	}
 
 
@@ -185,7 +184,7 @@ public class UserDaoOperation implements UserDaoInterface{
 	}
 
 	@Override
-	public boolean loginUser(String userID, String userPassword, String role) {
+	public boolean loginUser(String userID, String userPassword, String role) throws InvalidRoleException,UserNotFoundException,LoginFailedException,Exception,SQLException  {
 
 		PreparedStatement queryStatement;
 
@@ -243,20 +242,16 @@ public class UserDaoOperation implements UserDaoInterface{
 
 		}
 
-		catch(LoginFailedException ex){
-			System.out.println(ex.getMessage());
-		}
-		catch (UserNotFoundException ex) {
-			System.out.println(ex.getMessage());
-		}
+		
 		catch (SQLException ex) {
-			ex.printStackTrace();
+			throw ex;
+			
 		}
 		catch (Exception ex) {
-			System.out.println(ex.getMessage());
+			throw ex;
 		}
 
-		return false;
+//		return false;
 	}
 
 }

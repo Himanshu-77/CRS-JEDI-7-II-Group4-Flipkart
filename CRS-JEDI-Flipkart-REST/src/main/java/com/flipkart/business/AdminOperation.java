@@ -10,8 +10,7 @@ import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.exception.FeesPendingException;
 import com.flipkart.exception.ProfessorNotRegisteredException;
 import com.flipkart.exception.StudentNotApprovedException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ import java.util.List;
 public class AdminOperation implements AdminInterface {
 
 	private static volatile AdminOperation instance = null;
-	private static final Logger logger = LogManager.getLogger(AdminOperation.class);
+	private static final Logger logger = Logger.getLogger(AdminOperation.class);
 	
 	private AdminOperation()
 	{

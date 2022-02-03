@@ -8,8 +8,7 @@ import com.flipkart.bean.RegisteredCourses;
 import com.flipkart.dao.ProfessorDaoInterface;
 import com.flipkart.dao.ProfessorDaoOperation;
 import com.flipkart.exception.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 
 public class ProfessorOperation implements ProfessorInterface {
 
-	private static Logger logger = LogManager.getLogger(ProfessorOperation.class);
+	private static Logger logger = Logger.getLogger(ProfessorOperation.class);
 	
 	private static volatile ProfessorOperation instance=null;
 	private ProfessorOperation()

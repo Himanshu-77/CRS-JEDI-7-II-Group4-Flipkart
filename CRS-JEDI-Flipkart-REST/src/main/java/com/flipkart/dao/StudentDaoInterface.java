@@ -48,7 +48,7 @@ public interface StudentDaoInterface {
 	 * @return
 	 * @throws SQLException
 	 */
-	Student addStudent(Student student) throws SQLException;
+	Student addStudent(Student student) throws UsernameTakenException;
 
 	/**
 	 * @param username

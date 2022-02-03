@@ -4,8 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.flipkart.dao.ProfessorDaoOperation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.exception.GradeNotAddedException;
 import com.flipkart.exception.ProfessorNotRegisteredException;
@@ -14,7 +13,7 @@ import com.flipkart.business.ProfessorOperation;
 
 public class CRSProfessor {
 	
-	private static Logger logger = LogManager.getLogger(CRSProfessor.class);
+	private static Logger logger = Logger.getLogger(CRSProfessor.class);
 	
 	private Scanner sc = new Scanner(System.in);
     ProfessorInterface profObj = ProfessorOperation.getInstance();

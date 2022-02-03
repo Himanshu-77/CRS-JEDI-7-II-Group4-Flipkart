@@ -9,8 +9,7 @@ import com.flipkart.dao.PaymentDaoInterface;
 import com.flipkart.dao.PaymentDaoOperation;
 import com.flipkart.exception.PaymentDoneException;
 import com.flipkart.exception.PaymentFailedException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * @author Aeron
@@ -18,7 +17,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class PaymentOperation implements PaymentInterface{
 
-	private static final Logger logger = LogManager.getLogger(PaymentOperation.class);
+	private static final Logger logger = Logger.getLogger(PaymentOperation.class);
 
 	@Override
 	public void makePayment(Payment payment) {

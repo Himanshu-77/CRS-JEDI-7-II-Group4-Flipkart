@@ -1,15 +1,43 @@
 package com.flipkart.business;
 
 import com.flipkart.dao.UserDaoOperation;
+import com.flipkart.exception.InvalidRoleException;
+import com.flipkart.exception.LoginFailedException;
 import com.flipkart.exception.UserNotFoundException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.sql.SQLException;
+
+import org.apache.log4j.Logger;
 
 public class UserOperation implements UserInterface{
 
-	private static final Logger logger = LogManager.getLogger(UserOperation.class);
+	private static final Logger logger = Logger.getLogger(UserOperation.class);
 	private final UserDaoOperation userDao = UserDaoOperation.getInstance();
+	private static volatile UserOperation instance=null;
 
+	
+
+	public UserOperation()
+	{
+		
+	}
+	
+	/**
+	 * Method to make StudentOperation Singleton
+	 * @return
+	 */
+	public static UserOperation getInstance()
+	{
+		if(instance==null)
+		{
+			// This is a synchronized block, when multiple threads will access this instance
+			synchronized(UserOperation.class){
+				instance=new UserOperation();
+			}
+		}
+		return instance;
+	}
+	
 	@Override
 	public void updateStudentPassword(String userID, String password) {
 
@@ -59,7 +87,7 @@ public class UserOperation implements UserInterface{
 
 	@Override
 
-	public boolean loginUser(String userID, String password, String role) throws UserNotFoundException {
+	public boolean loginUser(String userID, String password, String role) throws InvalidRoleException,UserNotFoundException,LoginFailedException,Exception,SQLException {
 		
 		return userDao.loginUser(userID, password, role);
 	}
