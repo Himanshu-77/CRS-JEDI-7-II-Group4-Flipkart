@@ -74,7 +74,7 @@ public class CRSApplication {
             System.out.print("Enter Role (student/professor/admin): ");
             role = sc.nextLine();
             
-            UserOperation uo = new UserOperation();
+            UserOperation uo = UserOperation.getInstance();
             
             if(uo.loginUser(username, password, role))
             {
@@ -168,7 +168,7 @@ public class CRSApplication {
             System.out.print("Enter Role (student/professor/admin): ");
             role = sc.nextLine();
 
-            UserOperation uo = new UserOperation();
+            UserOperation uo = UserOperation.getInstance();
             if(uo.loginUser(username, oldPassword, role))
             {
                 System.out.println("=======================================");

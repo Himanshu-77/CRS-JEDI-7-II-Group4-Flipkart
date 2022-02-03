@@ -7,8 +7,7 @@ import com.flipkart.bean.Course;
 import com.flipkart.constants.SQLQueries;
 import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +23,7 @@ import java.util.Objects;
 public class SemesterRegistrationDaoOperation implements SemesterRegistrationDaoInterface{
 	private static volatile SemesterRegistrationDaoOperation instance=null;
 	private static Connection conn = DBUtil.getConnection();
-	private static final Logger logger = LogManager.getLogger(SemesterRegistrationDaoOperation.class);
+	private static final Logger logger = Logger.getLogger(SemesterRegistrationDaoOperation.class);
 
 
 	private SemesterRegistrationDaoOperation(){

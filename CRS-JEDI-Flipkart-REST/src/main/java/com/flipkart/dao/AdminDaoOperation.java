@@ -13,8 +13,7 @@ import com.flipkart.exception.FeesPendingException;
 import com.flipkart.exception.ProfessorNotRegisteredException;
 import com.flipkart.exception.StudentNotApprovedException;
 import com.flipkart.utils.DBUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +33,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	private PreparedStatement statement = null;
 
 	private static volatile AdminDaoOperation instance = null;
-	private static final Logger logger = LogManager.getLogger(AdminDaoOperation.class);
+	private static final Logger logger = Logger.getLogger(AdminDaoOperation.class);
 
 
 	/**

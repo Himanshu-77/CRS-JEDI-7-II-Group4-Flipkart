@@ -3,6 +3,10 @@
  */
 package com.flipkart.business;
 
+import java.sql.SQLException;
+
+import com.flipkart.exception.InvalidRoleException;
+import com.flipkart.exception.LoginFailedException;
 import com.flipkart.exception.UserNotFoundException;
 
 /**
@@ -46,7 +50,7 @@ public interface UserInterface {
 	 * @param password
 	 * @return
 	 */
-	public boolean loginUser(String userID, String password, String role) throws UserNotFoundException;
+	public boolean loginUser(String userID, String password, String role) throws InvalidRoleException,UserNotFoundException,LoginFailedException,Exception,SQLException;
 	
 
 }

@@ -3,8 +3,7 @@ import com.flipkart.bean.Notification;
 import com.flipkart.bean.Payment;
 import com.flipkart.constants.SQLQueries;
 import com.flipkart.utils.DBUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +16,7 @@ import java.sql.SQLException;
  */
 public class NotificationDaoOperation implements NotificationDaoInterface{
 	private static volatile NotificationDaoOperation instance=null;
-	private static Logger logger=LogManager.getLogger(NotificationDaoOperation.class);
+	private static Logger logger=Logger.getLogger(NotificationDaoOperation.class);
     private final Connection connection=DBUtil.getConnection();
 
 	public static NotificationDaoOperation getInstance(){

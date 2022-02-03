@@ -10,8 +10,7 @@ import com.flipkart.constants.SQLQueries;
 import com.flipkart.exception.PaymentDoneException;
 import com.flipkart.exception.PaymentFailedException;
 import com.flipkart.utils.DBUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +23,7 @@ import java.sql.SQLException;
  */
 public class PaymentDaoOperation implements PaymentDaoInterface{
 
-	private static final Logger logger = LogManager.getLogger(PaymentDaoOperation.class);
+	private static final Logger logger = Logger.getLogger(PaymentDaoOperation.class);
 	private static volatile PaymentDaoOperation instance=null;
 	private final Connection connection=DBUtil.getConnection();
 	
