@@ -104,7 +104,7 @@ public class StudentOperation implements StudentInterface {
 
 			return newStudent;
 
-		} catch (SQLException e) {
+		} catch (UsernameTakenException e) {
 			logger.error(e.getMessage());
 		}
 

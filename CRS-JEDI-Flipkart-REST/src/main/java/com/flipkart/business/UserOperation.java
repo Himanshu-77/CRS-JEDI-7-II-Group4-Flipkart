@@ -16,9 +16,12 @@ public class UserOperation implements UserInterface{
 	private static volatile UserOperation instance=null;
 
 	
-{
+
+	public UserOperation()
+	{
 		
 	}
+	
 	/**
 	 * Method to make StudentOperation Singleton
 	 * @return
