@@ -78,7 +78,12 @@ public class CRSProfessor {
         System.out.println("Enter Semester ID: ");
         semesterID = sc.nextInt();
         sc.nextLine();
-    	profObj.registerCourse(professorID, semesterID, courseID);
+    	try {
+			profObj.registerCourse(professorID, semesterID, courseID);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     private void viewAvailableCourses() {

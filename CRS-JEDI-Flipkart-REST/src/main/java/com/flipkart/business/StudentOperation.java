@@ -89,7 +89,7 @@ public class StudentOperation implements StudentInterface {
 	}
 
 	@Override
-	public Student addStudent(String userName, String name, String password,String department ,String contactNumber, Integer joiningYear) {
+	public Student addStudent(String userName, String name, String password,String department ,String contactNumber, Integer joiningYear)throws UsernameTakenException {
 
 		Student newStudent = new Student();
 
@@ -105,10 +105,8 @@ public class StudentOperation implements StudentInterface {
 			return newStudent;
 
 		} catch (UsernameTakenException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
-
-		return null;
 	}
 
 	public int getStudentIDFromUserName(String username) {

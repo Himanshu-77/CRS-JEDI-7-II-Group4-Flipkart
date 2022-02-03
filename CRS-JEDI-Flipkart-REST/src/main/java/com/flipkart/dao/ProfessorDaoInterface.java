@@ -22,7 +22,7 @@ public interface ProfessorDaoInterface {
 	 * @param courseID
 	 * @param grade
 	 */
-	public void addGrade(Integer studentID, Integer semesterID,String courseID, Integer grade) throws SQLException, GradeNotAddedException,StudentNotRegisteredException;
+	public void addGrade(Integer studentID, Integer semesterID,String courseID, Integer grade) throws Exception, GradeNotAddedException,StudentNotRegisteredException;
 
 
 	/**
@@ -33,7 +33,7 @@ public interface ProfessorDaoInterface {
 	 * @throws SQLException
 	 * @throws NoStudentInCourseException
 	 */
-	public ArrayList<RegisteredCourses> viewCourseStudents(String courseID, Integer semesterID) throws SQLException,NoStudentInCourseException;
+	public ArrayList<RegisteredCourses> viewCourseStudents(String courseID, Integer semesterID) throws CourseNotFoundException,NoStudentInCourseException;
 
 	/**
 	 * View courses which the professor is associated with
@@ -42,7 +42,7 @@ public interface ProfessorDaoInterface {
 	 * @throws SQLException
 	 * @throws ProfessorNotAssignedException
 	 */
-	public ArrayList<Course> viewCourseProf(Integer instructorID) throws SQLException,ProfessorNotAssignedException;
+	public ArrayList<Course> viewCourseProf(Integer instructorID) throws SQLException,ProfessorNotAssignedException,Exception;
 
 	/**
 	 * Prof. registers for course if no one is allocated to it

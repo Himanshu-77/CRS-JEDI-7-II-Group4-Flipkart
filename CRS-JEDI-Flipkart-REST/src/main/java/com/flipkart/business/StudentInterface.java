@@ -30,7 +30,7 @@ public interface StudentInterface {
 	 * @param joiningYear
 	 * @return
 	 */
-	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear);
+	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear) throws UsernameTakenException;
 	
 	
 	/**

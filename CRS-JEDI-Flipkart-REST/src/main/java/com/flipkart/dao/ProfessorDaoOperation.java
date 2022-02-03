@@ -50,7 +50,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 */
 
 	@Override
-	public void addGrade(Integer studentID, Integer semesterID, String courseID, Integer grade) throws GradeNotAddedException,StudentNotRegisteredException {
+	public void addGrade(Integer studentID, Integer semesterID, String courseID, Integer grade) throws Exception, GradeNotAddedException,StudentNotRegisteredException {
 		
 		Connection connection=DBUtil.getConnection();
 		try 
@@ -91,7 +91,8 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			}
 	                
 		}	
-			catch(SQLException e) {
+			catch(Exception e) {
+				throw e;
 			}
 	}
 			
@@ -102,7 +103,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 */
 
 	@Override
-	public ArrayList<RegisteredCourses> viewCourseStudents(String courseID, Integer semesterID) throws NoStudentInCourseException{
+	public ArrayList<RegisteredCourses> viewCourseStudents(String courseID, Integer semesterID) throws CourseNotFoundException,NoStudentInCourseException{
 		Connection connection=DBUtil.getConnection();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(SQLQueries.VIEW_REGISTERED_STUDENTS);
@@ -111,7 +112,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			ResultSet rs = stmt.executeQuery();
 			
 			ArrayList<RegisteredCourses> ans = new ArrayList<RegisteredCourses>();
-			ArrayList<String> temp = new ArrayList<String>();
+			
 			if(!rs.next())
 			{
 
@@ -119,10 +120,10 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			}
 			else {
 				do  {
-					temp.add(rs.getString("course_id"));
+					ArrayList<String> temp = new ArrayList<String>();
+					temp.add(courseID);
 					RegisteredCourses tempObject = new RegisteredCourses(rs.getInt("student_id"), rs.getInt("semester_id"), temp);
 					ans.add(tempObject);
-					temp.clear();
 				}while(rs.next());
 			}
 			
@@ -130,9 +131,9 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			return ans;
 		}
 		catch(SQLException e) {
+			throw new CourseNotFoundException(courseID);
 		}
 		
-		return null;
 	}
 
 	/**
@@ -142,7 +143,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * @throws ProfessorNotAssignedException
 	 */
 	@Override
-	public ArrayList<Course> viewCourseProf(Integer instructorID) throws ProfessorNotAssignedException {
+	public ArrayList<Course> viewCourseProf(Integer instructorID) throws ProfessorNotAssignedException,Exception {
 
 		ArrayList<Course>ans = new ArrayList<Course>();
 		Connection connection = DBUtil.getConnection();
@@ -153,7 +154,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				Course c = new Course(rs.getString("courseID"), rs.getString("course_name"), rs.getString("instructor"), 10, rs.getInt("available_seats"), 0);
+				Course c = new Course(rs.getString("courseID"), rs.getString("course_name"), rs.getString("instructor"), 10, rs.getInt("available_seats"), 1);
 				ans.add(c);
 			}
 
@@ -163,13 +164,9 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			else {
 				throw new ProfessorNotAssignedException(instructorID);
 			}
-		} catch(SQLException e) {
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		}  catch (Exception e) {
+			throw e;
 		}
-
-		return ans;
 	}
 
 	/**
@@ -181,7 +178,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	 * @throws ProfessorCourseRegistrationException
 	 */
 	@Override
-	public Boolean registerCourse(Integer instructorID, Integer semesterID, String courseID) throws ProfessorCourseRegistrationException{
+	public Boolean registerCourse(Integer instructorID, Integer semesterID, String courseID) throws ProfessorCourseRegistrationException,SQLException{
 
 		
 		Connection connection=DBUtil.getConnection();
@@ -194,8 +191,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 			if(!rs.next())
 			{
 
-				logger.error("Course already registered / Course doesn't exist!!");
-				return false;
+				throw new ProfessorCourseRegistrationException(instructorID, semesterID, courseID);
 			}
 			else {
 			
@@ -217,7 +213,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 		
 		catch(SQLException e)
 		{
-			return false;
+			throw e;
 		}
 	}
 
