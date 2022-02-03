@@ -272,7 +272,7 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 	}
 
 	@Override
-	public ArrayList<Course> viewAvailableCourses() {
+	public ArrayList<Course> viewAvailableCourses() throws Exception {
 
 		PreparedStatement stmt;
 		ArrayList<Course> courseCatalog = null;
@@ -299,7 +299,7 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 			}
 		} catch (SQLException e) {
 
-			logger.error(e.getMessage());
+			throw e;
 		}
 
 		return courseCatalog;

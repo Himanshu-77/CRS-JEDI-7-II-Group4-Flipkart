@@ -8,10 +8,13 @@ import com.flipkart.bean.Student;
 import com.flipkart.business.StudentOperation;
 import com.flipkart.constants.SQLQueries;
 import com.flipkart.constants.constants;
+import com.flipkart.exception.CourseAlreadyPresentException;
 import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.exception.FeesPendingException;
+import com.flipkart.exception.ProfessorNotFoundException;
 import com.flipkart.exception.ProfessorNotRegisteredException;
 import com.flipkart.exception.StudentNotApprovedException;
+import com.flipkart.exception.UsernameTakenException;
 import com.flipkart.utils.DBUtil;
 import org.apache.log4j.Logger;
 
@@ -56,20 +59,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 		return instance;
 	}
 
-	/*
-	public static void main(String[] args) throws CourseNotFoundException {
-		AdminDaoOperation test = new AdminDaoOperation();
-		Course c = new Course();
-		c.setCourseID("38");
-		c.setCoursename("test course");
-		c.setAvailableSeats(10);
-		c.setInstructorID("2");
-		c.setOfferedSemester(1);
-		test.addCourse(c);
-
-		test.removeCourse("38");
-	}
-	*/
 
 
 	@Override
@@ -136,7 +125,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 	}
 
 	@Override
-	public void addProfessor(Professor professor){
+	public void addProfessor(Professor professor) throws Exception{
 		// TODO Auto-generated method stub
 
 		String sql = SQLQueries.ADMIN_ADD_PROFESSOR;
@@ -169,12 +158,12 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 		} catch (SQLException e) {
 
-			logger.error(e.getMessage());
+			throw new UsernameTakenException();
 		}
 	}
 
 	@Override
-	public void removeProfessor(int professorID) throws ProfessorNotRegisteredException{
+	public void removeProfessor(int professorID) throws ProfessorNotRegisteredException,Exception{
 		// TODO Auto-generated method stub
 
 		String sql = SQLQueries.ADMIN_REMOVE_PROFESSOR;
@@ -187,7 +176,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 			int row = statement.executeUpdate();
 			if(row==0) {
-				throw new ProfessorNotRegisteredException(professorID);
+				throw new ProfessorNotFoundException(professorID);
 			}
 			else {
 			
@@ -196,12 +185,12 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 	}
 
 	@Override
-	public ReportCard generateReportCard(int studentID) throws StudentNotApprovedException {
+	public ReportCard generateReportCard(int studentID) throws Exception {
 
 		Connection connection = DBUtil.getConnection();
 		ReportCard R = new ReportCard();
@@ -211,10 +200,10 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			statement.setInt(1, studentID);
 			ResultSet rs = statement.executeQuery();
 			rs.next();
-			
 			if(rs.getBoolean(1)) {
 
 				StudentOperation so = new StudentOperation();
+				System.out.print("hahaha");
 				R = so.viewReportCard(studentID, constants.SemesterID);
 				
 				PreparedStatement statement1 = connection.prepareStatement(SQLQueries.GENERATE_REPORT_CARD);
@@ -228,14 +217,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 				throw new StudentNotApprovedException(studentID);
 			}
 			
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw e;
 		}
 		return R;
 	}
 
 	@Override
-	public void removeCourse(String courseID) throws CourseNotFoundException {
+	public void removeCourse(String courseID) throws Exception {
 
 		String sql = SQLQueries.ADMIN_REMOVE_COURSE;
 
@@ -262,13 +251,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 		
 	}
 
 	@Override
-	public void addCourse(Course course) {
+	public void addCourse(Course course) throws Exception {
 
 		String sql = SQLQueries.ADMIN_ADD_COURSE;
 		Connection connection = DBUtil.getConnection();
@@ -291,14 +280,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			System.out.println(row + " course added.");
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			throw new CourseAlreadyPresentException(course.getCourseID());
 		}
 		
 	}
 
 	
 	@Override
-	public HashMap<String,ArrayList<Integer> >  viewCourseStudentList(String courseID, int semesterId, Boolean viewAll) {
+	public HashMap<String,ArrayList<Integer> >  viewCourseStudentList(String courseID, int semesterId, Boolean viewAll) throws Exception {
 		
 		Connection connection = DBUtil.getConnection();
 		HashMap<String,ArrayList<Integer> > StudentList = new HashMap<String,ArrayList<Integer> >();
@@ -335,14 +324,14 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			throw new CourseNotFoundException(courseID);
 		}
 		return StudentList;
 	
 	}
 
 	@Override
-	public List<Student> getPendingStudentAccountsList() {
+	public List<Student> getPendingStudentAccountsList() throws Exception {
 		
 		Connection connection = DBUtil.getConnection();
 		List<Student> pendingStudents = new ArrayList<Student>();
@@ -352,7 +341,7 @@ public class AdminDaoOperation implements AdminDaoInterface {
 						
 			ResultSet rs = statement.executeQuery();
 			if(!rs.next()  ) {
-				logger.error("No pending student!!!");
+				throw new Exception("No pending student!!!");
 			}
 			else {
 			do {
@@ -369,13 +358,13 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}	
 				
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 		return pendingStudents;
 	}
 
 	@Override
-	public void approveStudentAccount(int studentId) {
+	public void approveStudentAccount(int studentId) throws Exception {
 		
 		Connection connection = DBUtil.getConnection();
 		
@@ -387,7 +376,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			System.out.println("Student ID: " + studentId + " Approved !");
 				
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			
+			throw new Exception ("Invalid Student ID");
 		}
 	}
 

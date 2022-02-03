@@ -8,6 +8,7 @@ import com.flipkart.dao.AdminDaoInterface;
 import com.flipkart.dao.AdminDaoOperation;
 import com.flipkart.exception.CourseNotFoundException;
 import com.flipkart.exception.FeesPendingException;
+import com.flipkart.exception.ProfessorNotAddedException;
 import com.flipkart.exception.ProfessorNotRegisteredException;
 import com.flipkart.exception.StudentNotApprovedException;
 import org.apache.log4j.Logger;
@@ -49,45 +50,49 @@ public class AdminOperation implements AdminInterface {
 	AdminDaoInterface ado  = AdminDaoOperation.getInstance();
 
 	@Override
-	public void enableFeePayment(int semesterId) {
+	public void enableFeePayment(int semesterId) throws Exception  {
 
 		try {
 			ado.enableFeePaymentWindow(semesterId);
 		}
 		catch (SQLException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 	}
 
 	@Override
-	public void approveStudentRegistration(int studentId,int semesterId) {
+	public void approveStudentRegistration(int studentId,int semesterId) throws Exception {
 
 		try {
 			ado.approveStudentRegistration(studentId,semesterId);
-		} catch (FeesPendingException | StudentNotApprovedException e) {
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 
 	@Override
-	public void addProfessor(Professor professor) {
+	public void addProfessor(Professor professor) throws Exception{
 
-		ado.addProfessor(professor);
+		try {
+			ado.addProfessor(professor);
+		} catch (Exception e) {
+			throw new ProfessorNotAddedException();
+		}
 	}
 
 	@Override
-	public void removeProfessor(int professorID) {
+	public void removeProfessor(int professorID) throws Exception {
 		try {
 		
 			ado.removeProfessor(professorID);
 		}
 		catch(ProfessorNotRegisteredException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 	}
 
 	@Override
-	public void removeCourse(String courseID) {
+	public void removeCourse(String courseID) throws Exception {
 
 		try {
 
@@ -95,55 +100,76 @@ public class AdminOperation implements AdminInterface {
 
 		}
 
-		catch(CourseNotFoundException e) {
-			logger.error(e.getMessage());
+		catch(Exception e) {
+			throw e;
 		}
 	}
 	
 
 	@Override
-	public void addCourse(String course_name, String courseID, int semester) {
-		// TODO Auto-generated method stub
-		Course newCourse = new Course();
-		newCourse.setCoursename(course_name);
-		newCourse.setCourseID(courseID);
-		newCourse.setOfferedSemester(semester);
-		newCourse.setAvailableSeats(10);
+	public void addCourse(String course_name, String courseID, int semester) throws Exception{
+		try {
+			Course newCourse = new Course();
+			newCourse.setCoursename(course_name);
+			newCourse.setCourseID(courseID);
+			newCourse.setOfferedSemester(semester);
+			newCourse.setAvailableSeats(10);
+			ado.addCourse(newCourse);
 
-		ado.addCourse(newCourse);
+		}
+		catch(Exception e) {
+			throw e;
+		}
+		
+		
 	}
 
 	
 	@Override
-	public HashMap<String,ArrayList<Integer> > viewCourseStudentList(String courseID, int semester, Boolean viewAll) {
+	public HashMap<String,ArrayList<Integer> > viewCourseStudentList(String courseID, int semester, Boolean viewAll)  throws Exception{
 
-		return ado.viewCourseStudentList(courseID,semester,viewAll);
+		try {
+			return ado.viewCourseStudentList(courseID,semester,viewAll);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	@Override
-	public ReportCard generateReportCard(int studentID) {
+	public ReportCard generateReportCard(int studentID) throws Exception{
 
 		ReportCard R = new ReportCard();
 		try {
 
 			R= ado.generateReportCard(studentID);
 
-		} catch (StudentNotApprovedException e) {
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw e;
 		}
 		return R;
 	}
 
 	
 	@Override
-	public List<Student> getPendingStudentAccountsList() {
+	public List<Student> getPendingStudentAccountsList() throws Exception {
 
-		return ado.getPendingStudentAccountsList();
+		try {
+			return ado.getPendingStudentAccountsList();
+		} catch (Exception e) {
+			throw e;
+		}
 		
 	}
 
 	@Override
-	public void approveStudentAccount(Integer studentID) {
-		ado.approveStudentAccount(studentID);
+	public void approveStudentAccount(Integer studentID) throws Exception {
+		try {
+			ado.approveStudentAccount(studentID);
+		}
+		catch(Exception e) {
+			throw e;
+		}
+		
+		
 	}
 }

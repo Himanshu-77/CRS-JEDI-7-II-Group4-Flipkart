@@ -40,7 +40,7 @@ public interface StudentInterface {
 	 * @throws StudentNotApprovedException 
 	 * @throws SQLException 
 	 */
-	public ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException,FeesPendingException, SQLException, StudentNotApprovedException;
+	public ReportCard viewReportCard(int StudentID, int semesterId) throws Exception;
 	
 	/**
 	 * @param studentID

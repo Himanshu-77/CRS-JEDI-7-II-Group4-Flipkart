@@ -18,24 +18,24 @@ public interface AdminInterface {
 	/**
 	 * @param semesterId
 	 */
-	public void enableFeePayment(int semesterId);
+	public void enableFeePayment(int semesterId) throws Exception ;
 
 	/**
 	 * @param studentId
 	 * @throws StudentNotApprovedException 
 	 * @throws FeesPendingException 
 	 */
-	public void approveStudentRegistration(int studentId,int semesterId) throws StudentNotRegisteredException, FeesPendingException, StudentNotApprovedException;
+	public void approveStudentRegistration(int studentId,int semesterId) throws Exception;
 	
 	/**
 	 * @param professor
 	 */
-	public void addProfessor(Professor professor) throws ProfessorNotAddedException;
+	public void addProfessor(Professor professor) throws Exception;
 	
 	/**
 	 * @param professorID
 	 */
-	public void removeProfessor(int professorID);
+	public void removeProfessor(int professorID) throws Exception;
 	
 	/**
 	 * @param studentID
@@ -43,14 +43,14 @@ public interface AdminInterface {
 	 * @throws StudentNotApprovedException 
 	 * @throws FeesPendingException 
 	 */
-	public ReportCard generateReportCard(int studentID) throws GradeNotAddedException, StudentNotApprovedException, FeesPendingException;
+	public ReportCard generateReportCard(int studentID) throws Exception;
 	
 	/**
 	 * @param courseID
 	 */
-	public void removeCourse(String courseID) throws CourseNotFoundException, CourseNotDeletedException;
+	public void removeCourse(String courseID) throws Exception;
 
-	public void addCourse(String course_name, String courseID, int semester) throws CourseAlreadyPresentException;
+	public void addCourse(String course_name, String courseID, int semester) throws Exception;
 
 	/**
 	 * @param courseID
@@ -58,12 +58,12 @@ public interface AdminInterface {
 	 * @param viewAll
 	 * @return
 	 */
-	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semester, Boolean viewAll);
+	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semester, Boolean viewAll)  throws Exception;
 
-	public List<Student> getPendingStudentAccountsList();
+	public List<Student> getPendingStudentAccountsList() throws Exception;
 
 	/**
 	 * @param studentID
 	 */
-	public void approveStudentAccount(Integer studentID);
+	public void approveStudentAccount(Integer studentID) throws Exception;
 }

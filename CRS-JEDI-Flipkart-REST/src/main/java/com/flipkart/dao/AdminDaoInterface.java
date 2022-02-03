@@ -34,13 +34,13 @@ public interface AdminDaoInterface {
 	/**
 	 * @param professor
 	 */
-	public void addProfessor(Professor professor);
+	public void addProfessor(Professor professor) throws Exception;
 
 	
 	/**
 	 * @param professorID
 	 */
-	public void removeProfessor(int professorID) throws ProfessorNotRegisteredException;
+	public void removeProfessor(int professorID) throws Exception;
 
 	
 	/**
@@ -51,20 +51,20 @@ public interface AdminDaoInterface {
 	 * @throws GradeNotAddedException 
 	 */
 
-	public ReportCard generateReportCard(int studentID) throws StudentNotApprovedException;
+	public ReportCard generateReportCard(int studentID) throws Exception;
 
 
 	/**
 	 * @param courseID
 	 * @throws CourseNotFoundException
 	 */
-	public void removeCourse(String courseID) throws CourseNotFoundException;
+	public void removeCourse(String courseID) throws Exception;
 
 
 	/**
 	 * @param course
 	 */
-	public void addCourse(Course course);
+	public void addCourse(Course course) throws Exception;
 
 	/**
 	 * @param courseID
@@ -72,16 +72,16 @@ public interface AdminDaoInterface {
 	 * @param viewAll
 	 * @return
 	 */
-	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semesterId, Boolean viewAll);
+	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semesterId, Boolean viewAll) throws Exception;
 
 	/**
 	 * @return
 	 */
-	public List<Student> getPendingStudentAccountsList();
+	public List<Student> getPendingStudentAccountsList() throws Exception;
 
 	/**
 	 * @param studentId
 	 */
-	public void approveStudentAccount(int studentId);
+	public void approveStudentAccount(int studentId) throws Exception;
 
 }

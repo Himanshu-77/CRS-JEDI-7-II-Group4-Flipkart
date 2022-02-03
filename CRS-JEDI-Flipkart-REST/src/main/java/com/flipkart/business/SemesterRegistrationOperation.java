@@ -69,7 +69,7 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 	}
 
 	@Override
-	public ArrayList<Course> viewAvailableCourses() {
+	public ArrayList<Course> viewAvailableCourses() throws Exception {
 
 		try {
 
@@ -81,9 +81,8 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 			return srdo.viewAvailableCourses();
 
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
-		return null;
 	}
 
 	@Override

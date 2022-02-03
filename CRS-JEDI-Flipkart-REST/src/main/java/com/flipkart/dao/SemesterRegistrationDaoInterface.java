@@ -49,5 +49,5 @@ public interface SemesterRegistrationDaoInterface {
 	 * Method to view all courses available
 	 * @return list of all courses with availbale seats
 	 */
-	public ArrayList<Course> viewAvailableCourses();
+	public ArrayList<Course> viewAvailableCourses() throws Exception;
 }

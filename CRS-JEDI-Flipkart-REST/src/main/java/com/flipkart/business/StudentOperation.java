@@ -38,7 +38,7 @@ public class StudentOperation implements StudentInterface {
 	}
 
 	@Override
-	public ReportCard viewReportCard(int StudentID, int semesterId)  {
+	public ReportCard viewReportCard(int StudentID, int semesterId) throws Exception {
 
 		ReportCard R = new ReportCard();
 
@@ -50,8 +50,8 @@ public class StudentOperation implements StudentInterface {
 	    		System.out.println(key + "    " + value);
 	    		});
 
-		} catch (ReportCardNotGeneratedException | GradeNotAddedException | StudentNotApprovedException | FeesPendingException e) {
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw e;
 		}
 
 		ReportCardOperation report = new ReportCardOperation();

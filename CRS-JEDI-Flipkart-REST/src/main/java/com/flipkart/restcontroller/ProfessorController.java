@@ -135,6 +135,7 @@ private static Logger logger = Logger.getLogger(CRSProfessor.class);
     	
     }
 
+//    Get professor ID by entering username
     private Integer getProfessorID(String username) throws Exception {
 
         ProfessorInterface po = ProfessorOperation.getInstance();

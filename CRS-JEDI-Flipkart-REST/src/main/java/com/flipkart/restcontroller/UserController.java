@@ -35,7 +35,7 @@ public class UserController {
     StudentOperation so = StudentOperation.getInstance();
 
 
-
+// PUT API for login verification
     @PUT
 	@Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
@@ -104,7 +104,8 @@ public class UserController {
 		
     }
 
-    
+ // POST API for student self registration
+ 
     @POST
 	@Path("/register")
 	@Consumes("application/json")
@@ -134,6 +135,8 @@ public class UserController {
         return Response.status(201).entity(result).build();
     }
 
+ // POST API to update password
+    
     @POST
 	@Path("/updatePassword")
     @Produces(MediaType.APPLICATION_JSON)
