@@ -47,6 +47,7 @@ public class StudentController {
     SemesterRegistrationInterface sro = SemesterRegistrationOperation.getInstance();
     StudentInterface so = StudentOperation.getInstance();
 
+    // GET API to check if student can finish semeseter registration and pay fees
     @GET
 	@Path("/finishRegistration")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -83,6 +84,8 @@ public class StudentController {
     	}
         
     }
+    
+//    POST API to pay student semester fees
 
     @POST
    	@Path("/payFee")
@@ -139,6 +142,7 @@ public class StudentController {
         }
 
 
+//    DELETE API to drop course 
     @DELETE
 	@Path("/dropCourse")
   	@Produces(MediaType.APPLICATION_JSON)
@@ -212,7 +216,7 @@ public class StudentController {
        
     }
 
-
+//View all registered courses for a given student in a given course
     @GET
 	@Path("/viewRegisteredCourses")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -232,6 +236,8 @@ public class StudentController {
     	}
     	
     }
+    
+//    View report card of student for a given semester
 
     @GET
 	@Path("/viewGradeCard")
@@ -251,6 +257,7 @@ public class StudentController {
     	}
     }
     
+//    Get student id from username
     private int getStudentID(String username)throws Exception{
 
         int res;
