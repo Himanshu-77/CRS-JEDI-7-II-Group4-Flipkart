@@ -3,11 +3,13 @@
  */
 package com.flipkart.business;
 
+import com.flipkart.bean.Course;
 import com.flipkart.bean.ReportCard;
 import com.flipkart.bean.Student;
 import com.flipkart.exception.*;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @author rutwi
@@ -48,11 +50,11 @@ public interface StudentInterface {
 	 * @return course list
 	 * @throws SQLException 
 	 */
-	public void viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException, SQLException;
+	public List<Course> viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException, SQLException;
 
 	/**
 	 * @param username
 	 * @return
 	 */
-	public int getStudentIDFromUserName(String username);
+	public int getStudentIDFromUserName(String username)throws Exception;
 }

@@ -153,8 +153,8 @@ public class AdminController {
 	@Path("/enableFeePaymentWindow")
 	@Produces(MediaType.APPLICATION_JSON)
   	public Response enableFeePaymentWindow(@NotNull
-  			@Min(value = 1, message = "Student ID should not be less than 1")
-			@Max(value = 8, message = "Student ID should be less than 9")
+  			@Min(value = 1, message = "Semester ID should not be less than 1")
+			@Max(value = 8, message = "Semester ID should be less than 9")
   			@QueryParam("semesterID") Integer semesterID){
       
   		try {

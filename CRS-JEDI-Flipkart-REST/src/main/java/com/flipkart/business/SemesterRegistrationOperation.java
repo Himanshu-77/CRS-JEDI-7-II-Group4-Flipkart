@@ -43,29 +43,31 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 	}
 
 	@Override
-	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary) {
+	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary)throws Exception,CourseExistsInCartException {
 
 		try {
 
 			return srdo.addCourse(studentId, semesterId, courseId, isPrimary);
 
-		} catch (CourseNotFoundException | CourseSeatsUnavailableException | CourseExistsInCartException e) {
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw e;
 		}
-		return false;
+		catch(CourseExistsInCartException e) {
+			throw e;
+		}
+		
 	}
 
 	@Override
-	public boolean dropCourse(int studentId, int semesterId, String courseId) {
+	public boolean dropCourse(int studentId, int semesterId, String courseId) throws Throwable{
 
 		try {
 
 			return srdo.dropCourse(studentId, semesterId, courseId);
 
 		} catch (CourseNotFoundException | CourseNotInCart e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
-		return false;
 	}
 
 	@Override
@@ -86,7 +88,7 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 	}
 
 	@Override
-	public boolean finishRegistration(int studentId, int semesterId) {
+	public boolean finishRegistration(int studentId, int semesterId)throws Exception, Throwable {
 
 		try {
 
@@ -96,10 +98,10 @@ public class SemesterRegistrationOperation implements SemesterRegistrationInterf
 			return val;
 
 		} catch (InvalidSemesterRegistration e) {
-			logger.error(e.getMessage());
+			throw e;
 		} catch (PaymentDoneException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
-		return false;
+		
 	}
 }

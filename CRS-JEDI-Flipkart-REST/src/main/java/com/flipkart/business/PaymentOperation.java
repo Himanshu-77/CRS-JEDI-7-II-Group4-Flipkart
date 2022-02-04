@@ -20,21 +20,16 @@ public class PaymentOperation implements PaymentInterface{
 	private static final Logger logger = Logger.getLogger(PaymentOperation.class);
 
 	@Override
-	public void makePayment(Payment payment) {
+	public void makePayment(Payment payment) throws Exception {
 
 		try {
 			PaymentDaoInterface paymentObj = new PaymentDaoOperation();
 			paymentObj.makePayment(payment);
 
-			/*
-			Notification obj = new Notification();
-			obj.showPaymentNotification(Integer.toString(payment.getStudentID()));
-			 */
-
 		} catch (PaymentFailedException e) {
-			logger.error(e.getMessage());
+			throw e;
 		} catch (PaymentDoneException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 	}
 

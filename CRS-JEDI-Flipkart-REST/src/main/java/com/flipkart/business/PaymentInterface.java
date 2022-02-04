@@ -16,6 +16,6 @@ public interface PaymentInterface {
 	 *
 	 * @param payment
 	 */
-	public void makePayment(Payment payment);
+	public void makePayment(Payment payment)throws Exception;
 	
 }

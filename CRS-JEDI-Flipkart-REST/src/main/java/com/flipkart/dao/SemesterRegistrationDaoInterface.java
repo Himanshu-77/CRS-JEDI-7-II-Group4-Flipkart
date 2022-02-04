@@ -24,7 +24,7 @@ public interface SemesterRegistrationDaoInterface {
 	 * @return the course if it is added successfully, else null
 	 */
 
-	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary) throws CourseNotFoundException, CourseSeatsUnavailableException, CourseExistsInCartException;
+	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary) throws Exception,CourseExistsInCartException;
 
 	
 	/**

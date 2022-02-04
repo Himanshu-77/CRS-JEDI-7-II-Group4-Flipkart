@@ -44,11 +44,7 @@ public class StudentOperation implements StudentInterface {
 
 		try {
 			R = SDO.viewReportCard(StudentID,semesterId);
-			System.out.println("StudentID : "+R.getStudentID()+"\t SemesterID : "+R.getSemesterID());
-	    	System.out.println("Course  Grade");
-	    	R.getGrades().forEach((key, value) -> {
-	    		System.out.println(key + "    " + value);
-	    		});
+			
 
 		} catch (Exception e) {
 			throw e;
@@ -56,35 +52,21 @@ public class StudentOperation implements StudentInterface {
 
 		ReportCardOperation report = new ReportCardOperation();
 		R.setSpi(report.getSPI(R));
+		R.setSemesterID(semesterId);
+		R.setStudentID(StudentID);
 		return R;
 	}
 
 	@Override
-	public void viewRegisteredCourses(int studentID, int semesterId) {
+	public List<Course> viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException, SQLException {
 
 		try {
 			List<Course> courses = SDO.viewRegisteredCourses(studentID,semesterId);
 
-			System.out.println("=======================================");
-			System.out.println("Registered courses :");
-			System.out.println("---------------------------------------");
-			System.out.println("Primary courses :");
-			for(Course c: courses) {
-				if(c.getPrimary()) {
-					System.out.println("Course ID : "+c.getCourseID()+" \t Course Name : "+ c.getCoursename()+"\t Instructor : "+c.getInstructorID());
-				}
-			}
-			System.out.println("---------------------------------------");
-			System.out.println("Alternate courses :");
-			for(Course c: courses) {
-				if(!c.getPrimary()) {
-					System.out.println("Course ID : "+c.getCourseID()+" \t Course Name : "+ c.getCoursename()+"\t Instructor : "+c.getInstructorID());
-				}
-			}
-			System.out.println("=======================================");
+			return courses;
 
-		} catch (StudentNotRegisteredException e) {
-			logger.error(e.getMessage());
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 
@@ -109,15 +91,15 @@ public class StudentOperation implements StudentInterface {
 		}
 	}
 
-	public int getStudentIDFromUserName(String username) {
+	public int getStudentIDFromUserName(String username)throws Exception {
 
 		try {
 			return SDO.getStudentIDFromUserName(username);
 		} catch (StudentNotRegisteredException e) {
-			logger.error(e.getMessage());
+			throw e;
 		}
 
-		return -1;
+		
 	}
 
 	public Boolean checkPaymentWindow(int StudentID)  {

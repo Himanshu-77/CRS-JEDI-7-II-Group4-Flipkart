@@ -4,6 +4,8 @@
 package com.flipkart.business;
 
 import com.flipkart.bean.Course;
+import com.flipkart.exception.CourseExistsInCartException;
+import com.flipkart.exception.CourseNotFoundException;
 
 import java.util.ArrayList;
 
@@ -20,7 +22,7 @@ public interface SemesterRegistrationInterface {
 	 * @param courseId 
 	 * @return the course if it is added successfully, else null
 	 */
-	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary);
+	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary) throws Exception,CourseExistsInCartException;
 	
 	/**
 	 * Method to drop Course selected by student 
@@ -30,7 +32,7 @@ public interface SemesterRegistrationInterface {
 	 * @return Boolean value indicating if it is was dropped successfully
 	 */
 
-	public boolean dropCourse(int studentId, int semesterId, String courseId);
+	public boolean dropCourse(int studentId, int semesterId, String courseId)throws Throwable;
 	
 	/**
 	 * Method to view all courses available
@@ -44,5 +46,5 @@ public interface SemesterRegistrationInterface {
 	 * @param semesterId
 	 * @return
 	 */
-	public boolean finishRegistration(int studentId, int semesterId);
+	public boolean finishRegistration(int studentId, int semesterId)throws Exception, Throwable;
 }

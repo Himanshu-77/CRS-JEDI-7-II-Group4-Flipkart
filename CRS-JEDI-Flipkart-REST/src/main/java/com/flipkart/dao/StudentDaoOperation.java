@@ -134,7 +134,6 @@ public class StudentDaoOperation implements StudentDaoInterface {
 			PreparedStatement preparedStatement=connection.prepareStatement(SQLQueries.GET_COURSES);
 			preparedStatement.setInt(1, studentID);
 			preparedStatement.setInt(2, semesterId);
-			
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
@@ -151,6 +150,8 @@ public class StudentDaoOperation implements StudentDaoInterface {
 					c.setCoursename(rs0.getString("course_name"));
 					c.setInstructorID(rs0.getString("instructor"));
 					c.setPrimary(rs.getBoolean("is_primary"));
+					c.setTotalSeats(10);
+					c.setAvailableSeats(rs0.getInt("available_seats"));
 
 					registeredCourses.add(c);
 				}

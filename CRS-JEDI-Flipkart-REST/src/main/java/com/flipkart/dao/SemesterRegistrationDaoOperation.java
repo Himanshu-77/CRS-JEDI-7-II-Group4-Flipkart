@@ -48,7 +48,7 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 	}
 
 	@Override
-	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary) throws CourseNotFoundException, CourseSeatsUnavailableException, CourseExistsInCartException {
+	public boolean addCourse(int studentId, int semesterId, String courseId, boolean isPrimary) throws Exception, CourseExistsInCartException {
 
 
 		PreparedStatement stmt;
@@ -249,14 +249,7 @@ public class SemesterRegistrationDaoOperation implements SemesterRegistrationDao
 			}
 
 			if(totalPrimaryCourse == 4 && totalAlternateCourses == 2) {
-				/*
-				System.out.println("+-----------------------------------+");
-				System.out.println("|         Notification Alert!       |");
-				System.out.println("+-----------------------------------+");
-				System.out.println("|      Registration Completed!      |");
-				System.out.println("|    Please Complete Fee Payment!   |");
-				System.out.println("+-----------------------------------+");
-				 */
+				
 				return true;
 			}
 
