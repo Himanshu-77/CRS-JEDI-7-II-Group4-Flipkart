@@ -203,7 +203,6 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			if(rs.getBoolean(1)) {
 
 				StudentOperation so = new StudentOperation();
-				System.out.print("hahaha");
 				R = so.viewReportCard(studentID, constants.SemesterID);
 				
 				PreparedStatement statement1 = connection.prepareStatement(SQLQueries.GENERATE_REPORT_CARD);

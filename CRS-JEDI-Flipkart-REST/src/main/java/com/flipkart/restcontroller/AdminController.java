@@ -225,8 +225,8 @@ public class AdminController {
       return Response.status(201).entity("Student Approved sucessfully!!! ").build();
   }
 
- // GET API to generate report card
-  	@GET
+ // POST API to generate report card
+  	@POST
 	@Path("/generateReportCard")
 	@Produces(MediaType.APPLICATION_JSON)
   	public Response generateReportCard(@NotNull
