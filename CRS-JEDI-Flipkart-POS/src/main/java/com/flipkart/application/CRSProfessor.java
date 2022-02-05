@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.flipkart.dao.ProfessorDaoOperation;
+import com.flipkart.validator.ProfessorValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.flipkart.exception.CourseNotFoundException;
@@ -27,9 +28,7 @@ public class CRSProfessor {
     public void createProfessorMenu(String username) {
         try {
 
-//            professorID = getProfessorID(username);
             this.professorID = getProfessorID(username);
-//            assert professorID != -1;
 
             while(true) {
                 
@@ -102,7 +101,13 @@ public class CRSProfessor {
         System.out.println("Enter Grade: ");
         grade = sc.nextInt();
         sc.nextLine();
-    	profObj.addGrade(studentID, semesterID, courseID, grade);
+        if(ProfessorValidator.isValidGrade(grade)){
+            profObj.addGrade(studentID, semesterID, courseID, grade);
+        }
+        else{
+            logger.error("Invalid Grade!!");
+        }
+
     }
 
     private void viewEnrolledStudents() throws CourseNotFoundException {
@@ -116,7 +121,13 @@ public class CRSProfessor {
         semesterID = sc.nextInt();
 
     	try {
-        	profObj.viewCourseStudents(courseID, semesterID);
+        	if(ProfessorValidator.isValidSemester(semesterID)){
+                profObj.viewCourseStudents(courseID, semesterID);
+            }
+            else{
+                logger.error("Invalid Semester");
+            }
+
     	}
     	catch(Exception e) {
     		throw new CourseNotFoundException(courseID);

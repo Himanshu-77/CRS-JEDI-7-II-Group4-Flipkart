@@ -17,9 +17,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.flipkart.application.CRSAdmin;
-import com.flipkart.application.CRSProfessor;
-import com.flipkart.application.CRSStudent;
 import com.flipkart.bean.Student;
 import com.flipkart.business.StudentOperation;
 import com.flipkart.business.UserOperation;

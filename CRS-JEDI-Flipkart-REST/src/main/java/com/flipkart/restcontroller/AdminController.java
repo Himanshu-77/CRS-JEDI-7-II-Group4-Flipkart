@@ -23,7 +23,6 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import com.flipkart.application.CRSAdmin;
 import com.flipkart.bean.Course;
 import com.flipkart.bean.Professor;
 import com.flipkart.bean.ReportCard;
@@ -42,7 +41,7 @@ import com.flipkart.exception.InvalidSemesterException;
 @Path("/admin")
 public class AdminController {
 	
-	private static final Logger logger = Logger.getLogger(CRSAdmin.class);
+	private static final Logger logger = Logger.getLogger(AdminController.class);
   
 	
   AdminInterface ao = AdminOperation.getInstance();
