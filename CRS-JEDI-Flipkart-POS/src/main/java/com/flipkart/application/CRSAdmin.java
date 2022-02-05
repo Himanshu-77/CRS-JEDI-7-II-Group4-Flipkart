@@ -15,6 +15,7 @@ import com.flipkart.constants.constants;
 import com.flipkart.business.AdminInterface;
 import com.flipkart.business.AdminOperation;
 import com.flipkart.exception.InvalidSemesterException;
+import com.flipkart.validator.AdminValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -228,16 +229,21 @@ public class CRSAdmin {
             joiningYear = sc.nextInt();
             System.out.println("=======================================");
 
-            Professor Prof = new Professor();
-            Prof.setUserID(username);
-            Prof.setName(name);
-            Prof.setPassword(password);
-            Prof.setDepartment(department);
-            Prof.setDesignation(designation);
-            Prof.setContactNumber(contact);
-            Prof.setJoiningYear(joiningYear);
-            
-            ao.addProfessor(Prof);
+            if(AdminValidator.isValidNumber(contact)){
+                Professor Prof = new Professor();
+                Prof.setUserID(username);
+                Prof.setName(name);
+                Prof.setPassword(password);
+                Prof.setDepartment(department);
+                Prof.setDesignation(designation);
+                Prof.setContactNumber(contact);
+                Prof.setJoiningYear(joiningYear);
+                ao.addProfessor(Prof);
+            }
+            else{
+                logger.error("Invalid details entered");
+            }
+
 
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -245,12 +251,21 @@ public class CRSAdmin {
     }
 
     private void approveStudentRegistration() {
-        int studentID;
+        int studentID,semesterID;
         System.out.println("Enter student ID: ");
         studentID = sc.nextInt();
+        System.out.println("Enter semester ID: ");
+        semesterID = sc.nextInt();
+
 
         try {
-			ao.approveStudentRegistration(studentID,constants.SemesterID);
+            if(AdminValidator.isValidSemester(semesterID)){
+                ao.approveStudentRegistration(studentID,semesterID);
+            }
+            else{
+                logger.error("Invalid Semester");
+            }
+
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

@@ -27,12 +27,12 @@ public class App extends Application<Configuration> {
     /*
      * Run will execute by the dropwizard container and registered all the web services here.
      * */
-    
+
     @Override
     public void run(Configuration c, Environment e) throws Exception {
         LOGGER.info("Registering REST resources");
 
-        e.jersey().register(new Sample());
+//        Register Controllers with jersey
         e.jersey().register(new AdminController());
         e.jersey().register(new ProfessorController());
         e.jersey().register(new UserController());

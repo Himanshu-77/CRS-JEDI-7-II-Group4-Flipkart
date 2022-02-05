@@ -19,7 +19,6 @@ import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
 
-import com.flipkart.application.CRSProfessor;
 import com.flipkart.business.ProfessorInterface;
 import com.flipkart.business.ProfessorOperation;
 import com.flipkart.exception.CourseNotFoundException;
@@ -32,7 +31,7 @@ import com.flipkart.exception.GradeNotAddedException;
 @Path("/professor")
 public class ProfessorController {
 	
-private static Logger logger = Logger.getLogger(CRSProfessor.class);
+private static Logger logger = Logger.getLogger(ProfessorController.class);
 	
     ProfessorInterface profObj = ProfessorOperation.getInstance();
     private int professorID;

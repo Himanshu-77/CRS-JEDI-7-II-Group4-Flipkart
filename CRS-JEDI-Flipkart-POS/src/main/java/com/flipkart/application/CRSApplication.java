@@ -1,17 +1,21 @@
 package com.flipkart.application;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import com.flipkart.bean.Student;
 import com.flipkart.business.StudentOperation;
 import com.flipkart.business.UserOperation;
+import com.flipkart.validator.StudentValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CRSApplication {
 
     private Scanner sc = new Scanner(System.in);
+    private static final Logger logger =  LogManager.getLogger(CRSApplication.class);
+
     StudentOperation so = StudentOperation.getInstance();
 
     public static void main(String[] args) {
@@ -142,17 +146,25 @@ public class CRSApplication {
             System.out.print("Contact Number: ");
             contact = sc.nextLine();
             System.out.println("=======================================");
-            
-            Student stud = so.addStudent(username, name, password, department, contact, Integer.parseInt(joiningYear));
 
-            if(stud == null) {
-                System.out.println("User Was not added");
-                System.out.println("=======================================");
+            if(StudentValidator.isValidNumber(contact)){
+                Student stud = so.addStudent(username, name, password, department, contact, Integer.parseInt(joiningYear));
+
+
+                if(stud == null) {
+                    System.out.println("User Was not added");
+                    System.out.println("=======================================");
+                }
+                else {
+                    System.out.println("User Added Successfully! Wait for admin approval!");
+                    System.out.println("=======================================");
+                }
             }
-            else {
-                System.out.println("User Added Successfully! Wait for admin approval!");
-                System.out.println("=======================================");
+            else{
+                logger.error("Invalid contact details");
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
