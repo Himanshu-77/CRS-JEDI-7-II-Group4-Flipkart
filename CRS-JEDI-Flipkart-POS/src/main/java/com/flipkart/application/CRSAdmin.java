@@ -26,6 +26,7 @@ public class CRSAdmin {
     AdminInterface ao = AdminOperation.getInstance();
     SemesterRegistrationInterface sro = SemesterRegistrationOperation.getInstance();
 
+    // Home page for Admin Login.
     public void createAdminMenu(String username) {
         try {
 
@@ -50,32 +51,50 @@ public class CRSAdmin {
 
                 switch(menuOption) {
                     case 1 :
+                        // Edit course details in course catalog.
                         editCourseList();
                         break;
+
                     case 2 :
+                        // Generate report card and SPI for students.
                         generateReportCard();
                         break;
+
                     case 3:
+                        // Approve student semester registration.
                         approveStudentRegistration();
                         break;
+
                     case 4:
+                        // Add a new professor in the system.
                     	addProfessorDetails();
                         break;
+
                     case 5:
+                        // Remove a professor from the system.
                     	removeProfessor();
                         break;
+
                     case 6:
+                        // View list of students enrolled in all courses.
                         viewCourseStudentList();
                         break;
+
                     case 7:
+                        // Approve new students' login accounts.
                     	approvePendingStudentAccounts();
                     	break;
+
                     case 8:
+                        // Enable fee payment for a semester.
                         enableFeePaymentWindow();
                         break;
+
                     case 9:
+                        // View details of all the courses.
                         viewAvailableCourses();
                         break;
+
                     case 10:
                         return;
 
@@ -307,11 +326,15 @@ public class CRSAdmin {
 
                 switch(menuOption) {
                     case 1 :
+                        // Add a new course in the catalog.
                         addCourse();
                         break;
+
                     case 2 :
+                        // Remove an existing course from the catalog.
                         removeCourse();
                         break;
+
                     case 3:
                         return;
                     default:

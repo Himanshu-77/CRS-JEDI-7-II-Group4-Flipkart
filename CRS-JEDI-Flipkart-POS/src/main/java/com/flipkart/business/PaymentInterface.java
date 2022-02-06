@@ -13,9 +13,9 @@ import com.flipkart.exception.PaymentFailedException;
 public interface PaymentInterface {
 
 	/**
-	 *
+	 * Pay fees.
 	 * @param payment
 	 */
-	public void makePayment(Payment payment);
+	void makePayment(Payment payment);
 	
 }

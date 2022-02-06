@@ -25,6 +25,7 @@ public class CRSProfessor {
         CRSProfessor test = new CRSProfessor();
     }
 
+    // Home page for a Professor Login.
     public void createProfessorMenu(String username) {
         try {
 
@@ -46,17 +47,25 @@ public class CRSProfessor {
 
                 switch(menuOption) {
                     case 1 :
+                        // View list of enrolled students for a course in a given semester.
                         viewEnrolledStudents();
                         break;
+
                     case 2 :
+                        // Add grade for a student in a course.
                         addGrade();
                         break;
+
                     case 3:
+                        // View list of courses in with professor is associated.
                         viewAvailableCourses();
                         break;
+
                     case 4:
+                        // Professor opt-in for a course.
                         registerCourse();
                         break;
+
                     case 5:
                         return;
                     default:
@@ -135,6 +144,7 @@ public class CRSProfessor {
     	
     }
 
+    // Get ID of professor by providing username.
     private Integer getProfessorID(String username) throws SQLException {
 
         ProfessorInterface po = ProfessorOperation.getInstance();
@@ -146,5 +156,5 @@ public class CRSProfessor {
         }
         return -1;
     }
-    }
+}
 

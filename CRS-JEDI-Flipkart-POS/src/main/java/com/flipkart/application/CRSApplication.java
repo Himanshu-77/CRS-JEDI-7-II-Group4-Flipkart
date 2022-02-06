@@ -24,6 +24,7 @@ public class CRSApplication {
         newUser.createMenu();
     }
 
+    // Home Page of application.
     private void createMenu() {
         try {
             while(true) {
@@ -42,18 +43,22 @@ public class CRSApplication {
 
                 switch(menuOption) {
                     case 1:
+                        // Self Registration for a new student.
                         registerStudent();
                         break;
 
                     case 2:
+                        // Login functionality (by student / professor / admin).
                         loginUser();
                         break;
 
                     case 3:
+                        // Functionality to update login password.
                         updatePassword();
                         break;
 
                     case 4:
+                        // Close / Exit the portal.
                         sc.close();
                         return;
 

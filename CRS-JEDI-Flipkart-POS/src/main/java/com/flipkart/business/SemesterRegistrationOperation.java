@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 
 /**
- * @author Asus
+ * @author Shubham
  *
  */
 public class SemesterRegistrationOperation implements SemesterRegistrationInterface{

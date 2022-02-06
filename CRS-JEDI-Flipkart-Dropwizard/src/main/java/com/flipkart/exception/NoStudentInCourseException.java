@@ -5,11 +5,10 @@ package com.flipkart.exception;
 
 /**
  * @author Dell
- *
+ * Exception arises when there is no student in a course
  */
 public class NoStudentInCourseException extends Exception{
 
-// Exception arises when there is no student in a course
 private String courseID;
 	
 	public NoStudentInCourseException() {

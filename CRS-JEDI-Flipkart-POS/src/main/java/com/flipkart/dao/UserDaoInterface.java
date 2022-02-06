@@ -10,46 +10,44 @@ import java.sql.SQLException;
  */
 public interface UserDaoInterface {
 
-	public void updateProfPassword(String userID, String password) throws UserNotFoundException;
+	/**
+	 * @param userID
+	 * @param password
+	 * @throws UserNotFoundException
+	 */
+	void updateProfPassword(String userID, String password) throws UserNotFoundException;
 
 	/**
 	 * @param userID
 	 * @param password
 	 */
-
-
-	public void updateAdminPassword(String userID, String password) throws UserNotFoundException;
+	void updateAdminPassword(String userID, String password) throws UserNotFoundException;
 
 	/**
 	 * @param userID
 	 * @param password
 	 */
+	void updateStudentPassword(String userID, String password) throws UserNotFoundException;
 
-
-	public void updateStudentPassword(String userID, String password) throws UserNotFoundException;
-
-	/**
-	 * @param userID
-	 * @param number
-	 */
 	/**
 	 * @param userID
 	 * @return
 	 * @throws UserNotFoundException
 	 */
-	public String getUserRole(String userID) throws UserNotFoundException;
+	String getUserRole(String userID) throws UserNotFoundException;
 
 	/**
 	 * @param userID
 	 * @param number
 	 */
-	public void updateContactNumber(String userID, String number) throws UserNotFoundException;
+	void updateContactNumber(String userID, String number) throws UserNotFoundException;
 
 	/**
 	 * @param userID
 	 * @param password
+	 * @param role
 	 * @return
+	 * @throws SQLException
 	 */
-
-	public boolean loginUser(String userID, String password, String role) throws SQLException;
+	boolean loginUser(String userID, String password, String role) throws SQLException;
 }

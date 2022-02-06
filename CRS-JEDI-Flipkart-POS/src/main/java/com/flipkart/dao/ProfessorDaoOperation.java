@@ -139,7 +139,7 @@ public class ProfessorDaoOperation implements ProfessorDaoInterface {
 	/**
 	 * Method to view courses which the professor is associated with
 	 * @param instructorID
-	 * @return the enrolled students for the corresponding professor and course code.
+	 * @return the list of courses in with professor is associated.
 	 * @throws ProfessorNotAssignedException
 	 */
 	@Override

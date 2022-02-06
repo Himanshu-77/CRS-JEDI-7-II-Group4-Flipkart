@@ -18,6 +18,7 @@ public class CRSStudent {
     SemesterRegistrationInterface sro = SemesterRegistrationOperation.getInstance();
     StudentInterface so = StudentOperation.getInstance();
 
+    // Home page for a Student Login.
     public void createStudentMenu(String username) {
 
         try {
@@ -40,17 +41,25 @@ public class CRSStudent {
 
                 switch(menuOption) {
                     case 1 :
+                        // View report card for logged-in student.
                         viewGradeCard(studentID,1);
                         break;
+
                     case 2 :
+                        // View all the courses registered by the student.
                         viewRegisteredCourses(studentID,1);
                         break;
+
                     case 3:
+                        // Redirect to semester registration dashboard.
                         createRegistrationDashboard();
                         break;
+
                     case 4:
-                    	System.out.println("Logging Out ...");
-                    	return;
+                        // Log out from the system.
+                        System.out.println("Logging Out ...");
+                        return;
+
                     default:
                         System.out.println("Invalid input");
                 }
@@ -83,22 +92,33 @@ public class CRSStudent {
 
                 switch(menuOption) {
                     case 1 :
+                        // View all the courses available to register in the semester.
                         viewAvailableCourses();
                         break;
+
                     case 2 :
+                        // Select a course for semester registration.
                         addCourse();
                         break;
+
                     case 3:
+                        // Drop out one selected course.
                         dropCourse();
                         break;
+
                     case 4:
+                        // Finish the selection of courses.
                         finishRegistration();
                         break;
+
                     case 5:
+                        // Pay the semester fees after successful registration.
                         payRegistrationFee();
                         break;
+
                     case 6:
                         return;
+
                     default:
                         System.out.println("Invalid input");
                 }
@@ -109,6 +129,7 @@ public class CRSStudent {
         }
     }
 
+    // Function that marks selection of courses is done, and checks if the choice made is valid.
     private void finishRegistration() {
 
         System.out.println("=======================================");
@@ -124,6 +145,7 @@ public class CRSStudent {
         }
     }
 
+    // Function to redirect on payment portal depending on the payment choice made.
     private void payRegistrationFee() {
 
         if (so.checkPaymentWindow(studentID)){

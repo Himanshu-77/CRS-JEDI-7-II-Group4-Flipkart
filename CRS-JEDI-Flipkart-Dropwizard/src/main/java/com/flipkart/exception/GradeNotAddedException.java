@@ -5,7 +5,7 @@ package com.flipkart.exception;
 
 /**
  * @author Aeron
- *
+ * Exception arises when grade is not added but student tries to access it.
  */
 
 public class GradeNotAddedException extends Exception {

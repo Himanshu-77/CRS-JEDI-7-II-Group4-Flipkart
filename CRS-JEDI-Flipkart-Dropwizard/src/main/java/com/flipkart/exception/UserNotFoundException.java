@@ -5,7 +5,7 @@ package com.flipkart.exception;
 
 /**
  * @author Aeron
- *
+ * Exception arises when login attempted with wrong username.
  */
 public class UserNotFoundException extends Exception {
 	

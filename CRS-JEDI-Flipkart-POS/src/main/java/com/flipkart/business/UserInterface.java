@@ -12,41 +12,45 @@ import com.flipkart.exception.UserNotFoundException;
 public interface UserInterface {
 	
 	/**
+	 * Update login password for professor account.
 	 * @param userID
 	 * @param password
 	 */
-	public void updateProfPassword(String userID, String password) throws UserNotFoundException;
+	void updateProfPassword(String userID, String password) throws UserNotFoundException;
 
 	/**
+	 * Update login password for admin account.
 	 * @param userID
 	 * @param password
 	 */
-	public void updateAdminPassword(String userID, String password) throws UserNotFoundException;
+	void updateAdminPassword(String userID, String password) throws UserNotFoundException;
 
 	/**
+	 * Update login password for student account.
 	 * @param userID
 	 * @param password
 	 */
-	public void updateStudentPassword(String userID, String password) throws UserNotFoundException;
+	void updateStudentPassword(String userID, String password) throws UserNotFoundException;
 	
 	/**
+	 * Update contact details for provided user-id.
 	 * @param userID
 	 * @param number
 	 */
-	public void updateContactNumber(String userID, String number) throws UserNotFoundException;
+	void updateContactNumber(String userID, String number) throws UserNotFoundException;
 	
 	/**
+	 * Update role for provided user-id.
 	 * @param userID
 	 * @param role
 	 */
-	public void updateRole(String userID, String role) throws UserNotFoundException;
+	void updateRole(String userID, String role) throws UserNotFoundException;
 	
 	/**
+	 * Login user.
 	 * @param userID
 	 * @param password
-	 * @return
+	 * @return the status if a user is successfully logged-in.
 	 */
-	public boolean loginUser(String userID, String password, String role) throws UserNotFoundException;
-	
-
+	boolean loginUser(String userID, String password, String role) throws UserNotFoundException;
 }
