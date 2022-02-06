@@ -1,5 +1,6 @@
 package com.flipkart.exception;
 
+// Exception arises when student takes an existing username.
 public class UsernameTakenException extends Exception {
 
     @Override

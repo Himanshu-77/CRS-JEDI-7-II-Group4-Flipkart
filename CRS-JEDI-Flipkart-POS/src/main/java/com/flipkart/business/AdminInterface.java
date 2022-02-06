@@ -16,54 +16,73 @@ import java.util.List;
 public interface AdminInterface {
 
 	/**
+	 * Enable fee payment for a semester.
 	 * @param semesterId
 	 */
-	public void enableFeePayment(int semesterId);
+	void enableFeePayment(int semesterId);
 
 	/**
+	 * Approve student semester registration.
 	 * @param studentId
 	 * @throws StudentNotApprovedException 
 	 * @throws FeesPendingException 
 	 */
-	public void approveStudentRegistration(int studentId,int semesterId) throws StudentNotRegisteredException, FeesPendingException, StudentNotApprovedException;
+	void approveStudentRegistration(int studentId,int semesterId) throws StudentNotRegisteredException, FeesPendingException, StudentNotApprovedException;
 	
 	/**
+	 * Add a new professor in the system.
 	 * @param professor
 	 */
-	public void addProfessor(Professor professor) throws ProfessorNotAddedException;
+	void addProfessor(Professor professor) throws ProfessorNotAddedException;
 	
 	/**
+	 * Remove a professor from the system.
 	 * @param professorID
 	 */
-	public void removeProfessor(int professorID);
+	void removeProfessor(int professorID);
 	
 	/**
+	 * Generate report card and SPI for students.
 	 * @param studentID
 	 * @return 
 	 * @throws StudentNotApprovedException 
 	 * @throws FeesPendingException 
 	 */
-	public ReportCard generateReportCard(int studentID) throws GradeNotAddedException, StudentNotApprovedException, FeesPendingException;
+	ReportCard generateReportCard(int studentID) throws GradeNotAddedException, StudentNotApprovedException, FeesPendingException;
 	
 	/**
+	 * Remove an existing course from the catalog.
 	 * @param courseID
 	 */
-	public void removeCourse(String courseID) throws CourseNotFoundException, CourseNotDeletedException;
-
-	public void addCourse(String course_name, String courseID, int semester) throws CourseAlreadyPresentException;
+	void removeCourse(String courseID) throws CourseNotFoundException, CourseNotDeletedException;
 
 	/**
+	 * Add a new course in the catalog.
+	 * @param course_name
+	 * @param courseID
+	 * @param semester
+	 * @throws CourseAlreadyPresentException
+	 */
+	void addCourse(String course_name, String courseID, int semester) throws CourseAlreadyPresentException;
+
+	/**
+	 * View list of students enrolled in all courses.
 	 * @param courseID
 	 * @param semester
 	 * @param viewAll
 	 * @return
 	 */
-	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semester, Boolean viewAll);
-
-	public List<Student> getPendingStudentAccountsList();
+	HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semester, Boolean viewAll);
 
 	/**
+	 * Get list of students' login accounts which are pending to be approved.
+	 * @return
+	 */
+	List<Student> getPendingStudentAccountsList();
+
+	/**
+	 * Approve a student's pending account.
 	 * @param studentID
 	 */
-	public void approveStudentAccount(Integer studentID);
+	void approveStudentAccount(Integer studentID);
 }

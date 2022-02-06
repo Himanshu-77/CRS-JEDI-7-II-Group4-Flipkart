@@ -10,7 +10,7 @@ import com.flipkart.exception.*;
 import java.sql.SQLException;
 
 /**
- * @author rutwi
+ * @author Aeron
  *
  */
 public interface StudentInterface {
@@ -19,9 +19,10 @@ public interface StudentInterface {
 	 * @param StudentID
 	 * @return payment window status for semester in which student has registered
 	 */
-	public Boolean checkPaymentWindow(int StudentID);
+	Boolean checkPaymentWindow(int StudentID);
 
 	/**
+	 * Add student details when he registers for a new account.
 	 * @param userName
 	 * @param name
 	 * @param password
@@ -30,29 +31,32 @@ public interface StudentInterface {
 	 * @param joiningYear
 	 * @return
 	 */
-	public Student addStudent (String userName, String name, String password,String department, String contactNumber, Integer joiningYear);
+	Student addStudent(String userName, String name, String password,String department, String contactNumber, Integer joiningYear);
 	
 	
 	/**
+	 * View report card for logged-in student.
 	 * @param StudentID
 	 * @param semesterId
 	 * @return reportCard
 	 * @throws StudentNotApprovedException 
 	 * @throws SQLException 
 	 */
-	public ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException,FeesPendingException, SQLException, StudentNotApprovedException;
+	ReportCard viewReportCard(int StudentID, int semesterId) throws GradeNotAddedException,FeesPendingException, SQLException, StudentNotApprovedException;
 	
 	/**
+	 * View all the courses registered by the student.
 	 * @param studentID
 	 * @param semesterId
 	 * @return course list
 	 * @throws SQLException 
 	 */
-	public void viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException, SQLException;
+	void viewRegisteredCourses(int studentID, int semesterId) throws StudentNotRegisteredException, SQLException;
 
 	/**
+	 * Get student ID by provided username.
 	 * @param username
 	 * @return
 	 */
-	public int getStudentIDFromUserName(String username);
+	int getStudentIDFromUserName(String username);
 }

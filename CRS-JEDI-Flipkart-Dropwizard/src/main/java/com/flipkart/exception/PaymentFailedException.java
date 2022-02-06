@@ -4,8 +4,8 @@
 package com.flipkart.exception;
 
 /**
- * @author Asus
- *
+ * @author Aeron
+ * Exception arises when payment is failed.
  */
 public class PaymentFailedException extends Exception {
 	

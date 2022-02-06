@@ -8,10 +8,17 @@ package com.flipkart.business;
  *
  */
 public interface NotificationInterface{
-	
-	
-	 public void sendPayFeesNotification();
-	 
-	 public void sendPaymentCompleteNotification(int transactionId, int studentid);
+
+	/**
+	 * Display pay fees notification to student when semester registration is completed.
+	 */
+	void sendPayFeesNotification();
+
+	/**
+	 * Display a notification denoting that payment is completed.
+	 * @param transactionId
+	 * @param studentid
+	 */
+	void sendPaymentCompleteNotification(int transactionId, int studentid);
 	
 }

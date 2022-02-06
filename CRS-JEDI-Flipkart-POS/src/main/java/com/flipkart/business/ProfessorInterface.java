@@ -15,30 +15,41 @@ import java.sql.SQLException;
 public interface ProfessorInterface {
 	
 	/**
+	 * Add grade for a student in a course.
 	 * @param studentID
 	 * @param courseID
 	 * @param grade
 	 */
-	public void addGrade(Integer studentID, Integer semesterID,String courseID, Integer grade) ;
+	void addGrade(Integer studentID, Integer semesterID,String courseID, Integer grade) ;
 
 	/**
+	 * View students enrolled in a course.
 	 * @param courseID
 	 * @param semesterID
 	 */
-	public void viewCourseStudents(String courseID, Integer semesterID) ;
+	void viewCourseStudents(String courseID, Integer semesterID) ;
 
 	/**
+	 * View list of courses in with professor is associated.
 	 * @param instructorID
 	 */
-	public void viewCourseProf(int instructorID) ;
+	void viewCourseProf(int instructorID) ;
 
 	/**
+	 * Professor opt-in for a course.
 	 * @param instructorID
 	 * @param semesterID
 	 * @param courseID
 	 */
-	public void registerCourse(int instructorID, Integer semesterID, String courseID) ;
+	void registerCourse(int instructorID, Integer semesterID, String courseID) ;
 
-	public Integer getProfessorID(String username) throws SQLException, ProfessorNotRegisteredException;
+	/**
+	 * Get ID of professor by providing username.
+	 * @param username
+	 * @return
+	 * @throws SQLException
+	 * @throws ProfessorNotRegisteredException
+	 */
+	Integer getProfessorID(String username) throws SQLException, ProfessorNotRegisteredException;
 
 }
