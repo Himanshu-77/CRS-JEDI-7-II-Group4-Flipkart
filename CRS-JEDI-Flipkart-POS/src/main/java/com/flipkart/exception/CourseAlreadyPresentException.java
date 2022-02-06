@@ -31,7 +31,7 @@ public class CourseAlreadyPresentException extends Exception{
 	
 	@Override
 	public String getMessage() {
-		return "CourseID: " + courseID + "is already present in catalog!";
+		return "CourseID: " + courseID + " is already present in catalog!";
 	}
 	
 }

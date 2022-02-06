@@ -21,13 +21,20 @@ public class DBUtil {
             return connection;
         else {
             try {
-//            	Properties prop = new Properties();
-//                InputStream inputStream = DBUtil.class.getClassLoader().getResourceAsStream("./config.properties");
-//                prop.load(inputStream);
-                String driver = "com.mysql.cj.jdbc.Driver";//prop.getProperty("driver");
-                String url = "jdbc:mysql://localhost:3306/test_schema_v2";//prop.getProperty("url");
-                String user ="root";// prop.getProperty("user");
-                String password = "arkathegreat";//prop.getProperty("password");
+                /*
+            	Properties prop = new Properties();
+                InputStream inputStream = DBUtil.class.getClassLoader().getResourceAsStream("./config.properties");
+                prop.load(inputStream);
+                String driver = prop.getProperty("driver");
+                String url = prop.getProperty("url");
+                String user = prop.getProperty("user");
+                String password = prop.getProperty("password");
+                 */
+
+                String driver = "com.mysql.cj.jdbc.Driver";
+                String url = "jdbc:mysql://localhost:3306/test_schema_v2";
+                String user ="root";
+                String password = "arkathegreat";
 
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, user, password);
@@ -35,12 +42,7 @@ public class DBUtil {
                 e.printStackTrace();
             } catch (SQLException e) {
                 e.printStackTrace();
-            } 
-//            catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            }
             return connection;
         }
 

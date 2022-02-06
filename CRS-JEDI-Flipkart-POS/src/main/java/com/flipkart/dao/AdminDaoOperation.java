@@ -8,10 +8,7 @@ import com.flipkart.bean.Student;
 import com.flipkart.business.StudentOperation;
 import com.flipkart.constants.SQLQueries;
 import com.flipkart.constants.constants;
-import com.flipkart.exception.CourseNotFoundException;
-import com.flipkart.exception.FeesPendingException;
-import com.flipkart.exception.ProfessorNotRegisteredException;
-import com.flipkart.exception.StudentNotApprovedException;
+import com.flipkart.exception.*;
 import com.flipkart.utils.DBUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -292,7 +289,9 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			System.out.println(row + " course added.");
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			
+			CourseAlreadyPresentException exc = new CourseAlreadyPresentException(course.getCourseID());
+			logger.error(exc.getMessage());
 		}
 		
 	}
