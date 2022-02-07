@@ -1,4 +1,4 @@
-package com.dropwizard;
+package com.flipkart.dropwizard;
 
 import com.flipkart.restcontroller.*;
 import io.dropwizard.Application;
@@ -32,10 +32,16 @@ public class App extends Application<Configuration> {
     public void run(Configuration c, Environment e) throws Exception {
         LOGGER.info("Registering REST resources");
 
-//        Register Controllers with jersey
+//        Register Admin Controller with jersey
         e.jersey().register(new AdminController());
+
+//        Register Professor Controller with jersey
         e.jersey().register(new ProfessorController());
+
+//        Register User Controllers with jersey
         e.jersey().register(new UserController());
+
+//        Register Student Controllers with jersey
         e.jersey().register(new StudentController());
     }
  

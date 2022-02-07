@@ -41,7 +41,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>com.dropwizard.App</mainClass>
+                  <mainClass>com.flipkart.dropwizard.App</mainClass>
                 </transformer>
                 <transformer />
               </transformers>

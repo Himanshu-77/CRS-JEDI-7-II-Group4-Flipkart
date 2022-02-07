@@ -12,10 +12,16 @@ public class ApplicationConfig extends ResourceConfig {
 	
 		public ApplicationConfig() {
 
-			
+//			Register User Controller class with Server
 			register(UserController.class);
+			
+//			Register Professor Controller class with Server
 			register(ProfessorController.class);
+			
+//			Register Admin Controller class with Server
 			register(AdminController.class);
+			
+//			Register Student Controller class with Server
 			register(StudentController.class);
 
 		}

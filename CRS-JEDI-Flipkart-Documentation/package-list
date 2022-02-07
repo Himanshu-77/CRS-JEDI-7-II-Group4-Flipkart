@@ -5,3 +5,4 @@ com.flipkart.constants
 com.flipkart.dao
 com.flipkart.exception
 com.flipkart.utils
+com.flipkart.validator

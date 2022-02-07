@@ -50,6 +50,14 @@ public interface AdminInterface {
 	 */
 	public void removeCourse(String courseID) throws Exception;
 
+	/**
+	 * 
+	 * @param course_name
+	 * @param courseID
+	 * @param semester
+	 * @throws Exception
+	 */
+	
 	public void addCourse(String course_name, String courseID, int semester) throws Exception;
 
 	/**
@@ -60,6 +68,12 @@ public interface AdminInterface {
 	 */
 	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semester, Boolean viewAll)  throws Exception;
 
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	
 	public List<Student> getPendingStudentAccountsList() throws Exception;
 
 	/**

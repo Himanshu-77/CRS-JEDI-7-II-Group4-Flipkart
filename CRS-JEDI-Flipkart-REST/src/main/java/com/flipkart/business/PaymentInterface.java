@@ -13,7 +13,7 @@ import com.flipkart.exception.PaymentFailedException;
 public interface PaymentInterface {
 
 	/**
-	 *
+	 * Make student Payment
 	 * @param payment
 	 */
 	public void makePayment(Payment payment)throws Exception;

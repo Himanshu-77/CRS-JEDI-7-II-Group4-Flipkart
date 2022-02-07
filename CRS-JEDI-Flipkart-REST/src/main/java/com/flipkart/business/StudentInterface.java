@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
- * @author rutwi
+ * @author Dell
  *
  */
 public interface StudentInterface {
