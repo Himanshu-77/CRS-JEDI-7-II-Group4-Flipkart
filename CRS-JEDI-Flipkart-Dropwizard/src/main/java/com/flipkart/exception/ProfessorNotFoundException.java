@@ -1,5 +1,6 @@
 package com.flipkart.exception;
 
+// Exception arises when prof doesnt exist in the given list
 public class ProfessorNotFoundException extends Exception {
 
     private int professorID;

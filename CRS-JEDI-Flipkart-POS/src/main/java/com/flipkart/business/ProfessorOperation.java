@@ -114,6 +114,9 @@ public class ProfessorOperation implements ProfessorInterface {
 		ProfessorDaoInterface profObj= ProfessorDaoOperation.getInstance();
 		try {
 			Boolean ans = profObj.registerCourse(instructorID, semesterID, courseID);
+			if(ans){
+				System.out.println("Course has been registered");
+			}
 		}
 		catch(Exception e) {
 			logger.error(e.getMessage());

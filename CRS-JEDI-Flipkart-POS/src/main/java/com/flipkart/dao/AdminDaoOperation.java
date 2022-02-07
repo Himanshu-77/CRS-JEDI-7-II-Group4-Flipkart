@@ -227,7 +227,8 @@ public class AdminDaoOperation implements AdminDaoInterface {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+
+//			logger.error(e.getMessage());
 		}
 		return R;
 	}

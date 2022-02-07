@@ -62,6 +62,7 @@ public interface AdminDaoInterface {
 
 
 	/**
+	 * Add course to catalog
 	 * @param course
 	 */
 	public void addCourse(Course course) throws Exception;
@@ -75,7 +76,8 @@ public interface AdminDaoInterface {
 	public HashMap<String, ArrayList<Integer>> viewCourseStudentList(String courseID, int semesterId, Boolean viewAll) throws Exception;
 
 	/**
-	 * @return
+	 * 
+	 * @return Pending student login list
 	 */
 	public List<Student> getPendingStudentAccountsList() throws Exception;
 

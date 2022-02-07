@@ -10,8 +10,16 @@ package com.flipkart.business;
 public interface NotificationInterface{
 	
 	
-	 public void sendPayFeesNotification();
+	/**
+	 *  Send payment pending notification
+	 */
+	public void sendPayFeesNotification();
 	 
-	 public void sendPaymentCompleteNotification(int transactionId, int studentid);
+	/**
+	 * Send payment complete notification
+	 * @param transactionId
+	 * @param studentid
+	 */
+	public void sendPaymentCompleteNotification(int transactionId, int studentid);
 	
 }

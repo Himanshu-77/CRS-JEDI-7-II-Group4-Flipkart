@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 
 /**
- * @author Asus
+ * @author Dell
  *
  */
 public interface SemesterRegistrationDaoInterface {
@@ -47,7 +47,7 @@ public interface SemesterRegistrationDaoInterface {
 	
 	/**
 	 * Method to view all courses available
-	 * @return list of all courses with availbale seats
+	 * @return list of all courses with available seats
 	 */
 	public ArrayList<Course> viewAvailableCourses() throws Exception;
 }

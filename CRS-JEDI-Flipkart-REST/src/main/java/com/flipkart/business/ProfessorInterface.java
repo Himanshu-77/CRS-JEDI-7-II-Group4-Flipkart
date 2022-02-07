@@ -44,6 +44,13 @@ public interface ProfessorInterface {
 	 */
 	public void registerCourse(int instructorID, Integer semesterID, String courseID) throws Exception ;
 
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws SQLException
+	 * @throws ProfessorNotRegisteredException
+	 */
 	public Integer getProfessorID(String username) throws SQLException, ProfessorNotRegisteredException;
 
 }

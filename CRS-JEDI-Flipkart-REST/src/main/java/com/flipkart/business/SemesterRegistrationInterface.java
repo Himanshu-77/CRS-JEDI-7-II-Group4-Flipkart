@@ -10,7 +10,7 @@ import com.flipkart.exception.CourseNotFoundException;
 import java.util.ArrayList;
 
 /**
- * @author Asus
+ * @author Dell
  *
  */
 public interface SemesterRegistrationInterface {
